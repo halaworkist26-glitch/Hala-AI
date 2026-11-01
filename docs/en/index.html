@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Solutions for Your Business</title>
+<meta name="description" content="You built the company. Let's lighten what you carry. A short illustrated guide to practical AI by Hala Al-Attiyat, Software Engineer.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="AI Solutions for Your Business">
+<meta property="og:description" content="You built the company. Let's lighten what you carry. A short illustrated guide by Hala Al-Attiyat.">
+<meta property="og:image" content="https://lh3.googleusercontent.com/d/1peaxtDCRJCkkIjMf_CABtLg44yuC7mNU">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23B30D12'/%3E%3Ctext x='16' y='22' font-family='Arial' font-size='16' font-weight='700' fill='white' text-anchor='middle'%3EAI%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* Layout idea: a picture book that turns like paper. One drawing and one short line per page, in the sky, red and green of email v4, with a handwritten voice for Hala. */
+    --red: #B30D12;
+    --red-hi: #D0080F;
+    --red-lo: #8E0107;
+    --blue: #2F6FA8;
+    --sky: #9CC3EA;
+    --sky-1: #DCE8F6;
+    --sky-2: #F4F8FD;
+    --ink: #14213A;
+    --muted: #41506B;
+    --green: #5B8F2E;
+    --green-1: #1F3322;
+    --green-2: #5B6A49;
+    --on-green: #DDE8D8;
+    --font: Poppins, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    --hand: Caveat, 'Segoe Print', 'Comic Sans MS', cursive;
+    --bar: 64px;
+    --s: 1;
+    color-scheme: light only;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body { background: radial-gradient(ellipse at 50% 30%, var(--sky-2) 0%, var(--sky-1) 58%, #BFD3E9 100%) fixed; color: var(--ink); font: 400 16px/24px var(--font); }
+  h2, h3, p, ul, ol { margin: 0; padding: 0; }
+  ul, ol { list-style: none; }
+  img { display: block; max-width: 100%; }
+  a { color: var(--red); }
+  a:focus-visible, button:focus-visible, input:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
+  .ic { fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
+
+  /* Reading without JavaScript or if the page-turn library cannot load: pages in one column */
+  #book { display: grid; gap: 18px; justify-content: center; padding: 18px 0; overflow-x: auto; }
+  .page { width: 560px; height: 720px; background: #FFFFFF; overflow: hidden; }
+  .flip #book { display: block; gap: 0; padding: 0; overflow: visible; }
+  .flip .page { width: auto; height: auto; }
+
+  /* A page is always designed at 560 by 720 and scaled as one picture, so nothing reflows on any screen */
+  .page-inner { position: relative; width: 560px; height: 720px; overflow: hidden; background: #FFFFFF; transform-origin: 0 0; transform: scale(var(--s)); }
+  .art { position: absolute; left: 0; top: 0; width: 560px; height: 720px; }
+  .art text { font-family: var(--font); }
+  .landscape .even .page-inner::after, .landscape .odd .page-inner::after { content: ""; position: absolute; top: 0; bottom: 0; width: 46px; pointer-events: none; z-index: 5; }
+  .landscape .even .page-inner::after { right: 0; background: linear-gradient(270deg, rgba(20, 33, 58, .17), rgba(20, 33, 58, 0)); }
+  .landscape .odd .page-inner::after { left: 0; background: linear-gradient(90deg, rgba(20, 33, 58, .17), rgba(20, 33, 58, 0)); }
+
+  .sky { background: linear-gradient(180deg, var(--sky-1) 0%, var(--sky-2) 42%, #FFFFFF 100%); }
+  .hd { position: absolute; left: 28px; right: 28px; top: 28px; z-index: 2; text-align: center; }
+  h2 { font-size: 34px; line-height: 41px; font-weight: 700; letter-spacing: -0.8px; color: var(--ink); text-wrap: balance; }
+  .r { color: var(--red); }
+  .sub { padding-top: 6px; font-size: 16px; line-height: 23px; color: var(--muted); text-wrap: balance; }
+  .note-hand { font-family: var(--hand); font-weight: 700; color: var(--red); }
+  .folio { position: absolute; bottom: 14px; z-index: 3; font-size: 13px; line-height: 16px; font-weight: 600; color: var(--blue); font-variant-numeric: tabular-nums; }
+  .even .folio { left: 26px; }
+  .odd .folio { right: 26px; }
+  .folio--light { color: rgba(255, 255, 255, .8); }
+  .cap { position: absolute; left: 32px; right: 32px; z-index: 2; text-align: center; text-wrap: balance; }
+  .btn { display: inline-block; padding: 13px 30px; border-radius: 12px; background: linear-gradient(135deg, var(--red-hi) 0%, var(--red-lo) 100%); color: #FFFFFF; font-size: 17px; line-height: 22px; font-weight: 700; text-decoration: none; box-shadow: 0 8px 18px rgba(142, 1, 7, .32); }
+  .page a * { pointer-events: none; }
+
+  /* Cover */
+  .cover-img { position: absolute; left: 0; top: 0; width: 560px; height: 524px; object-fit: cover; object-position: top; border-radius: 0 0 30px 30px; }
+  .cover-panel { position: absolute; left: 24px; right: 24px; top: 532px; text-align: center; }
+  .hook { font-size: 26px; line-height: 32px; font-weight: 700; letter-spacing: -0.5px; color: var(--ink); text-wrap: balance; }
+  .cover-who { padding-top: 7px; font-size: 14px; line-height: 20px; color: var(--blue); }
+  .cover-who b { font-weight: 700; color: var(--red); }
+  .cover-panel .btn { margin-top: 11px; }
+
+  /* Note */
+  .note-title { font-size: 46px; line-height: 50px; }
+  .note-body { position: absolute; left: 40px; right: 40px; top: 108px; font-family: var(--hand); font-size: 35px; line-height: 45px; font-weight: 600; color: var(--ink); }
+  .sign { position: absolute; left: 40px; right: 40px; top: 400px; display: flex; align-items: center; gap: 14px; }
+  .sign img { width: 72px; height: 72px; border-radius: 50%; border: 2px solid var(--red); }
+  .sign b { display: block; font-family: var(--hand); font-size: 36px; line-height: 38px; font-weight: 700; color: var(--red); }
+  .sign span { font-size: 13.5px; line-height: 19px; color: var(--blue); }
+  .band { position: absolute; left: 0; right: 0; bottom: 0; width: 560px; height: 220px; object-fit: cover; border-radius: 30px 30px 0 0; }
+
+  /* Contents */
+  .toc { position: absolute; left: 30px; right: 30px; top: 120px; display: grid; grid-template-columns: 1fr 1fr; grid-auto-flow: column; grid-template-rows: repeat(8, 62px); column-gap: 12px; }
+  .toc a { display: flex; align-items: center; gap: 10px; height: 54px; padding: 0 10px; border: 1px solid var(--sky-1); border-radius: 13px; background: #FFFFFF; font-size: 14.5px; line-height: 18px; font-weight: 500; color: var(--ink); text-decoration: none; }
+  .toc a:hover { border-color: var(--red); color: var(--red); }
+  .toc svg { flex: none; width: 24px; height: 24px; color: var(--red); }
+  .toc .n { margin-left: auto; font-weight: 600; color: var(--blue); font-variant-numeric: tabular-nums; }
+
+  /* Bubbles in the opening scene */
+  .bub rect, .bub path { fill: #FFFFFF; stroke: var(--sky); stroke-width: 1.5; }
+  .bub.hot rect, .bub.hot path { stroke: var(--red); }
+  .bub text { font-size: 15.5px; font-weight: 600; fill: var(--ink); text-anchor: middle; }
+
+  /* AI chips around the sphere */
+  .sphere-big { position: absolute; left: 110px; top: 108px; width: 340px; height: 340px; }
+  .orb { position: absolute; display: flex; align-items: center; gap: 7px; padding: 8px 14px 8px 10px; border-radius: 22px; background: #FFFFFF; border: 1.5px solid var(--sky); box-shadow: 0 6px 14px rgba(47, 111, 168, .16); font-size: 15.5px; line-height: 20px; font-weight: 600; color: var(--blue); z-index: 2; }
+  .orb svg { width: 20px; height: 20px; }
+  .keep { position: absolute; left: 24px; right: 24px; top: 466px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .keep div { padding: 15px 4px; border-radius: 16px; background: linear-gradient(135deg, var(--green) 0%, #3F6B1F 100%); color: #FFFFFF; text-align: center; font-size: 17px; line-height: 22px; font-weight: 700; }
+  .keep svg { display: block; width: 28px; height: 28px; margin: 0 auto 5px; }
+
+  /* Capability tiles */
+  .grid-8 { position: absolute; left: 24px; right: 24px; top: 104px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .t8 { display: flex; align-items: center; gap: 12px; height: 118px; padding: 0 12px; border-radius: 18px; background: #FFFFFF; border: 1px solid var(--sky-1); box-shadow: 0 6px 14px rgba(47, 111, 168, .1); font-size: 16px; line-height: 21px; font-weight: 600; color: var(--ink); }
+  .mark { display: flex; align-items: center; justify-content: center; flex: none; width: 58px; height: 58px; border-radius: 17px; background: linear-gradient(135deg, var(--red-hi) 0%, var(--red-lo) 100%); color: #FFFFFF; }
+  .mark svg { width: 30px; height: 30px; }
+
+  /* Industry tiles */
+  .grid-4 { position: absolute; left: 22px; right: 22px; top: 130px; bottom: 44px; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 12px; }
+  .t4 { display: flex; flex-direction: column; padding: 18px 16px; border-radius: 22px; color: #FFFFFF; }
+  .t4 svg { width: 68px; height: 68px; margin-bottom: auto; opacity: .95; }
+  .t4 b { display: block; font-size: 18.5px; line-height: 24px; }
+  .t4 span { padding-top: 5px; font-size: 15px; line-height: 20px; opacity: .92; }
+  .c-red { background: linear-gradient(135deg, var(--red-hi), var(--red-lo)); }
+  .c-blue { background: linear-gradient(135deg, #3F86C6, #235A8D); }
+  .c-green { background: linear-gradient(135deg, var(--green), #3F6B1F); }
+  .c-ink { background: linear-gradient(135deg, #2A3B5C, var(--ink)); }
+
+  /* Comic strip */
+  .tag { display: inline-block; margin-top: 6px; padding: 3px 12px; border-radius: 12px; background: #FDECEC; color: var(--red); font-size: 13px; line-height: 19px; font-weight: 600; }
+  .strip { position: absolute; left: 24px; right: 24px; top: 132px; bottom: 44px; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 12px; }
+  .panel { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; padding: 26px 12px 12px; border-radius: 20px; border: 2px solid var(--sky); background: #FFFFFF; text-align: center; font-size: 16.5px; line-height: 22px; font-weight: 600; color: var(--ink); }
+  .panel .num { position: absolute; left: 10px; top: 10px; width: 30px; height: 30px; border-radius: 50%; background: var(--sky); color: #FFFFFF; font-size: 15px; line-height: 30px; font-weight: 700; }
+  .panel svg.big { width: 92px; height: 92px; color: var(--blue); }
+  .panel .say { padding: 7px 12px; border-radius: 14px 14px 14px 3px; background: var(--sky-1); font-size: 15px; line-height: 20px; color: var(--ink); }
+  .panel--done { border-color: var(--green); }
+  .panel--done svg.big { color: var(--green); }
+  .panel--done .num { background: var(--green); }
+  .panel img { width: 92px; height: 92px; }
+
+  /* Road labels */
+  .stop rect { fill: #FFFFFF; stroke: var(--sky); stroke-width: 1.5; }
+  .stop .a { font-size: 17px; font-weight: 700; fill: var(--ink); }
+  .stop .b { font-size: 15px; font-weight: 500; fill: var(--muted); }
+
+  /* Cost blocks */
+  .legend { position: absolute; left: 22px; right: 22px; top: 468px; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+  .legend span { display: inline-flex; align-items: center; gap: 7px; padding: 6px 12px 6px 9px; border-radius: 16px; background: #FFFFFF; border: 1px solid var(--sky-1); font-size: 15px; line-height: 19px; font-weight: 500; color: var(--ink); }
+  .legend i { width: 15px; height: 15px; border-radius: 4px; }
+
+  /* Comparison */
+  .vs { position: absolute; left: 22px; right: 22px; top: 106px; width: 516px; border-collapse: separate; border-spacing: 0; font-size: 15.5px; line-height: 20px; }
+  .vs th { padding: 0 2px 8px; font-size: 14px; line-height: 17px; font-weight: 600; color: var(--muted); vertical-align: bottom; }
+  .vs th svg { display: block; width: 32px; height: 32px; margin: 0 auto 4px; color: var(--blue); }
+  .vs td { height: 62px; border-top: 1px solid var(--sky-1); text-align: center; }
+  .vs td:first-child { padding-right: 6px; text-align: left; font-weight: 500; color: var(--ink); }
+  .vs .me { background: #FFF3F3; border-left: 2px solid var(--red); border-right: 2px solid var(--red); }
+  .vs th.me { border-top: 2px solid var(--red); border-radius: 14px 14px 0 0; padding-top: 8px; color: var(--red); font-weight: 700; }
+  .vs th.me svg { color: var(--red); }
+  .vs tr:last-child .me { border-bottom: 2px solid var(--red); border-radius: 0 0 14px 14px; }
+  .m { display: inline-block; width: 28px; height: 28px; border-radius: 50%; font: 700 17px/28px Arial, sans-serif; color: #FFFFFF; }
+  .m-y { background: var(--green); }
+  .m-n { background: #D5DBE4; }
+  .m-p { background: linear-gradient(90deg, var(--green) 50%, #D5DBE4 50%); }
+  .vs-key { position: absolute; left: 22px; right: 22px; top: 524px; display: flex; justify-content: center; gap: 14px; font-size: 13px; line-height: 18px; color: var(--muted); }
+  .vs-key span { display: inline-flex; align-items: center; gap: 5px; }
+  .vs-key .m { width: 15px; height: 15px; }
+  .said { position: absolute; left: 26px; right: 26px; top: 566px; display: flex; align-items: center; gap: 12px; }
+  .said img { flex: none; width: 74px; height: 74px; border-radius: 50%; border: 2px solid var(--red); }
+  .said p { padding: 11px 16px; border-radius: 18px 18px 18px 4px; background: var(--sky-1); font-family: var(--hand); font-size: 26px; line-height: 31px; font-weight: 600; color: var(--ink); }
+
+  /* About */
+  .me-photo { position: absolute; left: 205px; top: 118px; width: 150px; height: 150px; border-radius: 50%; border: 4px solid var(--red); box-shadow: 0 0 0 9px rgba(156, 195, 234, .4), 0 0 0 19px rgba(156, 195, 234, .2); }
+  .skill { position: absolute; padding: 6px 13px; border-radius: 18px; background: #FFFFFF; border: 1.5px solid var(--sky); box-shadow: 0 5px 12px rgba(47, 111, 168, .14); font-size: 15px; line-height: 19px; font-weight: 600; color: var(--blue); white-space: nowrap; }
+  .me-say { position: absolute; left: 34px; right: 34px; top: 410px; padding: 15px 20px; border-radius: 20px; background: linear-gradient(135deg, var(--red-hi), var(--red-lo)); color: #FFFFFF; text-align: center; font-family: var(--hand); font-size: 31px; line-height: 37px; font-weight: 700; text-wrap: balance; }
+  .me-meta { position: absolute; left: 30px; right: 30px; top: 552px; text-align: center; font-size: 15px; line-height: 21px; color: var(--muted); text-wrap: balance; }
+  .me-meta b { display: block; color: var(--blue); font-weight: 600; }
+  .me-link { display: inline-block; margin-top: 7px; font-size: 15px; font-weight: 600; }
+
+  /* Chat */
+  .chat { position: absolute; left: 22px; right: 22px; top: 96px; display: flex; flex-direction: column; gap: 7px; }
+  .q, .a { max-width: 90%; padding: 8px 14px; font-size: 16px; line-height: 21px; }
+  .q { align-self: flex-end; border-radius: 16px 16px 3px 16px; background: var(--blue); color: #FFFFFF; font-weight: 500; }
+  .a { position: relative; align-self: flex-start; margin: 0 0 7px 38px; border-radius: 16px 16px 16px 3px; background: #FFFFFF; border: 1px solid var(--sky); color: var(--ink); }
+  .a img { position: absolute; left: -38px; bottom: 0; width: 30px; height: 30px; border-radius: 50%; }
+
+  /* Coffee */
+  .pills { position: absolute; left: 20px; right: 20px; top: 490px; display: grid; grid-template-columns: 1fr 1fr 1.25fr; gap: 9px; }
+  .pills div { display: flex; align-items: center; justify-content: center; min-height: 72px; padding: 6px; border-radius: 16px; background: var(--sky-1); text-align: center; font-size: 15.5px; line-height: 20px; font-weight: 600; color: var(--ink); }
+  .no { position: absolute; left: 20px; right: 20px; top: 576px; display: flex; justify-content: center; gap: 18px; font-size: 16px; line-height: 22px; font-weight: 600; color: var(--green); }
+  .no span { display: inline-flex; align-items: center; gap: 6px; }
+  .no svg { width: 22px; height: 22px; }
+  .bring { position: absolute; left: 30px; right: 30px; top: 612px; text-align: center; font-family: var(--hand); font-size: 28px; line-height: 32px; font-weight: 600; color: var(--red); text-wrap: balance; }
+
+  /* Back cover */
+  .back-cover { background: linear-gradient(135deg, var(--green-1) 0%, var(--green-2) 100%); color: var(--on-green); text-align: center; }
+  .back-sphere { position: absolute; left: 140px; top: 22px; width: 280px; height: 280px; }
+  .back-title { position: absolute; left: 24px; right: 24px; top: 300px; font-size: 56px; line-height: 62px; font-weight: 700; letter-spacing: -1.5px; color: #FFFFFF; }
+  .back-sub { position: absolute; left: 40px; right: 40px; top: 366px; font-size: 18px; line-height: 26px; text-wrap: balance; }
+  .back-cta { position: absolute; left: 0; right: 0; top: 428px; }
+  .contact { position: absolute; left: 0; right: 0; top: 494px; display: flex; flex-direction: column; align-items: center; gap: 8px; }
+  .contact a { display: inline-flex; align-items: center; gap: 10px; font-size: 16px; line-height: 23px; color: #FFFFFF; }
+  .contact svg { width: 22px; height: 22px; }
+  .sig { position: absolute; left: 60px; right: 60px; top: 580px; display: flex; align-items: center; justify-content: center; gap: 14px; padding-top: 18px; border-top: 1px solid rgba(221, 232, 216, .35); text-align: left; font-size: 13.5px; line-height: 19px; }
+  .sig img { flex: none; width: 66px; height: 66px; border-radius: 50%; border: 2px solid #FFFFFF; }
+  .sig b { display: block; font-family: var(--hand); font-size: 30px; line-height: 32px; font-weight: 700; color: #FFFFFF; }
+
+  /* Reader chrome */
+  .stage { display: contents; }
+  .bar, .arrow, .sheet, .toast { display: none; }
+  .flip, .flip body { height: 100%; overflow: hidden; }
+  .flip .stage { position: fixed; inset: 0 0 var(--bar) 0; display: flex; align-items: center; justify-content: center; }
+  #wrap { position: relative; }
+  .flip #wrap { transition: transform .55s ease; }
+  .landscape #wrap[data-pos="closed"] { transform: translateX(-25%); }
+  .landscape #wrap[data-pos="end"] { transform: translateX(25%); }
+  .desk-shadow, .edge { display: none; }
+  .flip .desk-shadow, .flip.landscape .edge { display: block; }
+  .stf__parent { touch-action: pan-y pinch-zoom !important; }
+  .desk-shadow { position: absolute; left: 1%; right: 1%; bottom: -14px; height: 28px; border-radius: 50%; background: rgba(20, 33, 58, .42); filter: blur(13px); transition: left .55s, right .55s; }
+  .landscape #wrap[data-pos="closed"] .desk-shadow { left: 51%; }
+  .landscape #wrap[data-pos="end"] .desk-shadow { right: 51%; }
+  .edge { position: absolute; top: .7%; bottom: .7%; background: repeating-linear-gradient(90deg, #FFFFFF 0 1px, #C3D4E7 1px 2px); }
+  .edge-l { right: 100%; width: calc(var(--done, 0) * 8px); }
+  .edge-r { left: 100%; width: calc((1 - var(--done, 0)) * 8px); }
+
+  .flip .bar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 50; display: flex; align-items: center; justify-content: center; gap: 10px; height: var(--bar); padding: 0 12px; background: rgba(255, 255, 255, .92); border-top: 1px solid var(--sky-1); }
+  .bar button { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; padding: 0; border: 1px solid var(--sky); border-radius: 12px; background: #FFFFFF; color: var(--blue); cursor: pointer; }
+  .bar button svg { width: 21px; height: 21px; }
+  .bar button:disabled { opacity: .35; cursor: default; }
+  .bar .go { border: 0; background: linear-gradient(135deg, var(--red-hi), var(--red-lo)); color: #FFFFFF; }
+  .bar input[type="range"] { flex: 0 1 320px; min-width: 60px; accent-color: var(--red); }
+  .label { min-width: 104px; text-align: center; font-size: 13.5px; line-height: 18px; font-weight: 500; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .sep { width: 1px; height: 26px; background: var(--sky-1); }
+  .flip.landscape .arrow { position: fixed; top: calc(50% - var(--bar) / 2 - 26px); z-index: 40; display: flex; align-items: center; justify-content: center; width: 52px; height: 52px; border: 1px solid var(--sky); border-radius: 50%; background: rgba(255, 255, 255, .9); color: var(--red); cursor: pointer; box-shadow: 0 6px 16px rgba(20, 33, 58, .16); }
+  .arrow svg { width: 26px; height: 26px; }
+  .arrow:disabled { opacity: .3; cursor: default; }
+  #arrow-prev { left: 12px; }
+  #arrow-next { right: 12px; }
+  .sheet[open-sheet] { position: fixed; inset: 0; z-index: 60; display: flex; flex-direction: column; background: rgba(20, 33, 58, .86); }
+  .sheet-head { display: flex; align-items: center; justify-content: space-between; padding: 12px 18px; color: #FFFFFF; font-weight: 600; }
+  .sheet-head button { width: 44px; height: 44px; border: 0; border-radius: 12px; background: rgba(255, 255, 255, .14); color: #FFFFFF; cursor: pointer; }
+  .sheet-head svg { width: 22px; height: 22px; }
+  .thumbs { flex: 1; display: grid; grid-template-columns: repeat(auto-fill, minmax(112px, 1fr)); gap: 14px; align-content: start; padding: 4px 18px 22px; overflow-y: auto; }
+  .thumb { padding: 0; border: 0; background: none; color: #FFFFFF; font: 500 12.5px/20px var(--font); cursor: pointer; }
+  .thumb-page { width: 112px; height: 144px; margin: 0 auto; overflow: hidden; border-radius: 4px; background: #FFFFFF; }
+  .thumb:hover .thumb-page, .thumb:focus-visible .thumb-page { outline: 3px solid var(--sky); }
+  .thumb .page-inner { --s: 0.2; pointer-events: none; }
+  .toast[show-toast] { position: fixed; left: 50%; bottom: calc(var(--bar) + 14px); z-index: 70; display: block; max-width: 90vw; padding: 9px 16px; transform: translateX(-50%); border-radius: 10px; background: var(--ink); color: #FFFFFF; font-size: 13.5px; line-height: 19px; overflow-wrap: anywhere; }
+
+  @media (max-width: 620px) {
+    .bar input[type="range"], .sep { display: none; }
+    .flip .bar { gap: 7px; padding: 0 8px; }
+    .label { min-width: 74px; font-size: 12.5px; }
+  }
+  @media print {
+    .bar, .arrow { display: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<svg class="sprite" aria-hidden="true">
+  <defs>
+    <linearGradient id="gSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#DCE8F6"/><stop offset=".6" stop-color="#F4F8FD"/><stop offset="1" stop-color="#FFFFFF"/></linearGradient>
+    <linearGradient id="gSea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6FA6DC"/><stop offset=".45" stop-color="#2F6FA8"/><stop offset="1" stop-color="#14213A"/></linearGradient>
+    <linearGradient id="gBerg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#CFE1F4"/></linearGradient>
+    <linearGradient id="gDeep" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#D9E8F7"/><stop offset="1" stop-color="#7FA8D4"/></linearGradient>
+    <linearGradient id="gRed" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#D0080F"/><stop offset="1" stop-color="#8E0107"/></linearGradient>
+    <linearGradient id="gHillA" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#A8C97C"/><stop offset="1" stop-color="#5B8F2E"/></linearGradient>
+    <linearGradient id="gHillB" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6E9E3F"/><stop offset="1" stop-color="#2E4630"/></linearGradient>
+    <radialGradient id="gGlow"><stop offset="0" stop-color="#3D6FB0" stop-opacity=".55"/><stop offset="1" stop-color="#14213A" stop-opacity="0"/></radialGradient>
+  </defs>
+  <symbol id="i-truck" viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></symbol>
+  <symbol id="i-factory" viewBox="0 0 24 24"><path d="M2 21V10l6 4v-4l6 4V3h7v18z"/><path d="M7 18h2M12 18h2M17 18h1"/></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></symbol>
+  <symbol id="i-building" viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20"/><path d="M9 22v-4h6v4M8 6h.01M12 6h.01M16 6h.01M8 10h.01M12 10h.01M16 10h.01M8 14h.01M12 14h.01M16 14h.01"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/><polyline points="22,6 12,13 2,6"/></symbol>
+  <symbol id="i-linkedin" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></symbol>
+  <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></symbol>
+  <symbol id="i-tasks" viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></symbol>
+  <symbol id="i-cpu" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></symbol>
+  <symbol id="i-layout" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></symbol>
+  <symbol id="i-box" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></symbol>
+  <symbol id="i-coffee" viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></symbol>
+  <symbol id="i-flag" viewBox="0 0 24 24"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></symbol>
+  <symbol id="i-check-c" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></symbol>
+  <symbol id="i-edit" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4z"/></symbol>
+  <symbol id="i-send" viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></symbol>
+  <symbol id="i-sort" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></symbol>
+  <symbol id="i-compass" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></symbol>
+  <symbol id="i-layers" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></symbol>
+  <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="i-prev" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></symbol>
+  <symbol id="i-next" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></symbol>
+  <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></symbol>
+  <symbol id="i-list" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></symbol>
+  <symbol id="i-share" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></symbol>
+  <symbol id="i-full" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></symbol>
+</svg>
+
+<div class="stage">
+<div id="wrap">
+<div class="desk-shadow"></div>
+<div class="edge edge-l"></div>
+<div class="edge edge-r"></div>
+<div id="book">
+
+  <!-- 1 Cover -->
+  <div class="page" data-density="hard" id="cover"><div class="page-inner">
+    <img class="cover-img" src="assets/cover.jpg" width="1149" height="950" alt="AI Solutions for your business: a hand holding a glowing AI sphere.">
+    <div class="cover-panel">
+      <p class="hook">You built the company.<br><span class="r">Let's lighten what you carry.</span></p>
+      <p class="cover-who"><b>Hala Al-Attiyat</b> | Software Engineer | AI Solutions &amp; Business Automation</p>
+      <a class="btn" href="#note">Let's start</a>
+    </div>
+  </div></div>
+
+  <!-- 2 Note -->
+  <div class="page even" id="note"><div class="page-inner sky">
+    <div class="hd"><p class="note-hand note-title">A note from me</p></div>
+    <p class="note-body">Honestly, I know your time is tight. So I drew this guide instead of writing you a long document. Flip through it. If something makes you say "that's us", let's talk.</p>
+    <div class="sign">
+      <img src="assets/hala.jpg" width="240" height="240" alt="Hala Al-Attiyat">
+      <div><b>Hala</b><span>Software Engineer | AI Solutions &amp; Business Automation</span></div>
+    </div>
+    <img class="band" src="assets/lake.jpg" width="780" height="200" alt="">
+    <p class="folio folio--light">2</p>
+  </div></div>
+
+  <!-- 3 Contents -->
+  <div class="page odd" id="contents"><div class="page-inner sky">
+    <div class="hd"><h2>From <span class="r">A to Z</span></h2><p class="sub">Tap any stop to jump there.</p></div>
+    <ol class="toc">
+      <li><a href="#familiar"><svg class="ic"><use href="#i-eye"/></svg><span>Your day</span><span class="n">4</span></a></li>
+      <li><a href="#hidden"><svg class="ic"><use href="#i-layers"/></svg><span>The hidden work</span><span class="n">5</span></a></li>
+      <li><a href="#no-dept"><svg class="ic"><use href="#i-users"/></svg><span>No department needed</span><span class="n">6</span></a></li>
+      <li><a href="#imagine"><svg class="ic"><use href="#i-compass"/></svg><span>Now imagine</span><span class="n">7</span></a></li>
+      <li><a href="#charge"><svg class="ic"><use href="#i-check-c"/></svg><span>You stay in charge</span><span class="n">8</span></a></li>
+      <li><a href="#build"><svg class="ic"><use href="#i-cpu"/></svg><span>What we could build</span><span class="n">9</span></a></li>
+      <li><a href="#industries"><svg class="ic"><use href="#i-truck"/></svg><span>Your industry</span><span class="n">10</span></a></li>
+      <li><a href="#example"><svg class="ic"><use href="#i-chat"/></svg><span>One example</span><span class="n">11</span></a></li>
+      <li><a href="#path"><svg class="ic"><use href="#i-flag"/></svg><span>The path</span><span class="n">12</span></a></li>
+      <li><a href="#cost"><svg class="ic"><use href="#i-box"/></svg><span>The cost</span><span class="n">13</span></a></li>
+      <li><a href="#options"><svg class="ic"><use href="#i-sort"/></svg><span>Your options</span><span class="n">14</span></a></li>
+      <li><a href="#about"><svg class="ic"><use href="#i-user"/></svg><span>Who I am</span><span class="n">15</span></a></li>
+      <li><a href="#questions"><svg class="ic"><use href="#i-help"/></svg><span>Your questions</span><span class="n">16</span></a></li>
+      <li><a href="#coffee"><svg class="ic"><use href="#i-coffee"/></svg><span>Twenty minutes</span><span class="n">17</span></a></li>
+      <li><a href="#talk"><svg class="ic"><use href="#i-mail"/></svg><span>Let's talk</span><span class="n">18</span></a></li>
+    </ol>
+    <p class="folio">3</p>
+  </div></div>
+
+  <!-- 4 Sound familiar -->
+  <div class="page even" id="familiar"><div class="page-inner">
+    <svg class="art" viewBox="0 0 560 720" role="img" aria-label="A manager at a desk with head in hands, surrounded by messages: where is my shipment, send the invoice again, who has the customs file, report by five, which version is right, did anyone reply, call the supplier.">
+      <rect width="560" height="720" fill="url(#gSky)"/>
+      <g fill="#FFFFFF" stroke="#9CC3EA" stroke-width="1.3">
+        <rect x="462" y="392" width="44" height="56" rx="3" transform="rotate(18 484 420)"/>
+        <rect x="58" y="400" width="44" height="56" rx="3" transform="rotate(-20 80 428)"/>
+        <rect x="140" y="372" width="34" height="44" rx="3" transform="rotate(12 157 394)"/>
+        <rect x="394" y="376" width="30" height="40" rx="3" transform="rotate(-14 409 396)"/>
+      </g>
+      <g fill="#14213A"><circle cx="280" cy="406" r="35"/><path d="M224 538c0-52 24-86 56-86s56 34 56 86z"/></g>
+      <g fill="none" stroke="#14213A" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"><path d="M246 472L204 528 248 420"/><path d="M314 472L356 528 312 420"/></g>
+      <rect x="44" y="536" width="472" height="18" rx="9" fill="#2F6FA8"/>
+      <rect x="84" y="554" width="14" height="70" fill="#2F6FA8"/><rect x="462" y="554" width="14" height="70" fill="#2F6FA8"/>
+      <g fill="#FFFFFF" stroke="#9CC3EA" stroke-width="1.3">
+        <rect x="70" y="524" width="104" height="12" rx="2"/><rect x="74" y="512" width="100" height="12" rx="2"/><rect x="68" y="500" width="104" height="12" rx="2"/><rect x="74" y="488" width="96" height="12" rx="2"/><rect x="70" y="476" width="100" height="12" rx="2"/>
+        <rect x="396" y="524" width="100" height="12" rx="2"/><rect x="400" y="512" width="94" height="12" rx="2"/><rect x="394" y="500" width="100" height="12" rx="2"/>
+      </g>
+      <rect x="358" y="498" width="24" height="38" rx="5" fill="#14213A"/><rect x="361" y="503" width="18" height="26" rx="2" fill="#9CC3EA"/><circle cx="384" cy="497" r="11" fill="#B30D12"/><text x="384" y="502" font-size="13" font-weight="700" fill="#FFFFFF" text-anchor="middle">9</text>
+      <g class="bub hot" transform="rotate(-3 121 142)"><rect x="18" y="120" width="206" height="44" rx="14"/><text x="121" y="147">Where's my shipment?</text></g>
+      <g class="bub" transform="rotate(3 437 140)"><rect x="330" y="118" width="214" height="44" rx="14"/><text x="437" y="145">Send the invoice again</text></g>
+      <g class="bub" transform="rotate(-1 280 208)"><rect x="160" y="186" width="240" height="44" rx="14"/><text x="280" y="213">Who has the customs file?</text></g>
+      <g class="bub hot" transform="rotate(4 89 276)"><rect x="24" y="254" width="130" height="44" rx="14"/><text x="89" y="281">Report by 5?</text></g>
+      <g class="bub" transform="rotate(-3 430 274)"><rect x="318" y="252" width="224" height="44" rx="14"/><text x="430" y="279">Which version is right?</text></g>
+      <g class="bub" transform="rotate(3 100 340)"><rect x="14" y="318" width="172" height="44" rx="14"/><text x="100" y="345">Did anyone reply?</text></g>
+      <g class="bub hot" transform="rotate(-4 460 336)"><rect x="372" y="314" width="176" height="44" rx="14"/><text x="460" y="341">Call the supplier!</text></g>
+    </svg>
+    <div class="hd"><h2>Sound <span class="r">familiar?</span></h2></div>
+    <p class="cap note-hand" style="top:630px;font-size:44px;line-height:48px;">And it's only Tuesday.</p>
+    <p class="folio">4</p>
+  </div></div>
+
+  <!-- 5 The hidden work -->
+  <div class="page odd" id="hidden"><div class="page-inner">
+    <svg class="art" viewBox="0 0 560 720" role="img" aria-label="An iceberg. The small tip above water is the work customers see. The huge part under water is updates, documents, questions, records and reports.">
+      <rect width="560" height="260" fill="url(#gSky)"/>
+      <rect y="250" width="560" height="470" fill="url(#gSea)"/>
+      <polygon points="186,252 226,196 252,214 288,150 330,206 362,186 402,252" fill="url(#gBerg)"/>
+      <polygon points="288,150 330,206 362,186 402,252 300,252" fill="#CFE1F4" opacity=".7"/>
+      <polygon points="118,252 442,252 500,340 476,470 392,566 280,610 176,552 84,430 66,330" fill="url(#gDeep)" opacity=".94"/>
+      <polygon points="280,610 392,566 476,470 500,340 442,252 330,252 360,420" fill="#5F8FC4" opacity=".35"/>
+      <path d="M0 250q35-10 70 0t70 0 70 0 70 0 70 0 70 0 70 0 70 0" fill="none" stroke="#FFFFFF" stroke-width="3" opacity=".85"/>
+      <g fill="#14213A" font-size="15.5" font-weight="600"><text x="412" y="172">The one your</text><text x="412" y="192">customers see</text></g>
+      <path d="M408 178c-20 2-38 12-50 26" fill="none" stroke="#14213A" stroke-width="1.8" stroke-dasharray="4 4"/>
+      <text x="280" y="290" font-size="15.5" font-weight="700" fill="#14213A" text-anchor="middle">The one that fills your day</text>
+      <g font-size="16" font-weight="600" fill="#14213A">
+        <rect x="170" y="304" width="220" height="42" rx="21" fill="#FFFFFF"/><use href="#i-truck" x="186" y="313" width="24" height="24" class="ic" color="#B30D12"/><text x="222" y="331">Updates</text>
+        <rect x="170" y="354" width="220" height="42" rx="21" fill="#FFFFFF"/><use href="#i-file" x="186" y="363" width="24" height="24" class="ic" color="#B30D12"/><text x="222" y="381">Documents</text>
+        <rect x="170" y="404" width="220" height="42" rx="21" fill="#FFFFFF"/><use href="#i-chat" x="186" y="413" width="24" height="24" class="ic" color="#B30D12"/><text x="222" y="431">Questions</text>
+        <rect x="170" y="454" width="220" height="42" rx="21" fill="#FFFFFF"/><use href="#i-search" x="186" y="463" width="24" height="24" class="ic" color="#B30D12"/><text x="222" y="481">Records</text>
+        <rect x="170" y="504" width="220" height="42" rx="21" fill="#FFFFFF"/><use href="#i-chart" x="186" y="513" width="24" height="24" class="ic" color="#B30D12"/><text x="222" y="531">Reports</text>
+      </g>
+    </svg>
+    <div class="hd"><h2 style="font-size:30px;line-height:36px;">Every company runs <span class="r">two operations.</span></h2></div>
+    <p class="cap note-hand" style="top:632px;font-size:38px;line-height:42px;color:#FFFFFF;">That second one is where AI gets interesting.</p>
+    <p class="folio folio--light">5</p>
+  </div></div>
+
+  <!-- 6 No department -->
+  <div class="page even" id="no-dept"><div class="page-inner">
+    <svg class="art" viewBox="0 0 560 720" role="img" aria-label="An organization chart. You at the top, with operations, sales and finance below. A dashed box for an AI department is crossed out. A direct line runs from you to Hala, one engineer.">
+      <rect width="560" height="720" fill="url(#gSky)"/>
+      <g fill="none" stroke="#9CC3EA" stroke-width="2.4"><path d="M268 232v42M268 274H104v28M268 274v28M268 274h164v28"/></g>
+      <circle cx="268" cy="186" r="48" fill="url(#gRed)"/><text x="268" y="195" font-size="26" font-weight="700" fill="#FFFFFF" text-anchor="middle">You</text>
+      <g fill="#FFFFFF" stroke="#9CC3EA" stroke-width="1.6"><rect x="36" y="302" width="136" height="50" rx="14"/><rect x="200" y="302" width="136" height="50" rx="14"/><rect x="364" y="302" width="136" height="50" rx="14"/></g>
+      <g font-size="16" font-weight="600" fill="#14213A" text-anchor="middle"><text x="104" y="333">Operations</text><text x="268" y="333">Sales</text><text x="432" y="333">Finance</text></g>
+      <rect x="40" y="414" width="196" height="76" rx="16" fill="none" stroke="#7B869B" stroke-width="2" stroke-dasharray="7 6"/>
+      <text x="138" y="447" font-size="16" font-weight="600" fill="#6B7487" text-anchor="middle">Your own</text><text x="138" y="469" font-size="16" font-weight="600" fill="#6B7487" text-anchor="middle">AI department</text>
+      <circle cx="232" cy="418" r="16" fill="#B30D12"/><g stroke="#FFFFFF" stroke-width="3.4" stroke-linecap="round"><line x1="225" y1="411" x2="239" y2="425"/><line x1="239" y1="411" x2="225" y2="425"/></g>
+      <path d="M316 186C470 176 544 260 528 362S474 426 448 432" fill="none" stroke="#B30D12" stroke-width="4" stroke-linecap="round" stroke-dasharray="1 10"/>
+      <circle cx="396" cy="452" r="56" fill="#FFFFFF" stroke="#B30D12" stroke-width="3.5"/>
+      <clipPath id="c-hala-6"><circle cx="396" cy="452" r="52"/></clipPath>
+      <image href="assets/hala.jpg" x="344" y="400" width="104" height="104" clip-path="url(#c-hala-6)"/>
+      <text x="396" y="536" font-size="17" font-weight="700" fill="#B30D12" text-anchor="middle">One engineer</text>
+      <text x="414" y="156" style="font-family:Caveat,cursive" font-size="28" font-weight="700" fill="#B30D12" text-anchor="middle">a direct line</text>
+    </svg>
+    <div class="hd"><h2>No AI department? <span class="r">You don't need one.</span></h2></div>
+    <div class="cap" style="top:568px;">
+      <p style="font-size:22px;line-height:29px;font-weight:700;color:var(--ink);">No hiring. No new department.</p>
+      <p class="sub">You talk to the engineer who builds it.</p>
+    </div>
+    <p class="folio">6</p>
+  </div></div>
+
+  <!-- 7 Imagine -->
+  <div class="page odd" id="imagine"><div class="page-inner" style="background:var(--ink);">
+    <svg class="art" viewBox="0 0 560 720" role="img" aria-label="A tangled red line goes into a glowing AI sphere and comes out as five neat straight blue lines, each ending in a check mark.">
+      <circle cx="280" cy="330" r="290" fill="url(#gGlow)"/>
+      <path d="M0 300C40 210 110 250 84 320S10 400 60 410 150 340 130 290 40 240 76 214 170 230 160 300 90 430 150 420 186 350 170 300 120 244 150 240 220 300 186 330" fill="none" stroke="#FF5A5F" stroke-width="3.2" stroke-linecap="round"/>
+      <path d="M10 370C60 330 100 400 130 370S70 280 110 266 200 280 196 320" fill="none" stroke="#B30D12" stroke-width="2.6" stroke-linecap="round"/>
+      <g stroke="#9CC3EA" stroke-width="3.4" stroke-linecap="round"><line x1="396" y1="246" x2="498" y2="246"/><line x1="412" y1="288" x2="498" y2="288"/><line x1="418" y1="330" x2="498" y2="330"/><line x1="412" y1="372" x2="498" y2="372"/><line x1="396" y1="414" x2="498" y2="414"/></g>
+      <g fill="#5B8F2E"><circle cx="518" cy="246" r="13"/><circle cx="518" cy="288" r="13"/><circle cx="518" cy="330" r="13"/><circle cx="518" cy="372" r="13"/><circle cx="518" cy="414" r="13"/></g>
+      <g fill="none" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M511 246l5 5 9-10M511 288l5 5 9-10M511 330l5 5 9-10M511 372l5 5 9-10M511 414l5 5 9-10"/></g>
+      <image href="assets/sphere-glow.png" x="118" y="170" width="324" height="324"/>
+      <text x="82" y="194" style="font-family:Caveat,cursive" font-size="33" font-weight="700" fill="#FF8A8F" text-anchor="middle">Today</text>
+      <text x="474" y="210" style="font-family:Caveat,cursive" font-size="33" font-weight="700" fill="#9CC3EA" text-anchor="middle">Tomorrow?</text>
+    </svg>
+    <div class="hd"><h2 style="font-size:44px;line-height:50px;color:#FFFFFF;">Now imagine.</h2></div>
+    <div class="cap" style="top:510px;">
+      <p style="font-size:27px;line-height:36px;font-weight:700;color:#FFFFFF;">The same company. The same people.<br><span style="color:#FF8A8F;">Less chasing.</span></p>
+      <p style="padding-top:8px;font-size:16.5px;line-height:24px;color:#C9D6E6;">Less searching, less retyping, and more time for the work only you can do.</p>
+    </div>
+    <p class="folio folio--light">7</p>
+  </div></div>
+
+  <!-- 8 In charge -->
+  <div class="page even" id="charge"><div class="page-inner sky">
+    <div class="hd"><h2>You stay <span class="r">in charge.</span></h2></div>
+    <img class="sphere-big" src="assets/sphere-soft.png" width="520" height="520" alt="A hand holding a glowing AI sphere.">
+    <div class="orb" style="left:34px;top:150px;"><svg class="ic"><use href="#i-search"/></svg>AI finds</div>
+    <div class="orb" style="right:34px;top:150px;"><svg class="ic"><use href="#i-edit"/></svg>AI drafts</div>
+    <div class="orb" style="left:20px;top:300px;"><svg class="ic"><use href="#i-sort"/></svg>AI sorts</div>
+    <div class="orb" style="right:20px;top:300px;"><svg class="ic"><use href="#i-chart"/></svg>AI adds up</div>
+    <div class="keep">
+      <div><svg class="ic"><use href="#i-compass"/></svg>You decide</div>
+      <div><svg class="ic"><use href="#i-check-c"/></svg>You approve</div>
+      <div><svg class="ic"><use href="#i-flag"/></svg>You lead</div>
+    </div>
+    <p class="cap sub" style="top:596px;font-size:16.5px;">AI can make mistakes, so a person checks what matters. That's how I design it.</p>
+    <p class="folio">8</p>
+  </div></div>
+
+  <!-- 9 What we could build -->
+  <div class="page odd" id="build"><div class="page-inner sky">
+    <div class="hd"><h2>What could <span class="r">we build?</span></h2></div>
+    <div class="grid-8">
+      <div class="t8"><span class="mark"><svg class="ic"><use href="#i-layout"/></svg></span>Internal management system</div>
+      <div class="t8"><span class="mark"><svg class="ic"><use href="#i-file"/></svg></span>Smart document handling</div>
+      <div class="t8"><span class="mark"><svg class="ic"><use href="#i-truck"/></svg></span>Shipment and order updates</div>
+      <div class="t8"><span class="mark"><svg class="ic"><use href="#i-tasks"/></svg></span>Team task coordination</div>
+      <div class="t8"><span class="mark"><svg class="ic"><use href="#i-chat"/></svg></span>Customer and supplier replies</div>
+      <div class="t8"><span class="mark"><svg class="ic"><use href="#i-chart"/></svg></span>Reports and analysis</div>
+      <div class="t8"><span class="mark"><svg class="ic"><use href="#i-cpu"/></svg></span>Your own AI assistant</div>
+      <div class="t8"><span class="mark"><svg class="ic"><use href="#i-link"/></svg></span>Connected systems</div>
+    </div>
+    <p class="cap note-hand" style="top:640px;font-size:34px;line-height:38px;">Pick what fits you. Skip the rest.</p>
+    <p class="folio">9</p>
+  </div></div>
+
+  <!-- 10 Industries -->
+  <div class="page even" id="industries"><div class="page-inner sky">
+    <div class="hd"><h2>Different industries. <span class="r">Same hidden work.</span></h2></div>
+    <div class="grid-4">
+      <div class="t4 c-red"><svg class="ic"><use href="#i-truck"/></svg><b>Logistics and supply chain</b><span>Shipments, customs, inquiries</span></div>
+      <div class="t4 c-blue"><svg class="ic"><use href="#i-factory"/></svg><b>Manufacturing and industrial</b><span>Production, suppliers, documents</span></div>
+      <div class="t4 c-green"><svg class="ic"><use href="#i-globe"/></svg><b>Trading, import and export</b><span>Orders, paperwork, messages</span></div>
+      <div class="t4 c-ink"><svg class="ic"><use href="#i-building"/></svg><b>Construction and real estate</b><span>Projects, site reports, contractors</span></div>
+    </div>
+    <p class="folio">10</p>
+  </div></div>
+
+  <!-- 11 Example -->
+  <div class="page odd" id="example"><div class="page-inner sky">
+    <div class="hd"><h2>One question. <span class="r">Four moves.</span></h2><p class="tag">An example for illustration, not a client case</p></div>
+    <div class="strip">
+      <div class="panel"><span class="num">1</span><svg class="ic big" style="width:64px;height:64px;"><use href="#i-user"/></svg><p class="say">Where's my shipment?</p>A customer asks</div>
+      <div class="panel"><span class="num">2</span><svg class="ic big"><use href="#i-search"/></svg>AI finds the record</div>
+      <div class="panel"><span class="num">3</span><svg class="ic big"><use href="#i-edit"/></svg>AI drafts the reply</div>
+      <div class="panel panel--done"><span class="num">4</span><svg class="ic big"><use href="#i-check-c"/></svg>Your employee checks it and sends it</div>
+    </div>
+    <p class="folio">11</p>
+  </div></div>
+
+  <!-- 12 The path -->
+  <div class="page even" id="path"><div class="page-inner">
+    <svg class="art" viewBox="0 0 560 720" role="img" aria-label="A winding road with five stops: let's talk for twenty minutes, I learn how you work, we pick one thing, a small pilot, and grow if it works, ending at a flag.">
+      <rect width="560" height="720" fill="url(#gSky)"/>
+      <path d="M0 330C120 260 260 300 360 262S520 200 560 226V720H0Z" fill="url(#gHillA)"/>
+      <path d="M0 560C150 480 330 560 560 470V720H0Z" fill="url(#gHillB)"/>
+      <path id="road" d="M46 700C170 668 410 650 428 566S120 498 112 420 410 372 436 300 330 214 396 158" fill="none" stroke="#3A4A66" stroke-width="30" stroke-linecap="round"/>
+      <path d="M46 700C170 668 410 650 428 566S120 498 112 420 410 372 436 300 330 214 396 158" fill="none" stroke="#FFFFFF" stroke-width="2.6" stroke-dasharray="10 11"/>
+      <g fill="#FFFFFF" stroke-width="4">
+        <circle cx="62" cy="696" r="19" fill="#2F6FA8" stroke="#FFFFFF"/>
+        <circle cx="428" cy="566" r="19" fill="#2F6FA8" stroke="#FFFFFF"/>
+        <circle cx="112" cy="420" r="19" fill="#2F6FA8" stroke="#FFFFFF"/>
+        <circle cx="436" cy="300" r="19" fill="#2F6FA8" stroke="#FFFFFF"/>
+        <circle cx="396" cy="158" r="21" fill="#5B8F2E" stroke="#FFFFFF"/>
+      </g>
+      <g font-size="17" font-weight="700" fill="#FFFFFF" text-anchor="middle"><text x="62" y="702">1</text><text x="428" y="572">2</text><text x="112" y="426">3</text><text x="436" y="306">4</text></g>
+      <use href="#i-flag" x="384" y="146" width="24" height="24" class="ic" color="#FFFFFF"/>
+      <g class="stop"><rect x="100" y="634" width="290" height="56" rx="14"/><text class="a" x="116" y="658">Let's talk</text><text class="b" x="116" y="679">Twenty minutes, no commitment</text></g>
+      <g class="stop"><rect x="142" y="534" width="256" height="56" rx="14"/><text class="a" x="158" y="558">I learn how you work</text><text class="b" x="158" y="579">Your processes and priorities</text></g>
+      <g class="stop"><rect x="146" y="392" width="226" height="56" rx="14"/><text class="a" x="162" y="416">We pick one thing</text><text class="b" x="162" y="437">The most valuable start</text></g>
+      <g class="stop"><rect x="166" y="272" width="240" height="56" rx="14"/><text class="a" x="182" y="296">A small pilot</text><text class="b" x="182" y="317">Built around that one need</text></g>
+      <g class="stop"><rect x="136" y="130" width="228" height="56" rx="14"/><text class="a" x="152" y="154">Grow if it works</text><text class="b" x="152" y="175">Every step is your call</text></g>
+    </svg>
+    <div class="hd" style="top:24px;"><h2>One step <span class="r">at a time.</span></h2></div>
+    <p class="folio folio--light" style="left:auto;right:26px;">12</p>
+  </div></div>
+
+  <!-- 13 The cost -->
+  <div class="page odd" id="cost"><div class="page-inner sky">
+    <div class="hd"><h2>Your budget <span class="r">sets the size.</span></h2></div>
+    <svg class="art" viewBox="0 0 560 720" role="img" aria-label="Three stacks of cost blocks, growing from a small solid first step to larger dashed stacks labelled if it proves itself and later, your call.">
+      <g>
+        <rect x="56" y="388" width="116" height="16" rx="4" fill="#B30D12"/><rect x="56" y="370" width="116" height="16" rx="4" fill="#2F6FA8"/><rect x="56" y="352" width="116" height="16" rx="4" fill="#9CC3EA"/><rect x="56" y="334" width="116" height="16" rx="4" fill="#5B8F2E"/><rect x="56" y="316" width="116" height="16" rx="4" fill="#14213A"/>
+      </g>
+      <g opacity=".42">
+        <rect x="222" y="372" width="116" height="32" rx="5" fill="#B30D12"/><rect x="222" y="338" width="116" height="32" rx="5" fill="#2F6FA8"/><rect x="222" y="304" width="116" height="32" rx="5" fill="#9CC3EA"/><rect x="222" y="270" width="116" height="32" rx="5" fill="#5B8F2E"/><rect x="222" y="236" width="116" height="32" rx="5" fill="#14213A"/>
+      </g>
+      <g opacity=".2">
+        <rect x="388" y="356" width="116" height="48" rx="6" fill="#B30D12"/><rect x="388" y="306" width="116" height="48" rx="6" fill="#2F6FA8"/><rect x="388" y="256" width="116" height="48" rx="6" fill="#9CC3EA"/><rect x="388" y="206" width="116" height="48" rx="6" fill="#5B8F2E"/><rect x="388" y="156" width="116" height="48" rx="6" fill="#14213A"/>
+      </g>
+      <rect x="216" y="230" width="128" height="180" rx="9" fill="none" stroke="#7B869B" stroke-width="1.8" stroke-dasharray="6 6"/>
+      <rect x="382" y="150" width="128" height="260" rx="10" fill="none" stroke="#7B869B" stroke-width="1.8" stroke-dasharray="6 6"/>
+      <line x1="40" y1="410" x2="520" y2="410" stroke="#14213A" stroke-width="2"/>
+      <g font-size="15.5" font-weight="700" text-anchor="middle"><text x="114" y="436" fill="#B30D12">First step</text><text x="280" y="436" fill="#41506B">If it proves itself</text><text x="446" y="436" fill="#41506B">Later, your call</text></g>
+    </svg>
+    <div class="legend">
+      <span><i style="background:#14213A"></i>Development</span>
+      <span><i style="background:#5B8F2E"></i>Integration</span>
+      <span><i style="background:#9CC3EA"></i>Infrastructure</span>
+      <span><i style="background:#2F6FA8"></i>External AI APIs</span>
+      <span><i style="background:#B30D12"></i>Maintenance</span>
+    </div>
+    <div class="cap" style="top:566px;">
+      <p style="font-size:19px;line-height:26px;font-weight:700;color:var(--ink);">You see every block priced separately.</p>
+      <p class="sub" style="font-size:16px;line-height:23px;">A full custom system is a serious investment. A first step can be far smaller, and it shows if going further makes sense.</p>
+    </div>
+    <p class="folio">13</p>
+  </div></div>
+
+  <!-- 14 Options -->
+  <div class="page even" id="options"><div class="page-inner sky">
+    <div class="hd"><h2>Three ways <span class="r">to get there.</span></h2></div>
+    <table class="vs">
+      <thead><tr><th style="width:41%;"></th><th><svg class="ic"><use href="#i-box"/></svg>Ready-made software</th><th><svg class="ic"><use href="#i-users"/></svg>Your own AI team</th><th class="me"><svg class="ic"><use href="#i-user"/></svg>Working with me</th></tr></thead>
+      <tbody>
+        <tr><td>Built around your process</td><td><span class="m m-p" aria-label="Partly"></span></td><td><span class="m m-y" aria-label="Yes">&#10003;</span></td><td class="me"><span class="m m-y" aria-label="Yes">&#10003;</span></td></tr>
+        <tr><td>Start small</td><td><span class="m m-y" aria-label="Yes">&#10003;</span></td><td><span class="m m-n" aria-label="No"></span></td><td class="me"><span class="m m-y" aria-label="Yes">&#10003;</span></td></tr>
+        <tr><td>No hiring needed</td><td><span class="m m-y" aria-label="Yes">&#10003;</span></td><td><span class="m m-n" aria-label="No"></span></td><td class="me"><span class="m m-y" aria-label="Yes">&#10003;</span></td></tr>
+        <tr><td>Quick to try</td><td><span class="m m-y" aria-label="Yes">&#10003;</span></td><td><span class="m m-n" aria-label="No"></span></td><td class="me"><span class="m m-p" aria-label="Partly"></span></td></tr>
+        <tr><td>Skills inside your company</td><td><span class="m m-n" aria-label="No"></span></td><td><span class="m m-y" aria-label="Yes">&#10003;</span></td><td class="me"><span class="m m-n" aria-label="No"></span></td></tr>
+      </tbody>
+    </table>
+    <div class="vs-key"><span><i class="m m-y"></i>Yes</span><span><i class="m m-p"></i>Partly</span><span><i class="m m-n"></i>No</span></div>
+    <div class="said">
+      <img src="assets/hala.jpg" width="240" height="240" alt="">
+      <p>Honestly? If a ready-made tool fits you better, I'll tell you.</p>
+    </div>
+    <p class="folio">14</p>
+  </div></div>
+
+  <!-- 15 About -->
+  <div class="page odd" id="about"><div class="page-inner sky">
+    <div class="hd" style="top:22px;"><h2 style="font-size:40px;line-height:46px;">Hi, I'm <span class="r">Hala.</span></h2></div>
+    <img class="me-photo" src="assets/hala.jpg" width="240" height="240" alt="Hala Al-Attiyat">
+    <span class="skill" style="left:50px;top:120px;">AI assistants</span>
+    <span class="skill" style="right:50px;top:120px;">AI API</span>
+    <span class="skill" style="left:40px;top:176px;">Model training</span>
+    <span class="skill" style="right:18px;top:176px;">Evaluation and QA</span>
+    <span class="skill" style="left:30px;top:232px;">Chatbot testing</span>
+    <span class="skill" style="right:26px;top:232px;">AI data projects</span>
+    <span class="skill" style="left:172px;top:312px;">Full-stack development</span><span class="skill" style="left:50px;top:358px;">Project coordination</span>
+    <span class="skill" style="right:40px;top:358px;">Client communication</span>
+    <p class="me-say">You'll talk to me, the engineer who understands, designs and builds it.</p>
+    <div class="me-meta">
+      <b>Software Engineer | AI Solutions &amp; Business Automation</b>
+      Three years coordinating technical projects and clients for a founder-led company. Work with international AI platforms.
+      <br><a class="me-link" href="https://www.linkedin.com/in/hala-al-attiyat-062514220" target="_blank" rel="noopener">See my LinkedIn</a>
+    </div>
+    <p class="folio">15</p>
+  </div></div>
+
+  <!-- 16 Questions -->
+  <div class="page even" id="questions"><div class="page-inner sky">
+    <div class="hd" style="top:22px;"><h2>You may be <span class="r">wondering...</span></h2></div>
+    <div class="chat">
+      <p class="q">Do we need technical staff?</p>
+      <p class="a"><img src="assets/hala.jpg" width="240" height="240" alt="">No. You know your business, I handle the tech.</p>
+      <p class="q">Will it replace my people?</p>
+      <p class="a"><img src="assets/hala.jpg" width="240" height="240" alt="">That's not the aim. It's there to support them.</p>
+      <p class="q">Will it work with our systems?</p>
+      <p class="a"><img src="assets/hala.jpg" width="240" height="240" alt="">Often, but it depends. We check that first.</p>
+      <p class="q">What about our data?</p>
+      <p class="a"><img src="assets/hala.jpg" width="240" height="240" alt="">We agree where it's stored and who can see it, before anything is built.</p>
+      <p class="q">How long will it take?</p>
+      <p class="a"><img src="assets/hala.jpg" width="240" height="240" alt="">It depends on the scope. You get an estimate once the first step is clear.</p>
+    </div>
+    <p class="folio">16</p>
+  </div></div>
+
+  <!-- 17 Coffee -->
+  <div class="page odd" id="coffee"><div class="page-inner sky">
+    <div class="hd"><h2>One coffee. <span class="r">Twenty minutes.</span></h2></div>
+    <svg class="art" viewBox="0 0 560 720" role="img" aria-label="A clock with a twenty minute slice marked in red, next to a steaming cup of coffee.">
+      <circle cx="312" cy="276" r="150" fill="#FFFFFF" stroke="#9CC3EA" stroke-width="5"/>
+      <path d="M312 276V134A142 142 0 0 1 435 347Z" fill="url(#gRed)"/>
+      <g stroke="#14213A" stroke-width="3" stroke-linecap="round"><line x1="312" y1="134" x2="312" y2="148"/><line x1="454" y1="276" x2="440" y2="276"/><line x1="312" y1="418" x2="312" y2="404"/><line x1="170" y1="276" x2="184" y2="276"/></g>
+      <text x="366" y="244" font-size="30" font-weight="700" fill="#FFFFFF" text-anchor="middle">20</text><text x="366" y="268" font-size="16" font-weight="600" fill="#FFFFFF" text-anchor="middle">minutes</text>
+      <circle cx="312" cy="276" r="7" fill="#14213A"/>
+      <g fill="none" stroke="#7B869B" stroke-width="4" stroke-linecap="round"><path d="M94 236c-14-18 14-28 0-48"/><path d="M130 236c-14-18 14-28 0-48"/><path d="M166 236c-14-18 14-28 0-48"/></g>
+      <path d="M58 256h148v104a46 46 0 0 1-46 46h-56a46 46 0 0 1-46-46z" fill="#2F6FA8"/>
+      <path d="M206 276h16a36 36 0 0 1 0 72h-16" fill="none" stroke="#2F6FA8" stroke-width="14"/>
+      <ellipse cx="132" cy="256" rx="74" ry="12" fill="#5A3A22"/>
+      <rect x="34" y="406" width="196" height="12" rx="6" fill="#14213A" opacity=".22"/>
+    </svg>
+    <div class="pills"><div>You talk.</div><div>I listen.</div><div>You leave with a clearer picture.</div></div>
+    <div class="no"><span><svg class="ic"><use href="#i-check-c"/></svg>No proposal</span><span><svg class="ic"><use href="#i-check-c"/></svg>No commitment</span></div>
+    <p class="bring">Bring the process that frustrates you most.</p>
+    <p class="folio">17</p>
+  </div></div>
+
+  <!-- 18 Back cover -->
+  <div class="page" data-density="hard" id="talk"><div class="page-inner back-cover">
+    <img class="back-sphere" src="assets/sphere-glow.png" width="520" height="520" alt="">
+    <h2 class="back-title">Let's talk.</h2>
+    <p class="back-sub">Pick the date and time that suit you, and I will contact you then.</p>
+    <div class="back-cta"><a class="btn" href="https://docs.google.com/forms/d/e/1FAIpQLSdnGKtMxjaMX1tibcLXi0RftbkU9DtjVryOefKJ4eJ_eYQB5Q/viewform" target="_blank" rel="noopener">Book your 20 minutes</a></div>
+    <div class="contact">
+      <a href="mailto:44hala2003@gmail.com"><svg class="ic"><use href="#i-mail"/></svg>44hala2003@gmail.com</a>
+      <a href="https://www.linkedin.com/in/hala-al-attiyat-062514220/" target="_blank" rel="noopener"><svg class="ic"><use href="#i-linkedin"/></svg>linkedin.com/in/hala-al-attiyat</a>
+      <!-- WhatsApp: to add it, remove these comment marks and put your number with its country code, digits only.
+      <a href="https://wa.me/YOURNUMBER" target="_blank" rel="noopener">WhatsApp</a>
+      -->
+    </div>
+    <div class="sig">
+      <img src="assets/hala.jpg" width="240" height="240" alt="">
+      <div><b>Hala Al-Attiyat</b>Software Engineer | AI Solutions &amp; Business Automation</div>
+    </div>
+  </div></div>
+
+</div>
+</div>
+</div>
+
+<button type="button" class="arrow" id="arrow-prev" aria-label="Previous page"><svg class="ic"><use href="#i-prev"/></svg></button>
+<button type="button" class="arrow" id="arrow-next" aria-label="Next page"><svg class="ic"><use href="#i-next"/></svg></button>
+
+<nav class="bar" aria-label="Book controls">
+  <button type="button" id="prev" aria-label="Previous page"><svg class="ic"><use href="#i-prev"/></svg></button>
+  <input type="range" id="slider" min="1" max="18" value="1" aria-label="Go to page">
+  <span class="label" id="label" aria-live="polite"></span>
+  <button type="button" class="go" id="next" aria-label="Next page"><svg class="ic"><use href="#i-next"/></svg></button>
+  <span class="sep"></span>
+  <button type="button" id="open-contents" aria-label="Contents" title="Contents"><svg class="ic"><use href="#i-list"/></svg></button>
+  <button type="button" id="open-thumbs" aria-label="All pages" title="All pages"><svg class="ic"><use href="#i-grid"/></svg></button>
+  <button type="button" id="share" aria-label="Share this guide" title="Share"><svg class="ic"><use href="#i-share"/></svg></button>
+  <button type="button" id="full" aria-label="Full screen" title="Full screen"><svg class="ic"><use href="#i-full"/></svg></button>
+</nav>
+
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-label="All pages">
+  <div class="sheet-head"><span>All pages</span><button type="button" id="close-sheet" aria-label="Close"><svg class="ic"><use href="#i-x"/></svg></button></div>
+  <div class="thumbs" id="thumbs"></div>
+</div>
+<div class="toast" id="toast" role="status"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/page-flip@2.0.7/dist/js/page-flip.browser.js" integrity="sha384-L4eWrYFdqQ+LoGA0MMuqLqzV13x7SKkQaqacy4MED8e815dS37tTKlO/6xBEUpZW" crossorigin="anonymous"></script>
+<script>
+(function () {
+  // If the page-turn library could not load, the pages stay readable in one column.
+  if (!window.St || !St.PageFlip) return;
+
+  var PAGE_W = 560, PAGE_H = 720;
+  var root = document.documentElement;
+  var stage = document.querySelector('.stage');
+  var wrap = document.getElementById('wrap');
+  var book = document.getElementById('book');
+  var pagesHtml = book.innerHTML;
+  var ids = Array.prototype.map.call(book.querySelectorAll('.page'), function (p) { return p.id; });
+  var total = ids.length;
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var flip = null;
+  var landscape = null;
+  var current = Math.max(0, ids.indexOf(location.hash.replace('#', '')));
+
+  var label = document.getElementById('label');
+  var slider = document.getElementById('slider');
+  var controls = {
+    prev: [document.getElementById('prev'), document.getElementById('arrow-prev')],
+    next: [document.getElementById('next'), document.getElementById('arrow-next')]
+  };
+
+  root.classList.add('flip');
+
+  function bookWidth(isLandscape) {
+    var pad = isLandscape ? 14 : 5;
+    var availW = stage.clientWidth - pad * 2 - (isLandscape ? 136 : 0);
+    var availH = stage.clientHeight - pad * 2 - 8;
+    var ratio = PAGE_W / PAGE_H;
+    return Math.floor(isLandscape ? Math.min(availW, availH * ratio * 2) : Math.min(availW, availH * ratio));
+  }
+
+  function applyScale() {
+    root.style.setProperty('--s', (flip.getBoundsRect().pageWidth / PAGE_W).toFixed(5));
+  }
+
+  // Returns the spread position for a page index: closed cover, open book, or closed back cover.
+  function setPosition(index) {
+    wrap.dataset.pos = index <= 0 ? 'closed' : index >= total - 1 ? 'end' : 'open';
+    wrap.style.setProperty('--done', (index / (total - 1)).toFixed(3));
+  }
+
+  function refresh() {
+    var index = current;
+    if (landscape) {
+      if (index === 0) label.textContent = 'Cover';
+      else if (index >= total - 1) label.textContent = 'Back cover';
+      else {
+        var left = index % 2 === 1 ? index : index - 1;
+        label.textContent = 'Pages ' + (left + 1) + '-' + (left + 2) + ' of ' + total;
+      }
+    } else {
+      label.textContent = (index + 1) + ' of ' + total;
+    }
+    slider.value = index + 1;
+    controls.prev.forEach(function (b) { b.disabled = index <= 0; });
+    controls.next.forEach(function (b) { b.disabled = index >= total - 1; });
+    setPosition(index);
+    try {
+      history.replaceState(null, '', index === 0 ? location.pathname + location.search : '#' + ids[index]);
+    } catch (e) { /* some embedded viewers refuse this; the book still works */ }
+  }
+
+  function build() {
+    landscape = stage.clientWidth >= stage.clientHeight * 1.12;
+    root.classList.toggle('landscape', landscape);
+    root.classList.toggle('portrait', !landscape);
+    if (flip) {
+      flip.destroy();
+      book = document.createElement('div');
+      book.id = 'book';
+      wrap.appendChild(book);
+      book.innerHTML = pagesHtml;
+    }
+    var width = bookWidth(landscape);
+    wrap.style.width = width + 'px';
+    flip = new St.PageFlip(book, {
+      width: PAGE_W,
+      height: PAGE_H,
+      size: 'stretch',
+      minWidth: landscape ? 100 : width,
+      maxWidth: 4000,
+      minHeight: 100,
+      maxHeight: 4000,
+      autoSize: true,
+      showCover: true,
+      usePortrait: !landscape,
+      maxShadowOpacity: 0.5,
+      flippingTime: reduceMotion ? 200 : 850,
+      swipeDistance: 24,
+      clickEventForward: true,
+      showPageCorners: true,
+      mobileScrollSupport: true,
+      startPage: current
+    });
+    flip.loadFromHTML(book.querySelectorAll('.page'));
+    flip.on('flip', function (event) {
+      current = event.data;
+      refresh();
+    });
+    applyScale();
+    refresh();
+  }
+
+  function goTo(index) {
+    index = Math.max(0, Math.min(total - 1, index));
+    if (index === current) return;
+    setPosition(index);
+    flip.flip(index);
+  }
+  function step(direction) {
+    if (direction > 0) {
+      if (current === 0) setPosition(1);
+      flip.flipNext();
+    } else {
+      if (current >= total - 1) setPosition(total - 2);
+      flip.flipPrev();
+    }
+  }
+
+  controls.prev.forEach(function (b) { b.addEventListener('click', function () { step(-1); }); });
+  controls.next.forEach(function (b) { b.addEventListener('click', function () { step(1); }); });
+  slider.addEventListener('change', function () { goTo(Number(slider.value) - 1); });
+  document.getElementById('open-contents').addEventListener('click', function () { goTo(ids.indexOf('contents')); });
+
+  document.addEventListener('click', function (event) {
+    var link = event.target.closest && event.target.closest('a[href^="#"]');
+    if (!link) return;
+    var index = ids.indexOf(link.getAttribute('href').slice(1));
+    if (index >= 0) {
+      event.preventDefault();
+      goTo(index);
+    }
+  });
+
+  document.addEventListener('keydown', function (event) {
+    if (event.altKey || event.ctrlKey || event.metaKey) return;
+    if (sheet.hasAttribute('open-sheet')) {
+      if (event.key === 'Escape') closeSheet();
+      return;
+    }
+    if (event.key === 'ArrowRight' || event.key === 'PageDown') { event.preventDefault(); step(1); }
+    if (event.key === 'ArrowLeft' || event.key === 'PageUp') { event.preventDefault(); step(-1); }
+    if (event.key === 'Home') { event.preventDefault(); goTo(0); }
+    if (event.key === 'End') { event.preventDefault(); goTo(total - 1); }
+  });
+
+  // The library ignores touches that start on a link, so a swipe that starts on one is handled here.
+  var linkSwipe = null;
+  document.addEventListener('touchstart', function (event) {
+    var touch = event.changedTouches[0];
+    linkSwipe = event.target.closest && event.target.closest('.page a') ? { x: touch.clientX, y: touch.clientY, at: Date.now() } : null;
+  }, { passive: true });
+  document.addEventListener('touchend', function (event) {
+    if (!linkSwipe) return;
+    var touch = event.changedTouches[0];
+    var dx = touch.clientX - linkSwipe.x;
+    var dy = touch.clientY - linkSwipe.y;
+    var quick = Date.now() - linkSwipe.at < 700;
+    linkSwipe = null;
+    if (quick && Math.abs(dx) > 40 && Math.abs(dy) < 60) step(dx < 0 ? 1 : -1);
+  }, { passive: true });
+
+  // All pages
+  var sheet = document.getElementById('sheet');
+  var thumbs = document.getElementById('thumbs');
+  var thumbsBuilt = false;
+  function openSheet() {
+    if (!thumbsBuilt) {
+      var holder = document.createElement('div');
+      holder.innerHTML = pagesHtml;
+      Array.prototype.forEach.call(holder.querySelectorAll('.page'), function (page, i) {
+        var button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'thumb';
+        button.setAttribute('aria-label', 'Go to page ' + (i + 1));
+        var box = document.createElement('div');
+        box.className = 'thumb-page';
+        var inner = page.querySelector('.page-inner');
+        inner.setAttribute('inert', '');
+        inner.querySelectorAll('[id]').forEach(function (el) { el.removeAttribute('id'); });
+        box.appendChild(inner);
+        button.appendChild(box);
+        button.appendChild(document.createTextNode(String(i + 1)));
+        button.addEventListener('click', function () {
+          closeSheet();
+          goTo(i);
+        });
+        thumbs.appendChild(button);
+      });
+      thumbsBuilt = true;
+    }
+    sheet.setAttribute('open-sheet', '');
+    document.getElementById('close-sheet').focus();
+  }
+  function closeSheet() {
+    sheet.removeAttribute('open-sheet');
+    document.getElementById('open-thumbs').focus();
+  }
+  document.getElementById('open-thumbs').addEventListener('click', openSheet);
+  document.getElementById('close-sheet').addEventListener('click', closeSheet);
+
+  // Share and full screen
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  function showToast(text) {
+    toast.textContent = text;
+    toast.setAttribute('show-toast', '');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { toast.removeAttribute('show-toast'); }, 3200);
+  }
+  document.getElementById('share').addEventListener('click', function () {
+    var url = location.href.split('#')[0];
+    function copy() {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(function () {
+          showToast('Link copied');
+        }, function () {
+          showToast(url);
+        });
+      } else {
+        showToast(url);
+      }
+    }
+    if (navigator.share) {
+      navigator.share({ title: document.title, url: url }).catch(function (error) {
+        if (error && error.name !== 'AbortError') copy();
+      });
+    } else {
+      copy();
+    }
+  });
+
+  var fullButton = document.getElementById('full');
+  if (!document.fullscreenEnabled) fullButton.style.display = 'none';
+  fullButton.addEventListener('click', function () {
+    var action = document.fullscreenElement ? document.exitFullscreen() : root.requestFullscreen();
+    if (action && action.catch) action.catch(function () { showToast('Full screen is not available here'); });
+  });
+
+  function resize() {
+    var nowLandscape = stage.clientWidth >= stage.clientHeight * 1.12;
+    if (nowLandscape !== landscape) {
+      build();
+    } else {
+      wrap.style.width = bookWidth(landscape) + 'px';
+      flip.update();
+      applyScale();
+    }
+  }
+  var resizeTimer = null;
+  window.addEventListener('resize', function () {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(resize, 120);
+  });
+  window.addEventListener('hashchange', function () {
+    var index = ids.indexOf(location.hash.replace('#', ''));
+    if (index >= 0) goTo(index);
+  });
+
+  build();
+})();
+</script>
+</body>
+</html>

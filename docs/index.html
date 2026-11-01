@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>حلول الذكاء الاصطناعي لأعمالكم | AI Solutions for Your Business</title>
+<meta name="description" content="كتيّب مصوّر عن حلول الذكاء الاصطناعي للمنشآت، بالعربية والإنجليزية. A short illustrated guide to practical AI for established companies, in Arabic and English.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="حلول الذكاء الاصطناعي لأعمالكم | AI Solutions for Your Business">
+<meta property="og:description" content="كتيّب مصوّر بالعربية والإنجليزية من حلا العطيات. An illustrated guide in Arabic and English by Hala Al-Attiyat.">
+<meta property="og:image" content="https://lh3.googleusercontent.com/d/1peaxtDCRJCkkIjMf_CABtLg44yuC7mNU">
+<link rel="alternate" hreflang="ar" href="ar/index.html">
+<link rel="alternate" hreflang="en" href="en/index.html">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23B30D12'/%3E%3Ccircle cx='16' cy='16' r='7' fill='white'/%3E%3Cellipse cx='16' cy='16' rx='12' ry='4.5' fill='none' stroke='white' stroke-width='1.6' transform='rotate(-20 16 16)'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* Layout idea: one open book. Its right page is Arabic and its left page is English, and choosing a page opens that book. Same sky, red and green as email v4. */
+    --red: #B30D12;
+    --red-hi: #D0080F;
+    --red-lo: #8E0107;
+    --blue: #2F6FA8;
+    --sky: #9CC3EA;
+    --sky-1: #DCE8F6;
+    --sky-2: #F4F8FD;
+    --ink: #14213A;
+    --muted: #41506B;
+    --green-1: #1F3322;
+    --green-2: #5B6A49;
+    --on-green: #DDE8D8;
+    --latin: Poppins, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    --naskh: 'Noto Naskh Arabic', 'Traditional Arabic', 'Geeza Pro', serif;
+    color-scheme: light only;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body { display: flex; flex-direction: column; min-height: 100vh; min-height: 100svh; background: radial-gradient(ellipse at 50% 30%, var(--sky-2) 0%, var(--sky-1) 58%, #BFD3E9 100%) fixed; color: var(--ink); font: 400 16px/26px var(--latin); }
+  [lang="ar"] { font-family: var(--naskh); }
+  h1, h2, p { margin: 0; }
+  img { display: block; max-width: 100%; }
+  a:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+  main { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 16px 20px 28px; }
+  .sphere { position: relative; z-index: 2; width: 196px; height: 196px; margin-bottom: -24px; pointer-events: none; }
+
+  /* direction: rtl puts the first page, Arabic, on the right. Each page then sets its own direction. */
+  .book { display: grid; grid-template-columns: 1fr 1fr; direction: rtl; width: 100%; max-width: 980px; border-radius: 20px; box-shadow: 4px 0 0 #FFFFFF, 5px 0 0 #C3D4E7, -4px 0 0 #FFFFFF, -5px 0 0 #C3D4E7, 0 22px 46px rgba(20, 33, 58, .22); }
+  .leaf { position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: 14px; padding: 42px 36px 34px; background: #FFFFFF; transition: background-color .2s ease; }
+  .leaf::before { content: ""; position: absolute; top: 0; bottom: 0; width: 44px; pointer-events: none; }
+  .leaf-ar { border-radius: 0 20px 20px 0; }
+  .leaf-ar::before { left: 0; background: linear-gradient(90deg, rgba(20, 33, 58, .13), rgba(20, 33, 58, 0)); }
+  .leaf-en { border-radius: 20px 0 0 20px; }
+  .leaf-en::before { right: 0; background: linear-gradient(270deg, rgba(20, 33, 58, .13), rgba(20, 33, 58, 0)); }
+  .leaf:hover { background: var(--sky-2); }
+
+  .pill { padding: 3px 14px; border: 1px solid var(--sky); border-radius: 16px; background: #FFFFFF; color: var(--blue); font-weight: 600; font-size: 13px; line-height: 20px; }
+  .leaf-ar .pill { font-size: 16px; line-height: 24px; }
+  h2 { font-weight: 700; color: var(--ink); text-wrap: balance; }
+  .leaf-ar h2 { font-size: 31px; line-height: 40px; }
+  .leaf-en h2 { font-size: 27px; line-height: 40px; letter-spacing: -0.5px; }
+  .line { flex: 1; color: var(--muted); text-wrap: pretty; }
+  .leaf-ar .line { font-size: 20px; line-height: 34px; }
+  .leaf-en .line { font-size: 16px; line-height: 27px; }
+
+  /* The button's ::after covers the whole page, so tapping anywhere on a page opens that language. */
+  .btn { display: inline-flex; align-items: center; gap: 10px; margin-top: 6px; padding: 12px 24px; border-radius: 12px; background: linear-gradient(135deg, var(--red-hi) 0%, var(--red-lo) 100%); color: #FFFFFF; font-weight: 700; text-decoration: none; box-shadow: 0 8px 18px rgba(142, 1, 7, .28); }
+  .btn::after { content: ""; position: absolute; inset: 0; }
+  .leaf-ar .btn { font-size: 21px; line-height: 30px; }
+  .leaf-en .btn { font-size: 16.5px; line-height: 28px; }
+  .btn svg { flex: none; width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+
+  footer { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 6px 22px; padding: 12px 20px; background: linear-gradient(135deg, var(--green-1) 0%, var(--green-2) 100%); color: var(--on-green); font-size: 14px; line-height: 22px; }
+  footer b { color: #FFFFFF; font-weight: 600; }
+  footer [lang="ar"] { font-size: 16.5px; }
+  footer a { color: #FFFFFF; }
+
+  @media (max-width: 720px) {
+    main { justify-content: flex-start; padding: 4px 16px 16px; }
+    .sphere { width: 100px; height: 100px; margin-bottom: -8px; }
+    .book { grid-template-columns: 1fr; gap: 12px; direction: ltr; border-radius: 0; box-shadow: none; }
+    .leaf, .leaf-ar, .leaf-en { gap: 8px; padding: 16px 20px 18px; border-radius: 18px; box-shadow: 0 10px 24px rgba(20, 33, 58, .16); }
+    .leaf::before, .pill { display: none; }
+    .leaf-ar h2 { font-size: 26px; line-height: 36px; }
+    .leaf-en h2 { font-size: 22px; line-height: 30px; }
+    .leaf-ar .line { font-size: 18.5px; line-height: 29px; }
+    .leaf-en .line { font-size: 15px; line-height: 24px; }
+    .btn { margin-top: 4px; padding: 9px 20px; }
+    .leaf-ar .btn { font-size: 19.5px; }
+    .leaf-en .btn { font-size: 15.5px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .leaf { transition: none; }
+  }
+</style>
+</head>
+<body>
+
+<main>
+  <h1 class="sr">حلول الذكاء الاصطناعي لأعمالكم | AI Solutions for Your Business</h1>
+  <img class="sphere" src="ar/assets/sphere-soft.png" width="420" height="420" alt="">
+
+  <div class="book">
+    <section class="leaf leaf-ar" lang="ar" dir="rtl">
+      <p class="pill">كتيّب مصوّر</p>
+      <h2>حلول الذكاء الاصطناعي لأعمالكم</h2>
+      <p class="line">كيف يمكن للذكاء الاصطناعي أن يساند فريقكم في الأعمال اليومية، بما يناسب احتياج منشأتكم وميزانيتها، دون الحاجة إلى قسم تقني.</p>
+      <a class="btn" href="ar/index.html" hreflang="ar">المتابعة بالعربية<svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg></a>
+    </section>
+
+    <section class="leaf leaf-en" lang="en" dir="ltr">
+      <p class="pill">An illustrated guide</p>
+      <h2>AI Solutions for Your Business</h2>
+      <p class="line">How AI could support your team's daily work, shaped around your company's needs and budget, with no technical department required.</p>
+      <a class="btn" href="en/index.html" hreflang="en">Continue in English<svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg></a>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <span><b>Hala Al-Attiyat</b> | <b lang="ar" dir="rtl">حلا العطيات</b></span>
+  <a href="mailto:44hala2003@gmail.com">44hala2003@gmail.com</a>
+  <a href="https://www.linkedin.com/in/hala-al-attiyat-062514220" target="_blank" rel="noopener">LinkedIn</a>
+</footer>
+
+</body>
+</html>

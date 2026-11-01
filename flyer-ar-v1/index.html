@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>حلول الذكاء الاصطناعي لأعمالكم</title>
+<meta name="description" content="بنيتم منشأتكم بجهدكم، فدعوا التقنية تحمل عنكم الأعمال المتكررة. كتيّب تعريفي مصوّر من حلا العطيات.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ar_AR">
+<meta property="og:title" content="حلول الذكاء الاصطناعي لأعمالكم">
+<meta property="og:description" content="بنيتم منشأتكم بجهدكم، فدعوا التقنية تحمل عنكم الأعمال المتكررة. كتيّب تعريفي مصوّر من حلا العطيات.">
+<meta property="og:image" content="https://lh3.googleusercontent.com/d/1peaxtDCRJCkkIjMf_CABtLg44yuC7mNU">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23B30D12'/%3E%3Ccircle cx='16' cy='16' r='7' fill='white'/%3E%3Cellipse cx='16' cy='16' rx='12' ry='4.5' fill='none' stroke='white' stroke-width='1.6' transform='rotate(-20 16 16)'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@700&family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* Layout idea: an Arabic company booklet for the Saudi and Gulf market that opens from the right. One drawing and one short formal line per page, in the sky, red and green of email v4, with Ruqaa only for the one-line title of each page and Naskh for everything else. */
+    --red: #B30D12;
+    --red-hi: #D0080F;
+    --red-lo: #8E0107;
+    --blue: #2F6FA8;
+    --sky: #9CC3EA;
+    --sky-1: #DCE8F6;
+    --sky-2: #F4F8FD;
+    --ink: #14213A;
+    --muted: #41506B;
+    --green: #5B8F2E;
+    --green-1: #1F3322;
+    --green-2: #5B6A49;
+    --on-green: #DDE8D8;
+    --naskh: 'Noto Naskh Arabic', 'Traditional Arabic', 'Geeza Pro', serif;
+    --ruqaa: 'Aref Ruqaa', 'Noto Naskh Arabic', 'Traditional Arabic', serif;
+    --bar: 64px;
+    --s: 1;
+    color-scheme: light only;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body { background: radial-gradient(ellipse at 50% 30%, var(--sky-2) 0%, var(--sky-1) 58%, #BFD3E9 100%) fixed; color: var(--ink); font: 400 18px/28px var(--naskh); }
+  button, input { font-family: var(--naskh); }
+  h2, h3, p, ul, ol { margin: 0; padding: 0; }
+  ul, ol { list-style: none; }
+  img { display: block; max-width: 100%; }
+  a { color: var(--red); }
+  a:focus-visible, button:focus-visible, input:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
+  .ic { fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
+
+  /* Reading without JavaScript or if the page-turn library cannot load: pages in one column */
+  #book { display: grid; gap: 18px; justify-content: center; padding: 18px 0; overflow-x: auto; }
+  .page { width: 560px; height: 720px; background: #FFFFFF; overflow: hidden; direction: ltr; }
+  .flip #book { display: block; gap: 0; padding: 0; overflow: visible; }
+  .flip .page { width: auto; height: auto; }
+
+  /* A page is always designed at 560 by 720 and scaled as one picture, so nothing reflows on any screen */
+  .page-inner { position: relative; width: 560px; height: 720px; overflow: hidden; background: #FFFFFF; transform-origin: 0 0; transform: scale(var(--s)); direction: rtl; }
+  .art { position: absolute; left: 0; top: 0; width: 560px; height: 720px; }
+  .art text { font-family: var(--naskh); direction: rtl; }
+
+  .landscape .even .page-inner::after, .landscape .odd .page-inner::after { content: ""; position: absolute; top: 0; bottom: 0; width: 46px; pointer-events: none; z-index: 5; }
+  .landscape .even .page-inner::after { left: 0; background: linear-gradient(90deg, rgba(20, 33, 58, .17), rgba(20, 33, 58, 0)); }
+  .landscape .odd .page-inner::after { right: 0; background: linear-gradient(270deg, rgba(20, 33, 58, .17), rgba(20, 33, 58, 0)); }
+
+  .sky { background: linear-gradient(180deg, var(--sky-1) 0%, var(--sky-2) 42%, #FFFFFF 100%); }
+  .hd { position: absolute; left: 28px; right: 28px; top: 24px; z-index: 2; text-align: center; }
+  h2 { font-family: var(--ruqaa); font-size: 42px; line-height: 56px; font-weight: 700; color: var(--ink); white-space: nowrap; }
+  .r { color: var(--red); }
+  .sub { padding-top: 4px; font-size: 18px; line-height: 28px; color: var(--muted); text-wrap: balance; }
+  .line { font-weight: 700; color: var(--red); text-wrap: balance; }
+  .folio { position: absolute; bottom: 12px; z-index: 3; font-size: 15px; line-height: 20px; font-weight: 600; color: var(--blue); }
+  .even .folio { right: 26px; }
+  .odd .folio { left: 26px; }
+  .folio--light { color: rgba(255, 255, 255, .85); }
+  .cap { position: absolute; left: 32px; right: 32px; z-index: 2; text-align: center; text-wrap: balance; }
+  .btn { display: inline-block; padding: 11px 32px; border-radius: 12px; background: linear-gradient(135deg, var(--red-hi) 0%, var(--red-lo) 100%); color: #FFFFFF; font-size: 20px; line-height: 28px; font-weight: 700; text-decoration: none; box-shadow: 0 8px 18px rgba(142, 1, 7, .32); }
+  .page a * { pointer-events: none; }
+
+  /* Cover */
+  .cover-img { position: absolute; left: 0; top: 0; width: 560px; height: 524px; object-fit: cover; object-position: top; border-radius: 0 0 30px 30px; }
+  .banner { position: absolute; left: 30px; right: 30px; top: 18px; padding: 12px 16px 10px; border-radius: 26px; background: linear-gradient(135deg, #E0080F 0%, var(--red-lo) 100%); box-shadow: 0 12px 26px rgba(90, 0, 4, .34), inset 0 1px 0 rgba(255, 255, 255, .35); color: #FFFFFF; text-align: center; font-weight: 700; }
+  .b-line { display: flex; align-items: center; justify-content: center; gap: 12px; font-size: 42px; line-height: 58px; }
+  .b-tile { padding: 0 14px; border-radius: 14px; background: #FFFFFF; color: var(--red); font-size: 36px; line-height: 54px; }
+  .b-sub { font-size: 36px; line-height: 48px; }
+  .b-swoosh { display: block; width: 170px; height: 12px; margin: 0 auto; }
+  .cover-panel { position: absolute; left: 20px; right: 20px; top: 530px; text-align: center; }
+  .hook { font-size: 25px; line-height: 38px; font-weight: 700; color: var(--ink); text-wrap: balance; }
+  .cover-who { padding-top: 3px; font-size: 16.5px; line-height: 25px; color: var(--blue); }
+  .cover-who b { font-weight: 700; color: var(--red); }
+  .cover-panel .btn { margin-top: 9px; padding: 6px 34px; }
+
+  /* Note */
+
+  .note-body { position: absolute; left: 40px; right: 40px; top: 88px; display: flex; flex-direction: column; gap: 9px; font-size: 23px; line-height: 38px; color: var(--ink); }
+  .note-body b { font-weight: 700; }
+  .sign { position: absolute; left: 40px; right: 40px; top: 472px; display: flex; align-items: center; gap: 14px; }
+  .sign img { width: 76px; height: 76px; border-radius: 50%; border: 2px solid var(--red); }
+  .sign em { display: block; font-style: normal; font-size: 18px; line-height: 26px; color: var(--muted); }
+  .sign b { display: block; font-size: 25px; line-height: 34px; font-weight: 700; color: var(--red); }
+  .sign span { font-size: 16.5px; line-height: 24px; color: var(--blue); }
+  .band { position: absolute; left: 0; right: 0; bottom: 0; width: 560px; height: 150px; object-fit: cover; border-radius: 30px 30px 0 0; }
+
+  /* Contents */
+  .toc { position: absolute; left: 22px; right: 22px; top: 122px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .toc-g { padding: 8px 14px 4px; border: 1px solid var(--sky-1); border-radius: 16px; background: #FFFFFF; box-shadow: 0 6px 14px rgba(47, 111, 168, .1); }
+  .toc-g h3 { padding-bottom: 5px; border-bottom: 2px solid var(--red); font-size: 20px; line-height: 30px; font-weight: 700; color: var(--red); }
+  .toc a { display: flex; align-items: center; gap: 8px; min-height: 47px; border-bottom: 1px solid var(--sky-1); font-size: 18.5px; line-height: 25px; font-weight: 500; color: var(--ink); text-decoration: none; }
+  .toc li:last-child a { border-bottom: 0; }
+  .toc a:hover { color: var(--red); }
+
+  .toc .n { margin-right: auto; font-weight: 600; color: var(--blue); }
+
+  /* Bubbles in the opening scene */
+  .bub rect { fill: #FFFFFF; stroke: var(--sky); stroke-width: 1.5; }
+  .bub.hot rect { stroke: var(--red); }
+  .bub text { font-size: 18.5px; font-weight: 600; fill: var(--ink); text-anchor: middle; }
+
+  /* Chips around the sphere */
+  .sphere-big { position: absolute; left: 130px; top: 84px; width: 300px; height: 300px; }
+  .orb { position: absolute; display: flex; align-items: center; gap: 7px; padding: 7px 10px 7px 15px; border-radius: 22px; background: #FFFFFF; border: 1.5px solid var(--sky); box-shadow: 0 6px 14px rgba(47, 111, 168, .16); font-size: 18px; line-height: 26px; font-weight: 600; color: var(--blue); z-index: 2; }
+  .orb svg { width: 20px; height: 20px; }
+  .keep { position: absolute; left: 24px; right: 24px; top: 446px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .keep div { padding: 13px 4px; border-radius: 16px; background: linear-gradient(135deg, var(--green) 0%, #3F6B1F 100%); color: #FFFFFF; text-align: center; font-size: 20px; line-height: 28px; font-weight: 700; }
+  .keep svg { display: block; width: 28px; height: 28px; margin: 0 auto 4px; }
+
+  /* Capability tiles */
+  .grid-8 { position: absolute; left: 24px; right: 24px; top: 92px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .t8 { display: flex; align-items: center; gap: 12px; height: 118px; padding: 0 12px; border-radius: 18px; background: #FFFFFF; border: 1px solid var(--sky-1); box-shadow: 0 6px 14px rgba(47, 111, 168, .1); font-size: 20px; line-height: 28px; font-weight: 600; color: var(--ink); }
+  .mark { display: flex; align-items: center; justify-content: center; flex: none; width: 58px; height: 58px; border-radius: 17px; background: linear-gradient(135deg, var(--red-hi) 0%, var(--red-lo) 100%); color: #FFFFFF; }
+  .mark svg { width: 30px; height: 30px; }
+
+  /* Industry tiles */
+  .grid-4 { position: absolute; left: 22px; right: 22px; top: 92px; bottom: 42px; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 12px; }
+  .t4 { display: flex; flex-direction: column; padding: 16px; border-radius: 22px; color: #FFFFFF; }
+  .t4 svg { align-self: flex-start; width: 64px; height: 64px; margin-bottom: auto; opacity: .95; }
+  .t4 b { display: block; font-size: 21px; line-height: 29px; }
+  .t4 span { padding-top: 3px; font-size: 16.5px; line-height: 24px; opacity: .94; }
+  .c-red { background: linear-gradient(135deg, var(--red-hi), var(--red-lo)); }
+  .c-blue { background: linear-gradient(135deg, #3F86C6, #235A8D); }
+  .c-green { background: linear-gradient(135deg, var(--green), #3F6B1F); }
+  .c-ink { background: linear-gradient(135deg, #2A3B5C, var(--ink)); }
+
+  /* Comic strip */
+  .tag { display: inline-block; margin-top: 2px; padding: 2px 14px; border-radius: 12px; background: #FDECEC; color: var(--red); font-size: 16.5px; line-height: 25px; font-weight: 600; }
+  .strip { position: absolute; left: 24px; right: 24px; top: 124px; bottom: 42px; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 12px; }
+  .panel { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; padding: 26px 12px 12px; border-radius: 20px; border: 2px solid var(--sky); background: #FFFFFF; text-align: center; font-size: 19px; line-height: 27px; font-weight: 600; color: var(--ink); }
+  .panel .num { position: absolute; right: 10px; top: 10px; width: 32px; height: 32px; border-radius: 50%; background: var(--sky); color: #FFFFFF; font-size: 18px; line-height: 32px; font-weight: 700; }
+  .panel svg.big { width: 92px; height: 92px; color: var(--blue); }
+  .panel .say { padding: 5px 14px; border-radius: 14px 14px 3px 14px; background: var(--sky-1); font-size: 18px; line-height: 26px; color: var(--ink); }
+  .panel--done { border-color: var(--green); }
+  .panel--done svg.big { color: var(--green); }
+  .panel--done .num { background: var(--green); }
+
+  /* Road labels */
+  .stop rect { fill: #FFFFFF; stroke: var(--sky); stroke-width: 1.5; }
+  .stop .a { font-size: 18.5px; font-weight: 700; fill: var(--ink); }
+  .stop .b { font-size: 16px; font-weight: 500; fill: var(--muted); }
+
+  /* Cost blocks */
+  .legend { position: absolute; left: 22px; right: 22px; top: 458px; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+  .legend span { display: inline-flex; align-items: center; gap: 7px; padding: 4px 9px 4px 13px; border-radius: 16px; background: #FFFFFF; border: 1px solid var(--sky-1); font-size: 16.5px; line-height: 25px; font-weight: 500; color: var(--ink); }
+  .legend i { width: 15px; height: 15px; border-radius: 4px; }
+
+  /* Comparison */
+  .vs { position: absolute; left: 22px; right: 22px; top: 92px; width: 516px; border-collapse: separate; border-spacing: 0; font-size: 18.5px; line-height: 25px; }
+  .vs th { padding: 0 2px 8px; font-size: 16px; line-height: 21px; font-weight: 600; color: var(--muted); vertical-align: bottom; }
+  .vs th svg { display: block; width: 32px; height: 32px; margin: 0 auto 4px; color: var(--blue); }
+  .vs td { height: 60px; border-top: 1px solid var(--sky-1); text-align: center; }
+  .vs td:first-child { padding-left: 6px; text-align: right; font-weight: 500; color: var(--ink); }
+  .vs .me { background: #FFF3F3; border-left: 2px solid var(--red); border-right: 2px solid var(--red); }
+  .vs th.me { border-top: 2px solid var(--red); border-radius: 14px 14px 0 0; padding-top: 8px; color: var(--red); font-weight: 700; }
+  .vs th.me svg { color: var(--red); }
+  .vs tr:last-child .me { border-bottom: 2px solid var(--red); border-radius: 0 0 14px 14px; }
+  .m { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 50%; color: #FFFFFF; vertical-align: middle; }
+  .m svg { width: 18px; height: 18px; stroke-width: 3; }
+  .m-y { background: var(--green); }
+  .m-n { background: #D5DBE4; }
+  .m-p { background: linear-gradient(90deg, #D5DBE4 50%, var(--green) 50%); }
+  .vs-key { position: absolute; left: 22px; right: 22px; top: 510px; display: flex; justify-content: center; gap: 16px; font-size: 16.5px; line-height: 23px; color: var(--muted); }
+  .vs-key span { display: inline-flex; align-items: center; gap: 5px; }
+  .vs-key .m { width: 15px; height: 15px; }
+  .said { position: absolute; left: 26px; right: 26px; top: 552px; display: flex; align-items: center; gap: 12px; }
+  .said img { flex: none; width: 76px; height: 76px; border-radius: 50%; border: 2px solid var(--red); }
+  .said p { padding: 10px 18px; border-radius: 18px 18px 4px 18px; background: var(--sky-1); font-size: 21px; line-height: 32px; font-weight: 600; color: var(--ink); text-wrap: balance; }
+
+  /* About */
+  .me-photo { position: absolute; left: 205px; top: 120px; width: 150px; height: 150px; border-radius: 50%; border: 4px solid var(--red); box-shadow: 0 0 0 9px rgba(156, 195, 234, .4), 0 0 0 19px rgba(156, 195, 234, .2); }
+  .skill { padding: 3px 12px; border-radius: 18px; background: #FFFFFF; border: 1.5px solid var(--sky); box-shadow: 0 5px 12px rgba(47, 111, 168, .14); font-size: 16px; line-height: 25px; font-weight: 600; color: var(--blue); white-space: nowrap; }
+  .skills-r, .skills-l { position: absolute; top: 114px; display: flex; flex-direction: column; gap: 22px; }
+  .skills-r { right: 14px; align-items: flex-end; }
+  .skills-l { left: 14px; align-items: flex-start; }
+  .skills-row { position: absolute; left: 10px; right: 10px; top: 314px; display: flex; justify-content: center; gap: 8px; }
+  .me-say { position: absolute; left: 30px; right: 30px; top: 366px; padding: 10px 18px; border-radius: 20px; background: linear-gradient(135deg, var(--red-hi), var(--red-lo)); color: #FFFFFF; text-align: center; font-size: 24px; line-height: 36px; font-weight: 700; text-wrap: balance; }
+  .me-meta { position: absolute; left: 30px; right: 30px; top: 472px; text-align: center; font-size: 19px; line-height: 31px; color: var(--muted); text-wrap: balance; }
+  .me-name { display: block; font-size: 25px; line-height: 34px; font-weight: 700; color: var(--red); }
+  .me-meta b { display: block; color: var(--blue); font-weight: 600; }
+  .me-link { display: inline-block; margin-top: 3px; font-size: 19px; font-weight: 600; }
+
+  /* Chat */
+  .chat { position: absolute; left: 20px; right: 20px; top: 84px; display: flex; flex-direction: column; gap: 8px; }
+  .q, .a { max-width: 92%; padding: 6px 15px; font-size: 20px; line-height: 30px; }
+  .q { align-self: flex-end; border-radius: 16px 16px 16px 3px; background: var(--blue); color: #FFFFFF; font-weight: 500; }
+  .a { position: relative; align-self: flex-start; margin: 0 38px 5px 0; border-radius: 16px 16px 3px 16px; background: #FFFFFF; border: 1px solid var(--sky); color: var(--ink); }
+  .a img { position: absolute; right: -38px; bottom: 0; width: 30px; height: 30px; border-radius: 50%; }
+
+  /* Coffee */
+  .pills { position: absolute; left: 20px; right: 20px; top: 482px; display: grid; grid-template-columns: 1fr 1fr 1.25fr; gap: 9px; }
+  .pills div { display: flex; align-items: center; justify-content: center; min-height: 76px; padding: 6px; border-radius: 16px; background: var(--sky-1); text-align: center; font-size: 19px; line-height: 26px; font-weight: 600; color: var(--ink); }
+  .no { position: absolute; left: 20px; right: 20px; top: 568px; display: flex; justify-content: center; gap: 22px; font-size: 18.5px; line-height: 28px; font-weight: 600; color: var(--green); }
+  .no span { display: inline-flex; align-items: center; gap: 6px; }
+  .no svg { width: 22px; height: 22px; }
+  .bring { position: absolute; left: 30px; right: 30px; top: 610px; text-align: center; font-size: 22px; line-height: 33px; font-weight: 700; color: var(--red); text-wrap: balance; }
+
+  /* Back cover */
+  .back-cover { background: linear-gradient(135deg, var(--green-1) 0%, var(--green-2) 100%); color: var(--on-green); text-align: center; }
+  .back-sphere { position: absolute; left: 140px; top: 18px; width: 280px; height: 280px; }
+  .back-title { position: absolute; left: 24px; right: 24px; top: 288px; font-size: 58px; line-height: 76px; font-weight: 700; color: #FFFFFF; }
+  .back-sub { position: absolute; left: 40px; right: 40px; top: 366px; font-size: 21px; line-height: 30px; text-wrap: balance; }
+  .back-cta { position: absolute; left: 0; right: 0; top: 436px; }
+  .contact { position: absolute; left: 0; right: 0; top: 498px; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .contact a { display: inline-flex; align-items: center; gap: 10px; font-size: 18px; line-height: 27px; color: #FFFFFF; }
+  .contact svg { width: 22px; height: 22px; }
+  .sig { position: absolute; left: 50px; right: 50px; top: 574px; display: flex; align-items: center; justify-content: center; gap: 14px; padding-top: 18px; border-top: 1px solid rgba(221, 232, 216, .35); text-align: right; font-size: 16px; line-height: 24px; }
+  .sig img { flex: none; width: 70px; height: 70px; border-radius: 50%; border: 2px solid #FFFFFF; }
+  .sig b { display: block; font-size: 25px; line-height: 33px; font-weight: 700; color: #FFFFFF; }
+
+  /* Reader chrome */
+  .stage { display: contents; }
+  .bar, .arrow, .sheet, .toast { display: none; }
+  .flip, .flip body { height: 100%; overflow: hidden; }
+  .flip .stage { position: fixed; inset: 0 0 var(--bar) 0; display: flex; align-items: center; justify-content: center; }
+  #wrap { position: relative; direction: ltr; }
+  .flip #wrap { transition: transform .55s ease; }
+  /* The closed cover sits on the left half of an Arabic book and the back cover on the right half */
+  .landscape #wrap[data-pos="closed"] { transform: translateX(25%); }
+  .landscape #wrap[data-pos="end"] { transform: translateX(-25%); }
+  .desk-shadow, .edge { display: none; }
+  .flip .desk-shadow, .flip.landscape .edge { display: block; }
+  .stf__parent { touch-action: pan-y pinch-zoom !important; }
+  .desk-shadow { position: absolute; left: 1%; right: 1%; bottom: -14px; height: 28px; border-radius: 50%; background: rgba(20, 33, 58, .42); filter: blur(13px); transition: left .55s, right .55s; }
+  .landscape #wrap[data-pos="closed"] .desk-shadow { right: 51%; }
+  .landscape #wrap[data-pos="end"] .desk-shadow { left: 51%; }
+  .edge { position: absolute; top: .7%; bottom: .7%; background: repeating-linear-gradient(90deg, #FFFFFF 0 1px, #C3D4E7 1px 2px); }
+  .edge-l { right: 100%; width: calc((1 - var(--done, 0)) * 8px); }
+  .edge-r { left: 100%; width: calc(var(--done, 0) * 8px); }
+
+  .flip .bar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 50; display: flex; align-items: center; justify-content: center; gap: 10px; height: var(--bar); padding: 0 12px; background: rgba(255, 255, 255, .92); border-top: 1px solid var(--sky-1); }
+  .bar button { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; padding: 0; border: 1px solid var(--sky); border-radius: 12px; background: #FFFFFF; color: var(--blue); cursor: pointer; }
+  .bar button svg { width: 21px; height: 21px; }
+  .bar button:disabled { opacity: .35; cursor: default; }
+  .bar .go { border: 0; background: linear-gradient(135deg, var(--red-hi), var(--red-lo)); color: #FFFFFF; }
+  .bar input[type="range"] { flex: 0 1 320px; min-width: 60px; accent-color: var(--red); }
+  .label { min-width: 124px; text-align: center; font-size: 16px; line-height: 22px; font-weight: 500; color: var(--muted); }
+  .sep { width: 1px; height: 26px; background: var(--sky-1); }
+  .flip.landscape .arrow { position: fixed; top: calc(50% - var(--bar) / 2 - 26px); z-index: 40; display: flex; align-items: center; justify-content: center; width: 52px; height: 52px; border: 1px solid var(--sky); border-radius: 50%; background: rgba(255, 255, 255, .9); color: var(--red); cursor: pointer; box-shadow: 0 6px 16px rgba(20, 33, 58, .16); }
+  .arrow svg { width: 26px; height: 26px; }
+  .arrow:disabled { opacity: .3; cursor: default; }
+  #arrow-prev { right: 12px; }
+  #arrow-next { left: 12px; }
+  .sheet[open-sheet] { position: fixed; inset: 0; z-index: 60; display: flex; flex-direction: column; background: rgba(20, 33, 58, .86); }
+  .sheet-head { display: flex; align-items: center; justify-content: space-between; padding: 12px 18px; color: #FFFFFF; font-size: 20px; font-weight: 600; }
+  .sheet-head button { width: 44px; height: 44px; border: 0; border-radius: 12px; background: rgba(255, 255, 255, .14); color: #FFFFFF; cursor: pointer; }
+  .sheet-head svg { width: 22px; height: 22px; }
+  .thumbs { flex: 1; display: grid; grid-template-columns: repeat(auto-fill, minmax(112px, 1fr)); gap: 14px; align-content: start; padding: 4px 18px 22px; overflow-y: auto; }
+  .thumb { padding: 0; border: 0; background: none; color: #FFFFFF; font: 500 15px/24px var(--naskh); cursor: pointer; }
+  .thumb-page { width: 112px; height: 144px; margin: 0 auto; overflow: hidden; border-radius: 4px; background: #FFFFFF; direction: ltr; }
+  .thumb:hover .thumb-page, .thumb:focus-visible .thumb-page { outline: 3px solid var(--sky); }
+  .thumb .page-inner { --s: 0.2; pointer-events: none; }
+  .toast[show-toast] { position: fixed; left: 50%; bottom: calc(var(--bar) + 14px); z-index: 70; display: block; max-width: 90vw; padding: 7px 16px; transform: translateX(-50%); border-radius: 10px; background: var(--ink); color: #FFFFFF; font-size: 16px; line-height: 24px; overflow-wrap: anywhere; }
+
+  @media (max-width: 620px) {
+    .bar input[type="range"], .sep { display: none; }
+    .flip .bar { gap: 7px; padding: 0 8px; }
+    .label { min-width: 70px; font-size: 15px; }
+  }
+  @media print {
+    .bar, .arrow { display: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<svg class="sprite" aria-hidden="true">
+  <defs>
+    <linearGradient id="gSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#DCE8F6"/><stop offset=".6" stop-color="#F4F8FD"/><stop offset="1" stop-color="#FFFFFF"/></linearGradient>
+    <linearGradient id="gSea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6FA6DC"/><stop offset=".45" stop-color="#2F6FA8"/><stop offset="1" stop-color="#14213A"/></linearGradient>
+    <linearGradient id="gBerg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#CFE1F4"/></linearGradient>
+    <linearGradient id="gDeep" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#D9E8F7"/><stop offset="1" stop-color="#7FA8D4"/></linearGradient>
+    <linearGradient id="gRed" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#D0080F"/><stop offset="1" stop-color="#8E0107"/></linearGradient>
+    <linearGradient id="gHillA" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#A8C97C"/><stop offset="1" stop-color="#5B8F2E"/></linearGradient>
+    <linearGradient id="gHillB" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6E9E3F"/><stop offset="1" stop-color="#2E4630"/></linearGradient>
+    <radialGradient id="gGlow"><stop offset="0" stop-color="#3D6FB0" stop-opacity=".55"/><stop offset="1" stop-color="#14213A" stop-opacity="0"/></radialGradient>
+  </defs>
+  <symbol id="i-truck" viewBox="0 0 24 24"><g transform="translate(24 0) scale(-1 1)"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></g></symbol>
+  <symbol id="i-factory" viewBox="0 0 24 24"><path d="M2 21V10l6 4v-4l6 4V3h7v18z"/><path d="M7 18h2M12 18h2M17 18h1"/></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></symbol>
+  <symbol id="i-building" viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20"/><path d="M9 22v-4h6v4M8 6h.01M12 6h.01M16 6h.01M8 10h.01M12 10h.01M16 10h.01M8 14h.01M12 14h.01M16 14h.01"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/><polyline points="22,6 12,13 2,6"/></symbol>
+  <symbol id="i-linkedin" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></symbol>
+  <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></symbol>
+  <symbol id="i-tasks" viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></symbol>
+  <symbol id="i-cpu" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></symbol>
+  <symbol id="i-layout" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="15" y1="21" x2="15" y2="9"/></symbol>
+  <symbol id="i-box" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></symbol>
+  <symbol id="i-coffee" viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></symbol>
+  <symbol id="i-flag" viewBox="0 0 24 24"><g transform="translate(24 0) scale(-1 1)"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></g></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></symbol>
+  <symbol id="i-check-c" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></symbol>
+  <symbol id="i-edit" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4z"/></symbol>
+  <symbol id="i-sort" viewBox="0 0 24 24"><g transform="translate(24 0) scale(-1 1)"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></g></symbol>
+  <symbol id="i-compass" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></symbol>
+  <symbol id="i-layers" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></symbol>
+  <symbol id="i-help" viewBox="0 0 24 24"><g transform="translate(24 0) scale(-1 1)"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></g></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="i-prev" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></symbol>
+  <symbol id="i-next" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></symbol>
+  <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></symbol>
+  <symbol id="i-list" viewBox="0 0 24 24"><g transform="translate(24 0) scale(-1 1)"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></g></symbol>
+  <symbol id="i-share" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></symbol>
+  <symbol id="i-full" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></symbol>
+</svg>
+
+<div class="stage">
+<div id="wrap">
+<div class="desk-shadow"></div>
+<div class="edge edge-l"></div>
+<div class="edge edge-r"></div>
+<div id="book">
+
+  <!-- ١ الغلاف -->
+  <div class="page" data-density="hard" id="cover"><div class="page-inner">
+    <img class="cover-img" src="assets/cover-ar.jpg" width="1069" height="1000" alt="يدٌ تحمل كرةً مضيئة كُتب عليها AI، وحولها رموز النمو والأتمتة والتعاون.">
+    <div class="banner">
+      <p class="b-line"><span>حلول</span><span class="b-tile">الذكاء الاصطناعي</span></p>
+      <p class="b-sub">لأعمالكم</p>
+      <svg class="b-swoosh" viewBox="0 0 170 12" aria-hidden="true"><path d="M4 9C50 2 120 2 166 6" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round"/></svg>
+    </div>
+    <div class="cover-panel">
+      <p class="hook">بنيتم منشأتكم بجهدكم…<br><span class="r">فدعوا التقنية تحمل عنكم الأعمال المتكررة.</span></p>
+      <p class="cover-who"><b>حلا العطيات</b> | هندسة البرمجيات وأتمتة الأعمال بالذكاء الاصطناعي</p>
+      <a class="btn" href="#note">تفضّلوا بتصفّح الكتيّب</a>
+    </div>
+  </div></div>
+
+  <!-- ٢ كلمة افتتاحية -->
+  <div class="page even" id="note"><div class="page-inner sky">
+    <div class="hd"><h2>كلمة <span class="r">افتتاحية</span></h2></div>
+    <div class="note-body">
+      <p><b>السلام عليكم ورحمة الله وبركاته،</b></p>
+      <p>أقدّر أن وقتكم ثمين، لذلك حرصتُ أن يكون هذا الكتيّب مختصرًا، يعتمد على الرسوم أكثر من النصوص.</p>
+      <p>ستجدون فيه كيف يمكن للذكاء الاصطناعي أن يساند فريقكم في الأعمال اليومية، بما يناسب احتياج منشأتكم وميزانيتها.</p>
+      <p>وإن وجدتم فيه ما يلامس واقعكم، فيسعدني الحديث معكم.</p>
+    </div>
+    <div class="sign">
+      <img src="assets/hala.jpg" width="240" height="240" alt="حلا العطيات">
+      <div><em>مع خالص التقدير،</em><b>حلا العطيات</b><span>هندسة البرمجيات | حلول الذكاء الاصطناعي وأتمتة الأعمال</span></div>
+    </div>
+    <img class="band" src="assets/lake.jpg" width="780" height="200" alt="">
+    <p class="folio folio--light">٢</p>
+  </div></div>
+
+  <!-- ٣ المحتويات -->
+  <div class="page odd" id="contents"><div class="page-inner sky">
+    <div class="hd"><h2>محتويات <span class="r">الكتيّب</span></h2><p class="sub">بالضغط على أي عنوان تنتقلون إليه مباشرة.</p></div>
+    <div class="toc">
+      <div class="toc-g"><h3>أولًا: الواقع</h3><ol>
+        <li><a href="#familiar"><span>يومكم التشغيلي</span><span class="n">٤</span></a></li>
+        <li><a href="#hidden"><span>الجهد الذي لا يظهر</span><span class="n">٥</span></a></li>
+      </ol></div>
+      <div class="toc-g"><h3>ثانيًا: الفرصة</h3><ol>
+        <li><a href="#imagine"><span>ماذا لو تغيّر المشهد؟</span><span class="n">٦</span></a></li>
+        <li><a href="#build"><span>حلول يمكن تصميمها</span><span class="n">٧</span></a></li>
+        <li><a href="#industries"><span>القطاعات</span><span class="n">٨</span></a></li>
+        <li><a href="#example"><span>مثال تطبيقي</span><span class="n">٩</span></a></li>
+      </ol></div>
+      <div class="toc-g"><h3>ثالثًا: آلية العمل</h3><ol>
+        <li><a href="#charge"><span>القرار لكم</span><span class="n">١٠</span></a></li>
+        <li><a href="#no-dept"><span>دون قسم تقني</span><span class="n">١١</span></a></li>
+        <li><a href="#path"><span>مراحل التنفيذ</span><span class="n">١٢</span></a></li>
+        <li><a href="#cost"><span>الميزانية والتكلفة</span><span class="n">١٣</span></a></li>
+        <li><a href="#options"><span>البدائل المتاحة</span><span class="n">١٤</span></a></li>
+      </ol></div>
+      <div class="toc-g"><h3>رابعًا: التواصل</h3><ol>
+        <li><a href="#about"><span>من سيعمل معكم</span><span class="n">١٥</span></a></li>
+        <li><a href="#questions"><span>الأسئلة الشائعة</span><span class="n">١٦</span></a></li>
+        <li><a href="#coffee"><span>اللقاء التعريفي</span><span class="n">١٧</span></a></li>
+        <li><a href="#talk"><span>حجز اللقاء والتواصل</span><span class="n">١٨</span></a></li>
+      </ol></div>
+    </div>
+    <p class="folio">٣</p>
+  </div></div>
+
+  <!-- ٤ اليوم التشغيلي -->
+  <div class="page even" id="familiar"><div class="page-inner">
+    <svg class="art" viewBox="0 0 560 720" role="img" aria-label="مسؤولٌ على مكتبه واضعًا رأسه بين يديه، تحيط به الرسائل: أين وصلت الشحنة؟ أرسلوا الفاتورة مرة أخرى، مَن لديه ملف التخليص؟ التقرير قبل الساعة ٥؟ أي نسخة هي المعتمدة؟ هل ردّ أحد على العميل؟ تواصلوا مع المورّد!">
+      <rect width="560" height="720" fill="url(#gSky)"/>
+      <g fill="#FFFFFF" stroke="#9CC3EA" stroke-width="1.3">
+        <rect x="462" y="392" width="44" height="56" rx="3" transform="rotate(18 484 420)"/>
+        <rect x="58" y="400" width="44" height="56" rx="3" transform="rotate(-20 80 428)"/>
+        <rect x="140" y="372" width="34" height="44" rx="3" transform="rotate(12 157 394)"/>
+        <rect x="394" y="376" width="30" height="40" rx="3" transform="rotate(-14 409 396)"/>
+      </g>
+      <g fill="#14213A"><circle cx="280" cy="406" r="35"/><path d="M224 538c0-52 24-86 56-86s56 34 56 86z"/></g>
+      <g fill="none" stroke="#14213A" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"><path d="M246 472L204 528 248 420"/><path d="M314 472L356 528 312 420"/></g>
+      <rect x="44" y="536" width="472" height="18" rx="9" fill="#2F6FA8"/>
+      <rect x="84" y="554" width="14" height="70" fill="#2F6FA8"/><rect x="462" y="554" width="14" height="70" fill="#2F6FA8"/>
+      <g fill="#FFFFFF" stroke="#9CC3EA" stroke-width="1.3">
+        <rect x="70" y="524" width="104" height="12" rx="2"/><rect x="74" y="512" width="100" height="12" rx="2"/><rect x="68" y="500" width="104" height="12" rx="2"/><rect x="74" y="488" width="96" height="12" rx="2"/><rect x="70" y="476" width="100" height="12" rx="2"/>
+        <rect x="396" y="524" width="100" height="12" rx="2"/><rect x="400" y="512" width="94" height="12" rx="2"/><rect x="394" y="500" width="100" height="12" rx="2"/>
+      </g>
+      <rect x="358" y="498" width="24" height="38" rx="5" fill="#14213A"/><rect x="361" y="503" width="18" height="26" rx="2" fill="#9CC3EA"/><circle cx="384" cy="497" r="11" fill="#B30D12"/><text x="384" y="502" font-size="14" font-weight="700" fill="#FFFFFF" text-anchor="middle">٩</text>
+      <g class="bub hot" transform="rotate(2 446 141)"><rect x="352" y="118" width="188" height="46" rx="15"/><text x="446" y="147">أين وصلت الشحنة؟</text></g>
+      <g class="bub" transform="rotate(-2 145 141)"><rect x="20" y="118" width="250" height="46" rx="15"/><text x="145" y="147">أرسلوا الفاتورة مرة أخرى</text></g>
+      <g class="bub" transform="rotate(1 280 207)"><rect x="172" y="184" width="216" height="46" rx="15"/><text x="280" y="213">مَن لديه ملف التخليص؟</text></g>
+      <g class="bub hot" transform="rotate(-2 433 273)"><rect x="326" y="250" width="214" height="46" rx="15"/><text x="433" y="279">التقرير قبل الساعة ٥؟</text></g>
+      <g class="bub" transform="rotate(2 131 273)"><rect x="24" y="250" width="214" height="46" rx="15"/><text x="131" y="279">أي نسخة هي المعتمدة؟</text></g>
+      <g class="bub" transform="rotate(-2 429 339)"><rect x="316" y="316" width="226" height="46" rx="15"/><text x="429" y="345">هل ردّ أحد على العميل؟</text></g>
+      <g class="bub hot" transform="rotate(3 118 339)"><rect x="20" y="316" width="196" height="46" rx="15"/><text x="118" y="345">تواصلوا مع المورّد!</text></g>
+    </svg>
+    <div class="hd"><h2>هل هذا <span class="r">يومكم المعتاد؟</span></h2></div>
+    <p class="cap line" style="top:630px;font-size:34px;line-height:48px;">وما زال الأسبوع في بدايته!</p>
+    <p class="folio">٤</p>
+  </div></div>
+
+  <!-- ٥ الجهد الذي لا يظهر -->
+  <div class="page odd" id="hidden"><div class="page-inner">
+    <svg class="art" viewBox="0 0 560 720" role="img" aria-label="جبل جليد: قمته الصغيرة فوق الماء هي ما يراه العملاء، وكتلته الضخمة تحت الماء هي تحديث الحالات والمستندات واستفسارات العملاء والسجلات والتقارير اليومية.">
+      <rect width="560" height="260" fill="url(#gSky)"/>
+      <rect y="250" width="560" height="470" fill="url(#gSea)"/>
+      <polygon points="158,252 198,196 224,214 260,150 302,206 334,186 374,252" fill="url(#gBerg)"/>
+      <polygon points="260,150 302,206 334,186 374,252 272,252" fill="#CFE1F4" opacity=".7"/>
+      <polygon points="118,252 442,252 500,340 476,470 392,566 280,610 176,552 84,430 66,330" fill="url(#gDeep)" opacity=".94"/>
+      <polygon points="280,610 392,566 476,470 500,340 442,252 330,252 360,420" fill="#5F8FC4" opacity=".35"/>
+      <path d="M0 250q35-10 70 0t70 0 70 0 70 0 70 0 70 0 70 0 70 0" fill="none" stroke="#FFFFFF" stroke-width="3" opacity=".85"/>
+      <g fill="#14213A" font-size="18" font-weight="600" text-anchor="middle"><text x="462" y="166">ما يراه</text><text x="462" y="192">عملاؤكم</text></g>
+      <path d="M416 178c-20 2-50 14-68 30" fill="none" stroke="#14213A" stroke-width="1.8" stroke-dasharray="4 4"/>
+      <text x="280" y="291" font-size="19" font-weight="700" fill="#14213A" text-anchor="middle">وما يستنزف وقت فريقكم</text>
+      <g font-size="19" font-weight="600" fill="#14213A">
+        <rect x="150" y="304" width="260" height="42" rx="21" fill="#FFFFFF"/><use href="#i-truck" x="372" y="313" width="24" height="24" class="ic" color="#B30D12"/><text x="360" y="332">تحديث الحالات</text>
+        <rect x="150" y="354" width="260" height="42" rx="21" fill="#FFFFFF"/><use href="#i-file" x="372" y="363" width="24" height="24" class="ic" color="#B30D12"/><text x="360" y="382">المستندات</text>
+        <rect x="150" y="404" width="260" height="42" rx="21" fill="#FFFFFF"/><use href="#i-chat" x="372" y="413" width="24" height="24" class="ic" color="#B30D12"/><text x="360" y="432">استفسارات العملاء</text>
+        <rect x="150" y="454" width="260" height="42" rx="21" fill="#FFFFFF"/><use href="#i-search" x="372" y="463" width="24" height="24" class="ic" color="#B30D12"/><text x="360" y="482">السجلات</text>
+        <rect x="150" y="504" width="260" height="42" rx="21" fill="#FFFFFF"/><use href="#i-chart" x="372" y="513" width="24" height="24" class="ic" color="#B30D12"/><text x="360" y="532">التقارير اليومية</text>
+      </g>
+    </svg>
+    <div class="hd"><h2>الجهد <span class="r">الذي لا يظهر</span></h2></div>
+    <p class="cap line" style="top:622px;left:44px;right:44px;font-size:25px;line-height:38px;color:#FFFFFF;">وهنا تحديدًا تبدأ قيمة الذكاء الاصطناعي.</p>
+    <p class="folio folio--light">٥</p>
+  </div></div>
+
+  <!-- ٦ ماذا لو -->
+  <div class="page even" id="imagine"><div class="page-inner" style="background:var(--ink);">
+    <svg class="art" viewBox="0 0 560 720" role="img" aria-label="خيطٌ أحمر متشابك يدخل كرةً مضيئة، فيخرج منها خمسة خيوط زرقاء مستقيمة، في نهاية كلٍّ منها علامة صح.">
+      <circle cx="280" cy="330" r="290" fill="url(#gGlow)"/>
+      <g transform="translate(560 0) scale(-1 1)">
+        <path d="M0 300C40 210 110 250 84 320S10 400 60 410 150 340 130 290 40 240 76 214 170 230 160 300 90 430 150 420 186 350 170 300 120 244 150 240 220 300 186 330" fill="none" stroke="#FF5A5F" stroke-width="3.2" stroke-linecap="round"/>
+        <path d="M10 370C60 330 100 400 130 370S70 280 110 266 200 280 196 320" fill="none" stroke="#B30D12" stroke-width="2.6" stroke-linecap="round"/>
+      </g>
+      <g stroke="#9CC3EA" stroke-width="3.4" stroke-linecap="round"><line x1="164" y1="246" x2="62" y2="246"/><line x1="148" y1="288" x2="62" y2="288"/><line x1="142" y1="330" x2="62" y2="330"/><line x1="148" y1="372" x2="62" y2="372"/><line x1="164" y1="414" x2="62" y2="414"/></g>
+      <g fill="#5B8F2E"><circle cx="42" cy="246" r="13"/><circle cx="42" cy="288" r="13"/><circle cx="42" cy="330" r="13"/><circle cx="42" cy="372" r="13"/><circle cx="42" cy="414" r="13"/></g>
+      <g fill="none" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M35 246l5 5 9-10M35 288l5 5 9-10M35 330l5 5 9-10M35 372l5 5 9-10M35 414l5 5 9-10"/></g>
+      <image href="assets/sphere-glow.png" x="118" y="170" width="324" height="324"/>
+      <text x="474" y="150" font-size="25" font-weight="700" fill="#FF8A8F" text-anchor="middle">الوضع الحالي</text>
+      <text x="92" y="212" font-size="25" font-weight="700" fill="#9CC3EA" text-anchor="middle">الوضع المأمول</text>
+    </svg>
+    <div class="hd"><h2 style="color:#FFFFFF;">ماذا لو تغيّر المشهد؟</h2></div>
+    <div class="cap" style="top:498px;">
+      <p style="font-size:28px;line-height:42px;font-weight:700;color:#FFFFFF;">المنشأة نفسها، والفريق نفسه،<br><span style="color:#FF8A8F;">لكن بمتابعة يدوية أقل.</span></p>
+      <p style="padding-top:8px;font-size:19px;line-height:30px;color:#C9D6E6;">وقت أقل في البحث وإعادة الإدخال، ووقت أكبر للقرارات التي لا يتخذها غيركم.</p>
+    </div>
+    <p class="folio folio--light">٦</p>
+  </div></div>
+
+  <!-- ٧ الحلول -->
+  <div class="page odd" id="build"><div class="page-inner sky">
+    <div class="hd"><h2 style="font-size:38px;">حلول يمكن <span class="r">تصميمها لمنشأتكم</span></h2></div>
+    <div class="grid-8">
+      <div class="t8"><span class="mark"><svg class="ic"><use href="#i-layout"/></svg></span>نظام إدارة داخلي</div>
+      <div class="t8"><span class="mark"><svg class="ic"><use href="#i-file"/></svg></span>فرز المستندات والبحث فيها</div>
+      <div class="t8"><span class="mark"><svg class="ic"><use href="#i-truck"/></svg></span>متابعة الشحنات والطلبات</div>
+      <div class="t8"><span class="mark"><svg class="ic"><use href="#i-tasks"/></svg></span>تنسيق مهام الموظفين</div>
+      <div class="t8"><span class="mark"><svg class="ic"><use href="#i-chat"/></svg></span>مساعد لمراسلات العملاء والموردين</div>
+      <div class="t8"><span class="mark"><svg class="ic"><use href="#i-chart"/></svg></span>التقارير وتحليل البيانات</div>
+      <div class="t8"><span class="mark"><svg class="ic"><use href="#i-cpu"/></svg></span>مساعد ذكي وقاعدة معرفة داخلية</div>
+      <div class="t8"><span class="mark"><svg class="ic"><use href="#i-link"/></svg></span>ربط الأنظمة وأتمتة الإجراءات</div>
+    </div>
+    <p class="cap line" style="top:612px;font-size:22px;line-height:33px;">هذه أمثلة لما يمكن عمله، ويُختار منها ما يناسب احتياجكم فقط.</p>
+    <p class="folio">٧</p>
+  </div></div>
+
+  <!-- ٨ القطاعات -->
+  <div class="page even" id="industries"><div class="page-inner sky">
+    <div class="hd"><h2 style="font-size:38px;">قطاعات مختلفة، <span class="r">والتحدي واحد</span></h2></div>
+    <div class="grid-4">
+      <div class="t4 c-red"><svg class="ic"><use href="#i-truck"/></svg><b>الخدمات اللوجستية وسلاسل الإمداد</b><span>الشحنات، التخليص الجمركي، استفسارات العملاء</span></div>
+      <div class="t4 c-blue"><svg class="ic"><use href="#i-factory"/></svg><b>التصنيع والقطاع الصناعي</b><span>تقارير الإنتاج، الموردون، الوثائق الداخلية</span></div>
+      <div class="t4 c-green"><svg class="ic"><use href="#i-globe"/></svg><b>التجارة والاستيراد والتصدير</b><span>الطلبات، مستندات الشحن، مراسلات العملاء</span></div>
+      <div class="t4 c-ink"><svg class="ic"><use href="#i-building"/></svg><b>المقاولات والعقارات</b><span>وثائق المشاريع، تقارير الموقع، التنسيق مع المقاولين</span></div>
+    </div>
+    <p class="folio">٨</p>
+  </div></div>
+
+  <!-- ٩ مثال -->
+  <div class="page odd" id="example"><div class="page-inner sky">
+    <div class="hd"><h2>مثال <span class="r">تطبيقي</span></h2><p class="tag">مثال توضيحي، وليس مشروعًا منفذًا</p></div>
+    <div class="strip">
+      <div class="panel"><span class="num">١</span><svg class="ic big" style="width:60px;height:60px;"><use href="#i-user"/></svg><p class="say">أين وصلت شحنتي؟</p>يرد استفسار من العميل</div>
+      <div class="panel"><span class="num">٢</span><svg class="ic big"><use href="#i-search"/></svg>يبحث المساعد الذكي في السجلات</div>
+      <div class="panel"><span class="num">٣</span><svg class="ic big"><use href="#i-edit"/></svg>يجهّز مسودة الرد</div>
+      <div class="panel panel--done"><span class="num">٤</span><svg class="ic big"><use href="#i-check-c"/></svg>يراجعها الموظف، ثم يرسلها</div>
+    </div>
+    <p class="folio">٩</p>
+  </div></div>
+
+  <!-- ١٠ القرار -->
+  <div class="page even" id="charge"><div class="page-inner sky">
+    <div class="hd"><h2>التقنية تساند <span class="r">والقرار لكم</span></h2></div>
+    <img class="sphere-big" src="assets/sphere-soft.png" width="420" height="420" alt="يدٌ تحمل كرةً مضيئة.">
+    <div class="orb" style="right:14px;top:128px;"><svg class="ic"><use href="#i-search"/></svg>البحث في السجلات</div>
+    <div class="orb" style="left:14px;top:128px;"><svg class="ic"><use href="#i-edit"/></svg>إعداد المسودات</div>
+    <div class="orb" style="right:14px;top:290px;"><svg class="ic"><use href="#i-sort"/></svg>تنظيم المستندات</div>
+    <div class="orb" style="left:14px;top:290px;"><svg class="ic"><use href="#i-chart"/></svg>تجميع الأرقام</div>
+    <p class="cap line" style="top:408px;font-size:23px;line-height:34px;color:var(--ink);">ويبقى لفريقكم:</p>
+    <div class="keep">
+      <div><svg class="ic"><use href="#i-compass"/></svg>القرار</div>
+      <div><svg class="ic"><use href="#i-check-c"/></svg>الاعتماد</div>
+      <div><svg class="ic"><use href="#i-flag"/></svg>التوجيه</div>
+    </div>
+    <p class="cap sub" style="top:560px;font-size:19.5px;line-height:31px;">قد يخطئ الذكاء الاصطناعي، لذلك تُصمَّم الحلول بحيث يراجع الموظف كل ما يهم قبل اعتماده.</p>
+    <p class="folio">١٠</p>
+  </div></div>
+
+  <!-- ١١ دون قسم تقني -->
+  <div class="page odd" id="no-dept"><div class="page-inner">
+    <svg class="art" viewBox="0 0 560 720" role="img" aria-label="هيكل تنظيمي: الإدارة في الأعلى، وتحتها العمليات والمبيعات والمالية. مربع منقّط لقسم ذكاء اصطناعي وتوظيف جديد عليه علامة إلغاء، وخط تواصل مباشر من الإدارة إلى حلا العطيات.">
+      <rect width="560" height="720" fill="url(#gSky)"/>
+      <g fill="none" stroke="#9CC3EA" stroke-width="2.4"><path d="M292 232v42M292 274H456v28M292 274v28M292 274H128v28"/></g>
+      <circle cx="292" cy="186" r="48" fill="url(#gRed)"/><text x="292" y="195" font-size="24" font-weight="700" fill="#FFFFFF" text-anchor="middle">الإدارة</text>
+      <g fill="#FFFFFF" stroke="#9CC3EA" stroke-width="1.6"><rect x="388" y="302" width="136" height="50" rx="14"/><rect x="224" y="302" width="136" height="50" rx="14"/><rect x="60" y="302" width="136" height="50" rx="14"/></g>
+      <g font-size="18.5" font-weight="600" fill="#14213A" text-anchor="middle"><text x="456" y="334">العمليات</text><text x="292" y="334">المبيعات</text><text x="128" y="334">المالية</text></g>
+      <rect x="324" y="412" width="196" height="84" rx="16" fill="none" stroke="#7B869B" stroke-width="2" stroke-dasharray="7 6"/>
+      <text x="422" y="447" font-size="18" font-weight="600" fill="#5F6B80" text-anchor="middle">قسم ذكاء اصطناعي</text><text x="422" y="474" font-size="18" font-weight="600" fill="#5F6B80" text-anchor="middle">وتوظيف جديد</text>
+      <circle cx="328" cy="416" r="16" fill="#B30D12"/><g stroke="#FFFFFF" stroke-width="3.4" stroke-linecap="round"><line x1="321" y1="409" x2="335" y2="423"/><line x1="335" y1="409" x2="321" y2="423"/></g>
+      <path d="M244 186C90 176 16 260 32 362S86 426 112 432" fill="none" stroke="#B30D12" stroke-width="4" stroke-linecap="round" stroke-dasharray="1 10"/>
+      <circle cx="164" cy="452" r="56" fill="#FFFFFF" stroke="#B30D12" stroke-width="3.5"/>
+      <clipPath id="c-hala-11"><circle cx="164" cy="452" r="52"/></clipPath>
+      <image href="assets/hala.jpg" x="112" y="400" width="104" height="104" clip-path="url(#c-hala-11)"/>
+      <text x="164" y="538" font-size="19" font-weight="700" fill="#B30D12" text-anchor="middle">حلا العطيات</text>
+      <text x="124" y="166" font-size="22" font-weight="700" fill="#B30D12" text-anchor="middle">تواصل مباشر</text>
+    </svg>
+    <div class="hd"><h2>دون الحاجة إلى <span class="r">قسم تقني</span></h2></div>
+    <div class="cap" style="top:558px;">
+      <p class="line" style="font-size:26px;line-height:38px;color:var(--ink);">لا توظيف فريق، ولا إنشاء قسم جديد.</p>
+      <p class="sub" style="font-size:19.5px;line-height:31px;">تتواصلون مباشرة مع من يدرس احتياجكم ويصمّم الحل وينفّذه.</p>
+    </div>
+    <p class="folio">١١</p>
+  </div></div>
+
+  <!-- ١٢ مراحل التنفيذ -->
+  <div class="page even" id="path"><div class="page-inner">
+    <svg class="art" viewBox="0 0 560 720" role="img" aria-label="طريقٌ متعرّج بخمس محطات: لقاء تعريفي، فهم طبيعة عملكم، تحديد نقطة البداية، مرحلة تجريبية، ثم التوسّع عند ثبوت الجدوى، وفي نهايته راية.">
+      <rect width="560" height="720" fill="url(#gSky)"/>
+      <g transform="translate(560 0) scale(-1 1)">
+        <path d="M0 330C120 260 260 300 360 262S520 200 560 226V720H0Z" fill="url(#gHillA)"/>
+        <path d="M0 560C150 480 330 560 560 470V720H0Z" fill="url(#gHillB)"/>
+        <path d="M46 700C170 668 410 650 428 566S120 498 112 420 410 372 436 300 330 214 396 158" fill="none" stroke="#3A4A66" stroke-width="30" stroke-linecap="round"/>
+        <path d="M46 700C170 668 410 650 428 566S120 498 112 420 410 372 436 300 330 214 396 158" fill="none" stroke="#FFFFFF" stroke-width="2.6" stroke-dasharray="10 11"/>
+      </g>
+      <g stroke="#FFFFFF" stroke-width="4">
+        <circle cx="498" cy="696" r="19" fill="#2F6FA8"/>
+        <circle cx="132" cy="566" r="19" fill="#2F6FA8"/>
+        <circle cx="448" cy="420" r="19" fill="#2F6FA8"/>
+        <circle cx="124" cy="300" r="19" fill="#2F6FA8"/>
+        <circle cx="164" cy="158" r="21" fill="#5B8F2E"/>
+      </g>
+      <g font-size="20" font-weight="700" fill="#FFFFFF" text-anchor="middle"><text x="498" y="703">١</text><text x="132" y="573">٢</text><text x="448" y="427">٣</text><text x="124" y="307">٤</text></g>
+      <use href="#i-flag" x="152" y="146" width="24" height="24" class="ic" color="#FFFFFF"/>
+      <g class="stop"><rect x="196" y="632" width="264" height="60" rx="14"/><text class="a" x="444" y="657">لقاء تعريفي</text><text class="b" x="444" y="681">٢٠ دقيقة دون أي التزام</text></g>
+      <g class="stop"><rect x="162" y="532" width="256" height="60" rx="14"/><text class="a" x="402" y="557">فهم طبيعة عملكم</text><text class="b" x="402" y="581">الإجراءات والأولويات</text></g>
+      <g class="stop"><rect x="188" y="390" width="226" height="60" rx="14"/><text class="a" x="398" y="415">تحديد نقطة البداية</text><text class="b" x="398" y="439">الفرصة الأعلى قيمة</text></g>
+      <g class="stop"><rect x="154" y="270" width="240" height="60" rx="14"/><text class="a" x="378" y="295">مرحلة تجريبية</text><text class="b" x="378" y="319">بنطاق محدد وواضح</text></g>
+      <g class="stop"><rect x="196" y="128" width="246" height="60" rx="14"/><text class="a" x="426" y="153">التوسّع عند ثبوت الجدوى</text><text class="b" x="426" y="177">وكل مرحلة بقرار منكم</text></g>
+    </svg>
+    <div class="hd"><h2>التنفيذ <span class="r">على مراحل</span></h2></div>
+    <p class="folio folio--light" style="right:auto;left:26px;">١٢</p>
+  </div></div>
+
+  <!-- ١٣ التكلفة -->
+  <div class="page odd" id="cost"><div class="page-inner sky">
+    <div class="hd"><h2>ميزانيتكم <span class="r">تحدّد النطاق</span></h2></div>
+    <svg class="art" viewBox="0 0 560 720" role="img" aria-label="ثلاث مجموعات من بنود التكلفة تكبر تدريجيًا: مرحلة أولى صغيرة، ثم مجموعة أكبر عند ثبوت الجدوى، ثم أكبر لاحقًا بقراركم.">
+      <g>
+        <rect x="388" y="388" width="116" height="16" rx="4" fill="#B30D12"/><rect x="388" y="370" width="116" height="16" rx="4" fill="#2F6FA8"/><rect x="388" y="352" width="116" height="16" rx="4" fill="#9CC3EA"/><rect x="388" y="334" width="116" height="16" rx="4" fill="#5B8F2E"/><rect x="388" y="316" width="116" height="16" rx="4" fill="#14213A"/>
+      </g>
+      <g opacity=".42">
+        <rect x="222" y="372" width="116" height="32" rx="5" fill="#B30D12"/><rect x="222" y="338" width="116" height="32" rx="5" fill="#2F6FA8"/><rect x="222" y="304" width="116" height="32" rx="5" fill="#9CC3EA"/><rect x="222" y="270" width="116" height="32" rx="5" fill="#5B8F2E"/><rect x="222" y="236" width="116" height="32" rx="5" fill="#14213A"/>
+      </g>
+      <g opacity=".2">
+        <rect x="56" y="356" width="116" height="48" rx="6" fill="#B30D12"/><rect x="56" y="306" width="116" height="48" rx="6" fill="#2F6FA8"/><rect x="56" y="256" width="116" height="48" rx="6" fill="#9CC3EA"/><rect x="56" y="206" width="116" height="48" rx="6" fill="#5B8F2E"/><rect x="56" y="156" width="116" height="48" rx="6" fill="#14213A"/>
+      </g>
+      <rect x="216" y="230" width="128" height="180" rx="9" fill="none" stroke="#7B869B" stroke-width="1.8" stroke-dasharray="6 6"/>
+      <rect x="50" y="150" width="128" height="260" rx="10" fill="none" stroke="#7B869B" stroke-width="1.8" stroke-dasharray="6 6"/>
+      <line x1="40" y1="410" x2="520" y2="410" stroke="#14213A" stroke-width="2"/>
+      <g font-size="18" font-weight="700" text-anchor="middle"><text x="446" y="438" fill="#B30D12">المرحلة الأولى</text><text x="280" y="438" fill="#41506B">عند ثبوت الجدوى</text><text x="114" y="438" fill="#41506B">لاحقًا، بقراركم</text></g>
+    </svg>
+    <div class="legend">
+      <span><i style="background:#14213A"></i>التطوير</span>
+      <span><i style="background:#5B8F2E"></i>الربط والتكامل</span>
+      <span><i style="background:#9CC3EA"></i>البنية التحتية</span>
+      <span><i style="background:#2F6FA8"></i>خدمات الذكاء الاصطناعي الخارجية</span>
+      <span><i style="background:#B30D12"></i>الصيانة</span>
+    </div>
+    <div class="cap" style="top:544px;">
+      <p class="line" style="font-size:23px;line-height:34px;color:var(--ink);">كل بند له تقدير مستقل، دون باقات مفروضة.</p>
+      <p class="sub" style="font-size:18px;line-height:28px;">بناء نظام متكامل استثمار كبير بطبيعته، أما المرحلة الأولى فيمكن أن تكون أصغر بكثير، وهي التي تبيّن جدوى التوسع.</p>
+    </div>
+    <p class="folio">١٣</p>
+  </div></div>
+
+  <!-- ١٤ البدائل -->
+  <div class="page even" id="options"><div class="page-inner sky">
+    <div class="hd"><h2>البدائل <span class="r">المتاحة أمامكم</span></h2></div>
+    <table class="vs">
+      <thead><tr><th style="width:41%;"></th><th><svg class="ic"><use href="#i-box"/></svg>برنامج جاهز</th><th><svg class="ic"><use href="#i-users"/></svg>فريق داخلي</th><th class="me"><svg class="ic"><use href="#i-user"/></svg>العمل معي</th></tr></thead>
+      <tbody>
+        <tr><td>مصمّم حسب إجراءاتكم</td><td><span class="m m-p" role="img" aria-label="جزئيًا"></span></td><td><span class="m m-y" role="img" aria-label="نعم"><svg class="ic"><use href="#i-check"/></svg></span></td><td class="me"><span class="m m-y" role="img" aria-label="نعم"><svg class="ic"><use href="#i-check"/></svg></span></td></tr>
+        <tr><td>بداية بنطاق صغير</td><td><span class="m m-y" role="img" aria-label="نعم"><svg class="ic"><use href="#i-check"/></svg></span></td><td><span class="m m-n" role="img" aria-label="لا"></span></td><td class="me"><span class="m m-y" role="img" aria-label="نعم"><svg class="ic"><use href="#i-check"/></svg></span></td></tr>
+        <tr><td>دون توظيف</td><td><span class="m m-y" role="img" aria-label="نعم"><svg class="ic"><use href="#i-check"/></svg></span></td><td><span class="m m-n" role="img" aria-label="لا"></span></td><td class="me"><span class="m m-y" role="img" aria-label="نعم"><svg class="ic"><use href="#i-check"/></svg></span></td></tr>
+        <tr><td>سرعة التجربة</td><td><span class="m m-y" role="img" aria-label="نعم"><svg class="ic"><use href="#i-check"/></svg></span></td><td><span class="m m-n" role="img" aria-label="لا"></span></td><td class="me"><span class="m m-p" role="img" aria-label="جزئيًا"></span></td></tr>
+        <tr><td>خبرة تبقى داخل المنشأة</td><td><span class="m m-n" role="img" aria-label="لا"></span></td><td><span class="m m-y" role="img" aria-label="نعم"><svg class="ic"><use href="#i-check"/></svg></span></td><td class="me"><span class="m m-n" role="img" aria-label="لا"></span></td></tr>
+      </tbody>
+    </table>
+    <div class="vs-key"><span><i class="m m-y"></i>نعم</span><span><i class="m m-p"></i>جزئيًا</span><span><i class="m m-n"></i>لا</span></div>
+    <div class="said">
+      <img src="assets/hala.jpg" width="240" height="240" alt="">
+      <p>بكل أمانة: إذا كان البرنامج الجاهز أنسب لكم، فسأوضّح لكم ذلك.</p>
+    </div>
+    <p class="folio">١٤</p>
+  </div></div>
+
+  <!-- ١٥ من سيعمل معكم -->
+  <div class="page odd" id="about"><div class="page-inner sky">
+    <div class="hd"><h2>من <span class="r">سيعمل معكم؟</span></h2></div>
+    <img class="me-photo" src="assets/hala.jpg" width="240" height="240" alt="حلا العطيات">
+    <div class="skills-r"><span class="skill">المساعدات الذكية</span><span class="skill">تدريب النماذج</span><span class="skill">اختبار المحادثة الآلية</span></div>
+    <div class="skills-l"><span class="skill">تكامل Gemini</span><span class="skill">التقييم وضبط الجودة</span><span class="skill">مشاريع البيانات</span></div>
+    <div class="skills-row"><span class="skill">تطوير الأنظمة المتكاملة</span><span class="skill">تنسيق المشاريع</span><span class="skill">التواصل مع العملاء</span></div>
+    <p class="me-say">تتعاملون معي مباشرة، من دراسة الاحتياج إلى التصميم والتنفيذ.</p>
+    <div class="me-meta">
+      <span class="me-name">حلا العطيات</span>
+      <b>هندسة البرمجيات | حلول الذكاء الاصطناعي وأتمتة الأعمال</b>
+      ثلاث سنوات في تنسيق المشاريع التقنية والتواصل مع العملاء لدى شركة يقودها مؤسسها، إضافة إلى العمل مع منصات عالمية في الذكاء الاصطناعي.
+      <br><a class="me-link" href="https://www.linkedin.com/in/hala-al-attiyat-062514220" target="_blank" rel="noopener">الملف الشخصي على لينكدإن</a>
+    </div>
+    <p class="folio">١٥</p>
+  </div></div>
+
+  <!-- ١٦ الأسئلة الشائعة -->
+  <div class="page even" id="questions"><div class="page-inner sky">
+    <div class="hd"><h2>الأسئلة <span class="r">الشائعة</span></h2></div>
+    <div class="chat">
+      <p class="q">هل نحتاج إلى موظفين تقنيين؟</p>
+      <p class="a"><img src="assets/hala.jpg" width="240" height="240" alt="">لا. أنتم تعرفون أعمالكم، وأتولى أنا الجانب التقني.</p>
+      <p class="q">هل يحلّ النظام محل الموظفين؟</p>
+      <p class="a"><img src="assets/hala.jpg" width="240" height="240" alt="">ليس هذا هو الهدف، فالنظام يساندهم في الأعمال المتكررة.</p>
+      <p class="q">هل يتوافق مع أنظمتنا الحالية؟</p>
+      <p class="a"><img src="assets/hala.jpg" width="240" height="240" alt="">غالبًا نعم، ويعتمد ذلك على الأنظمة، ونتحقق منه في البداية.</p>
+      <p class="q">ماذا عن سرية بياناتنا؟</p>
+      <p class="a"><img src="assets/hala.jpg" width="240" height="240" alt="">نتفق قبل البدء على مكان حفظها وصلاحيات الاطلاع عليها.</p>
+      <p class="q">كم يستغرق التنفيذ؟</p>
+      <p class="a"><img src="assets/hala.jpg" width="240" height="240" alt="">يعتمد على النطاق، ويصلكم التقدير بعد تحديد المرحلة الأولى.</p>
+    </div>
+    <p class="folio">١٦</p>
+  </div></div>
+
+  <!-- ١٧ اللقاء التعريفي -->
+  <div class="page odd" id="coffee"><div class="page-inner sky">
+    <div class="hd"><h2>٢٠ دقيقة <span class="r">على فنجان قهوة</span></h2></div>
+    <svg class="art" viewBox="0 0 560 720" role="img" aria-label="ساعةٌ عُلّمت عليها عشرون دقيقة بالأحمر، وبجانبها فنجان قهوة يتصاعد بخاره.">
+      <circle cx="312" cy="266" r="150" fill="#FFFFFF" stroke="#9CC3EA" stroke-width="5"/>
+      <path d="M312 266V124A142 142 0 0 1 435 337Z" fill="url(#gRed)"/>
+      <g stroke="#14213A" stroke-width="3" stroke-linecap="round"><line x1="312" y1="124" x2="312" y2="138"/><line x1="454" y1="266" x2="440" y2="266"/><line x1="312" y1="408" x2="312" y2="394"/><line x1="170" y1="266" x2="184" y2="266"/></g>
+      <text x="366" y="236" font-size="36" font-weight="700" fill="#FFFFFF" text-anchor="middle">٢٠</text><text x="366" y="264" font-size="19" font-weight="600" fill="#FFFFFF" text-anchor="middle">دقيقة</text>
+      <circle cx="312" cy="266" r="7" fill="#14213A"/>
+      <g fill="none" stroke="#7B869B" stroke-width="4" stroke-linecap="round"><path d="M94 226c-14-18 14-28 0-48"/><path d="M130 226c-14-18 14-28 0-48"/><path d="M166 226c-14-18 14-28 0-48"/></g>
+      <path d="M58 246h148v104a46 46 0 0 1-46 46h-56a46 46 0 0 1-46-46z" fill="#2F6FA8"/>
+      <path d="M206 266h16a36 36 0 0 1 0 72h-16" fill="none" stroke="#2F6FA8" stroke-width="14"/>
+      <ellipse cx="132" cy="246" rx="74" ry="12" fill="#5A3A22"/>
+      <rect x="34" y="396" width="196" height="12" rx="6" fill="#14213A" opacity=".22"/>
+    </svg>
+    <div class="pills"><div>تعرضون واقع العمل</div><div>أستمع وأسأل</div><div>تخرجون بتصور أوضح</div></div>
+    <div class="no"><span><svg class="ic"><use href="#i-check-c"/></svg>دون عرض سعر</span><span><svg class="ic"><use href="#i-check-c"/></svg>دون أي التزام</span></div>
+    <p class="bring">يكفي أن تحضروا معكم الإجراء الذي يشغلكم أكثر من غيره.</p>
+    <p class="folio">١٧</p>
+  </div></div>
+
+  <!-- ١٨ الغلاف الأخير -->
+  <div class="page" data-density="hard" id="talk"><div class="page-inner back-cover">
+    <img class="back-sphere" src="assets/sphere-glow.png" width="420" height="420" alt="">
+    <h2 class="back-title">يسعدني تواصلكم</h2>
+    <p class="back-sub">تفضلوا بتعبئة النموذج بالتاريخ والوقت المناسبين لكم، وسأتواصل معكم في الموعد.</p>
+    <div class="back-cta"><a class="btn" href="https://docs.google.com/forms/d/e/1FAIpQLSdnGKtMxjaMX1tibcLXi0RftbkU9DtjVryOefKJ4eJ_eYQB5Q/viewform" target="_blank" rel="noopener">احجزوا موعد اللقاء</a></div>
+    <div class="contact">
+      <a href="mailto:44hala2003@gmail.com"><svg class="ic"><use href="#i-mail"/></svg><span dir="ltr">44hala2003@gmail.com</span></a>
+      <a href="https://www.linkedin.com/in/hala-al-attiyat-062514220" target="_blank" rel="noopener"><svg class="ic"><use href="#i-linkedin"/></svg><span dir="ltr">linkedin.com/in/hala-al-attiyat</span></a>
+      <!-- WhatsApp: to add it, remove these comment marks and put your number with its country code, digits only.
+      <a href="https://wa.me/YOURNUMBER" target="_blank" rel="noopener">واتساب</a>
+      -->
+    </div>
+    <div class="sig">
+      <img src="assets/hala.jpg" width="240" height="240" alt="">
+      <div><b>حلا العطيات</b>هندسة البرمجيات | حلول الذكاء الاصطناعي وأتمتة الأعمال</div>
+    </div>
+  </div></div>
+
+</div>
+</div>
+</div>
+
+<button type="button" class="arrow" id="arrow-prev" aria-label="الصفحة السابقة"><svg class="ic"><use href="#i-next"/></svg></button>
+<button type="button" class="arrow" id="arrow-next" aria-label="الصفحة التالية"><svg class="ic"><use href="#i-prev"/></svg></button>
+
+<nav class="bar" aria-label="أدوات الكتاب">
+  <button type="button" id="prev" aria-label="الصفحة السابقة"><svg class="ic"><use href="#i-next"/></svg></button>
+  <input type="range" id="slider" min="1" max="18" value="1" aria-label="الانتقال إلى صفحة">
+  <span class="label" id="label" aria-live="polite"></span>
+  <button type="button" class="go" id="next" aria-label="الصفحة التالية"><svg class="ic"><use href="#i-prev"/></svg></button>
+  <span class="sep"></span>
+  <button type="button" id="open-contents" aria-label="الفهرس" title="الفهرس"><svg class="ic"><use href="#i-list"/></svg></button>
+  <button type="button" id="open-thumbs" aria-label="جميع الصفحات" title="جميع الصفحات"><svg class="ic"><use href="#i-grid"/></svg></button>
+  <button type="button" id="share" aria-label="مشاركة الدليل" title="مشاركة"><svg class="ic"><use href="#i-share"/></svg></button>
+  <button type="button" id="full" aria-label="ملء الشاشة" title="ملء الشاشة"><svg class="ic"><use href="#i-full"/></svg></button>
+</nav>
+
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-label="جميع الصفحات">
+  <div class="sheet-head"><span>جميع الصفحات</span><button type="button" id="close-sheet" aria-label="إغلاق"><svg class="ic"><use href="#i-x"/></svg></button></div>
+  <div class="thumbs" id="thumbs"></div>
+</div>
+<div class="toast" id="toast" role="status"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/page-flip@2.0.7/dist/js/page-flip.browser.js" integrity="sha384-L4eWrYFdqQ+LoGA0MMuqLqzV13x7SKkQaqacy4MED8e815dS37tTKlO/6xBEUpZW" crossorigin="anonymous"></script>
+<script>
+(function () {
+  // If the page-turn library could not load, the pages stay readable in one column.
+  if (!window.St || !St.PageFlip) return;
+
+  var PAGE_W = 560, PAGE_H = 720;
+  var root = document.documentElement;
+  var stage = document.querySelector('.stage');
+  var wrap = document.getElementById('wrap');
+  var book = document.getElementById('book');
+  var pagesHtml = book.innerHTML;
+  var ids = Array.prototype.map.call(book.querySelectorAll('.page'), function (p) { return p.id; });
+  var total = ids.length;
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var flip = null;
+  var landscape = null;
+  // current is the page in reading order. The library only turns left to right when it goes backwards,
+  // so it holds the pages reversed and "forward" for the reader is flipPrev for the library.
+  var current = Math.max(0, ids.indexOf(location.hash.replace('#', '')));
+
+  var label = document.getElementById('label');
+  var slider = document.getElementById('slider');
+  var controls = {
+    prev: [document.getElementById('prev'), document.getElementById('arrow-prev')],
+    next: [document.getElementById('next'), document.getElementById('arrow-next')]
+  };
+
+  root.classList.add('flip');
+
+  function libIndex(index) { return total - 1 - index; }
+  function arabic(number) {
+    return String(number).replace(/\d/g, function (d) { return '٠١٢٣٤٥٦٧٨٩'.charAt(Number(d)); });
+  }
+
+  function bookWidth(isLandscape) {
+    var pad = isLandscape ? 14 : 5;
+    var availW = stage.clientWidth - pad * 2 - (isLandscape ? 136 : 0);
+    var availH = stage.clientHeight - pad * 2 - 8;
+    var ratio = PAGE_W / PAGE_H;
+    return Math.floor(isLandscape ? Math.min(availW, availH * ratio * 2) : Math.min(availW, availH * ratio));
+  }
+
+  function applyScale() {
+    root.style.setProperty('--s', (flip.getBoundsRect().pageWidth / PAGE_W).toFixed(5));
+  }
+
+  // Sets the spread position for a page in reading order: closed cover, open book, or closed back cover.
+  function setPosition(index) {
+    wrap.dataset.pos = index <= 0 ? 'closed' : index >= total - 1 ? 'end' : 'open';
+    wrap.style.setProperty('--done', (index / (total - 1)).toFixed(3));
+  }
+
+  function refresh() {
+    var index = current;
+    var first = index;
+    if (landscape) {
+      if (index === 0) label.textContent = 'الغلاف';
+      else if (index >= total - 1) label.textContent = 'الغلاف الأخير';
+      else {
+        first = index % 2 === 1 ? index : index - 1;
+        label.textContent = 'الصفحتان ' + arabic(first + 1) + ' و' + arabic(first + 2) + ' من ' + arabic(total);
+      }
+    } else {
+      label.textContent = arabic(index + 1) + ' من ' + arabic(total);
+    }
+    slider.value = index + 1;
+    controls.prev.forEach(function (b) { b.disabled = index <= 0; });
+    controls.next.forEach(function (b) { b.disabled = index >= total - 1; });
+    setPosition(index);
+    try {
+      history.replaceState(null, '', index === 0 ? location.pathname + location.search : '#' + ids[first]);
+    } catch (e) { /* some embedded viewers refuse this; the book still works */ }
+  }
+
+  function build() {
+    landscape = stage.clientWidth >= stage.clientHeight * 1.12;
+    root.classList.toggle('landscape', landscape);
+    root.classList.toggle('portrait', !landscape);
+    if (flip) {
+      flip.destroy();
+      book = document.createElement('div');
+      book.id = 'book';
+      wrap.appendChild(book);
+      book.innerHTML = pagesHtml;
+    }
+    var width = bookWidth(landscape);
+    wrap.style.width = width + 'px';
+    flip = new St.PageFlip(book, {
+      width: PAGE_W,
+      height: PAGE_H,
+      size: 'stretch',
+      minWidth: landscape ? 100 : width,
+      maxWidth: 4000,
+      minHeight: 100,
+      maxHeight: 4000,
+      autoSize: true,
+      showCover: true,
+      usePortrait: !landscape,
+      maxShadowOpacity: 0.5,
+      flippingTime: reduceMotion ? 200 : 850,
+      swipeDistance: 24,
+      clickEventForward: true,
+      showPageCorners: true,
+      mobileScrollSupport: true,
+      startPage: libIndex(current)
+    });
+    flip.loadFromHTML(Array.prototype.slice.call(book.querySelectorAll('.page')).reverse());
+    flip.on('flip', function (event) {
+      current = libIndex(event.data);
+      refresh();
+    });
+    applyScale();
+    refresh();
+  }
+
+  function goTo(index) {
+    index = Math.max(0, Math.min(total - 1, index));
+    if (index === current) return;
+    setPosition(index);
+    flip.flip(libIndex(index));
+  }
+  // direction is in reading order: 1 is the next page, -1 is the previous one.
+  function step(direction) {
+    if (direction > 0) {
+      if (current === 0) setPosition(1);
+      flip.flipPrev();
+    } else {
+      if (current >= total - 1) setPosition(total - 2);
+      flip.flipNext();
+    }
+  }
+
+  controls.prev.forEach(function (b) { b.addEventListener('click', function () { step(-1); }); });
+  controls.next.forEach(function (b) { b.addEventListener('click', function () { step(1); }); });
+  slider.addEventListener('change', function () { goTo(Number(slider.value) - 1); });
+  document.getElementById('open-contents').addEventListener('click', function () { goTo(ids.indexOf('contents')); });
+
+  document.addEventListener('click', function (event) {
+    var link = event.target.closest && event.target.closest('a[href^="#"]');
+    if (!link) return;
+    var index = ids.indexOf(link.getAttribute('href').slice(1));
+    if (index >= 0) {
+      event.preventDefault();
+      goTo(index);
+    }
+  });
+
+  document.addEventListener('keydown', function (event) {
+    if (event.altKey || event.ctrlKey || event.metaKey) return;
+    if (sheet.hasAttribute('open-sheet')) {
+      if (event.key === 'Escape') closeSheet();
+      return;
+    }
+    if (event.key === 'ArrowLeft' || event.key === 'PageDown') { event.preventDefault(); step(1); }
+    if (event.key === 'ArrowRight' || event.key === 'PageUp') { event.preventDefault(); step(-1); }
+    if (event.key === 'Home') { event.preventDefault(); goTo(0); }
+    if (event.key === 'End') { event.preventDefault(); goTo(total - 1); }
+  });
+
+  // The library ignores touches that start on a link, so a swipe that starts on one is handled here.
+  var linkSwipe = null;
+  document.addEventListener('touchstart', function (event) {
+    var touch = event.changedTouches[0];
+    linkSwipe = event.target.closest && event.target.closest('.page a') ? { x: touch.clientX, y: touch.clientY, at: Date.now() } : null;
+  }, { passive: true });
+  document.addEventListener('touchend', function (event) {
+    if (!linkSwipe) return;
+    var touch = event.changedTouches[0];
+    var dx = touch.clientX - linkSwipe.x;
+    var dy = touch.clientY - linkSwipe.y;
+    var quick = Date.now() - linkSwipe.at < 700;
+    linkSwipe = null;
+    if (quick && Math.abs(dx) > 40 && Math.abs(dy) < 60) step(dx > 0 ? 1 : -1);
+  }, { passive: true });
+
+  // All pages
+  var sheet = document.getElementById('sheet');
+  var thumbs = document.getElementById('thumbs');
+  var thumbsBuilt = false;
+  function openSheet() {
+    if (!thumbsBuilt) {
+      var holder = document.createElement('div');
+      holder.innerHTML = pagesHtml;
+      Array.prototype.forEach.call(holder.querySelectorAll('.page'), function (page, i) {
+        var button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'thumb';
+        button.setAttribute('aria-label', 'الانتقال إلى الصفحة ' + arabic(i + 1));
+        var box = document.createElement('div');
+        box.className = 'thumb-page';
+        var inner = page.querySelector('.page-inner');
+        inner.setAttribute('inert', '');
+        inner.querySelectorAll('[id]').forEach(function (el) { el.removeAttribute('id'); });
+        box.appendChild(inner);
+        button.appendChild(box);
+        button.appendChild(document.createTextNode(arabic(i + 1)));
+        button.addEventListener('click', function () {
+          closeSheet();
+          goTo(i);
+        });
+        thumbs.appendChild(button);
+      });
+      thumbsBuilt = true;
+    }
+    sheet.setAttribute('open-sheet', '');
+    document.getElementById('close-sheet').focus();
+  }
+  function closeSheet() {
+    sheet.removeAttribute('open-sheet');
+    document.getElementById('open-thumbs').focus();
+  }
+  document.getElementById('open-thumbs').addEventListener('click', openSheet);
+  document.getElementById('close-sheet').addEventListener('click', closeSheet);
+
+  // Share and full screen
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  function showToast(text) {
+    toast.textContent = text;
+    toast.setAttribute('show-toast', '');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { toast.removeAttribute('show-toast'); }, 3200);
+  }
+  document.getElementById('share').addEventListener('click', function () {
+    var url = location.href.split('#')[0];
+    function copy() {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(function () {
+          showToast('نُسخ الرابط');
+        }, function () {
+          showToast(url);
+        });
+      } else {
+        showToast(url);
+      }
+    }
+    if (navigator.share) {
+      navigator.share({ title: document.title, url: url }).catch(function (error) {
+        if (error && error.name !== 'AbortError') copy();
+      });
+    } else {
+      copy();
+    }
+  });
+
+  var fullButton = document.getElementById('full');
+  if (!document.fullscreenEnabled) fullButton.style.display = 'none';
+  fullButton.addEventListener('click', function () {
+    var action = document.fullscreenElement ? document.exitFullscreen() : root.requestFullscreen();
+    if (action && action.catch) action.catch(function () { showToast('ملء الشاشة غير متاح هنا'); });
+  });
+
+  function resize() {
+    var nowLandscape = stage.clientWidth >= stage.clientHeight * 1.12;
+    if (nowLandscape !== landscape) {
+      build();
+    } else {
+      wrap.style.width = bookWidth(landscape) + 'px';
+      flip.update();
+      applyScale();
+    }
+  }
+  var resizeTimer = null;
+  window.addEventListener('resize', function () {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(resize, 120);
+  });
+  window.addEventListener('hashchange', function () {
+    var index = ids.indexOf(location.hash.replace('#', ''));
+    if (index >= 0) goTo(index);
+  });
+
+  build();
+})();
+</script>
+</body>
+</html>

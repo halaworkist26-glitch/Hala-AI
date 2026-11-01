@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Solutions for Your Business</title>
+<meta name="description" content="A short guide to practical, customized AI for established companies, by Hala Al-Attiyat, Software Engineer.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="AI Solutions for Your Business">
+<meta property="og:description" content="A short guide to practical, customized AI for established companies, by Hala Al-Attiyat, Software Engineer.">
+<meta property="og:image" content="https://lh3.googleusercontent.com/d/1peaxtDCRJCkkIjMf_CABtLg44yuC7mNU">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23B30D12'/%3E%3Ctext x='16' y='22' font-family='Arial' font-size='16' font-weight='700' fill='white' text-anchor='middle'%3EAI%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* Layout idea: an open book of fixed pages turning around a spine, in the sky, red and green of email v4. */
+    --red: #B30D12;
+    --red-hi: #D0080F;
+    --red-lo: #8E0107;
+    --blue: #2F6FA8;
+    --sky: #9CC3EA;
+    --sky-1: #DCE8F6;
+    --sky-2: #F4F8FD;
+    --desk: #DFE8F3;
+    --ink: #14213A;
+    --text: #2B2627;
+    --muted: #41506B;
+    --soft: #6B7487;
+    --green: #5B8F2E;
+    --green-1: #1F3322;
+    --green-2: #5B6A49;
+    --on-green: #DDE8D8;
+    --font: Poppins, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    --pw: 560px;
+    --ph: 660px;
+    --bar: 64px;
+    --gutter: 36px;
+    color-scheme: light only;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body { background: var(--desk); color: var(--text); font: 400 14.5px/23px var(--font); }
+  h2, h3, p, ul, ol { margin: 0; padding: 0; }
+  ul, ol { list-style: none; }
+  img { display: block; max-width: 100%; }
+  a { color: var(--red); }
+  a:focus-visible, button:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
+  svg.icon { width: 22px; height: 22px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* Flow: every page in one column. Used without JavaScript and for printing. */
+  .book { display: grid; gap: 20px; justify-content: center; grid-template-columns: minmax(0, var(--pw)); padding: 20px 12px; }
+  .page { position: relative; display: flex; flex-direction: column; width: 100%; min-height: var(--ph); background: #FFFFFF; overflow: hidden; }
+
+  /* Page parts */
+  .pg-head { padding: 28px var(--gutter) 22px; text-align: center; background: linear-gradient(180deg, var(--sky-1) 0%, var(--sky-2) 100%); }
+  .pill { display: inline-block; padding: 4px 14px; border: 1px solid var(--sky); border-radius: 16px; background: #FFFFFF; font-size: 12.5px; line-height: 18px; font-weight: 600; color: var(--blue); }
+  h2 { padding-top: 12px; font-size: 26px; line-height: 33px; font-weight: 700; letter-spacing: -0.5px; color: var(--ink); text-wrap: balance; }
+  .r { color: var(--red); }
+  .lead { padding-top: 8px; font-size: 14.5px; line-height: 23px; color: var(--muted); text-wrap: balance; }
+  .pg-body { flex: 1; display: flex; flex-direction: column; gap: 14px; padding: 20px var(--gutter) 12px; }
+  .pg-foot { display: flex; justify-content: space-between; gap: 12px; padding: 9px var(--gutter) 11px; font-size: 11.5px; line-height: 16px; color: var(--soft); border-top: 1px dashed var(--sky); font-variant-numeric: tabular-nums; }
+  .pg-foot b { font-weight: 600; color: var(--blue); }
+  .note { font-size: 13px; line-height: 20px; color: var(--muted); }
+  .punch { font-size: 16px; line-height: 24px; font-weight: 600; text-align: center; color: var(--red); }
+
+  /* Cover */
+  .cover { height: var(--ph); }
+  .cover-img { flex: 1 1 0; min-height: 0; width: 100%; object-fit: cover; object-position: top; border-radius: 0 0 28px 28px; }
+  .cover-panel { padding: 16px var(--gutter) 18px; text-align: center; }
+  .cover-sub { font-size: 14px; line-height: 21px; color: var(--muted); }
+  .cover-name { padding-top: 4px; font-size: 21px; line-height: 28px; font-weight: 700; letter-spacing: -0.3px; color: var(--red); }
+  .cover-role { font-size: 13px; line-height: 19px; color: var(--blue); }
+  .btn { display: inline-block; padding: 12px 30px; border-radius: 10px; background: linear-gradient(135deg, var(--red-hi) 0%, var(--red-lo) 100%); color: #FFFFFF; font-size: 15px; line-height: 20px; font-weight: 700; text-decoration: none; }
+  .cover-panel .btn { margin-top: 12px; }
+
+  /* Contents */
+  .toc { display: flex; flex-direction: column; }
+  .toc a { display: flex; justify-content: space-between; gap: 12px; padding: 5px 0; border-bottom: 1px solid var(--sky-1); font-size: 14px; line-height: 21px; color: var(--ink); text-decoration: none; }
+  .toc a:hover { color: var(--red); }
+  .toc-n { font-weight: 600; color: var(--blue); font-variant-numeric: tabular-nums; }
+
+  /* Red tiles from the email */
+  .lanes { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .tile { padding: 18px 14px; border-radius: 14px; background: linear-gradient(135deg, var(--red-hi) 0%, var(--red-lo) 100%); text-align: center; color: #FFD9DA; font-size: 13px; line-height: 19px; }
+  .tile b { display: block; padding-bottom: 6px; font-size: 16px; line-height: 21px; color: #FFFFFF; }
+  .tile--sky { background: var(--sky-1); border: 1px solid var(--sky); color: var(--muted); }
+  .tile--sky b { color: var(--ink); }
+
+  /* Check lists */
+  .checks { display: flex; flex-direction: column; gap: 8px; }
+  .checks li { position: relative; padding-left: 28px; font-size: 14px; line-height: 21px; }
+  .checks li::before { content: "\2713"; position: absolute; left: 0; top: 1px; width: 19px; height: 19px; border-radius: 50%; background: var(--sky); color: #FFFFFF; font: 700 12px/19px Arial, sans-serif; text-align: center; }
+  .checks--q li::before { content: "?"; background: var(--blue); }
+  .checks--keep li::before { background: var(--green); }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .two h3 { padding-bottom: 8px; font-size: 14.5px; line-height: 21px; font-weight: 700; color: var(--ink); }
+
+  /* Capabilities */
+  .caps { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
+  .cap { padding: 10px 12px; border-radius: 12px; background: var(--sky-2); border: 1px solid var(--sky-1); font-size: 12.5px; line-height: 18px; color: var(--muted); }
+  .cap b { display: block; padding-bottom: 2px; font-size: 13px; line-height: 18px; font-weight: 600; color: var(--ink); }
+
+  /* Industries */
+  .inds { display: flex; flex-direction: column; gap: 10px; }
+  .ind { display: flex; gap: 12px; align-items: flex-start; }
+  .ind-mark { display: flex; align-items: center; justify-content: center; flex: none; width: 42px; height: 42px; border-radius: 12px; background: linear-gradient(135deg, var(--red-hi) 0%, var(--red-lo) 100%); color: #FFFFFF; }
+  .ind h3 { font-size: 14.5px; line-height: 21px; font-weight: 600; color: var(--ink); }
+  .ind p { font-size: 13px; line-height: 20px; color: var(--muted); }
+
+  /* Example */
+  .tag { align-self: center; padding: 3px 12px; border-radius: 12px; background: #FDECEC; color: var(--red); font-size: 12px; line-height: 18px; font-weight: 600; }
+  .msg { padding: 10px 14px; border-radius: 12px 12px 12px 2px; background: var(--sky-1); font-size: 14px; line-height: 21px; color: var(--ink); }
+  .ex-label { font-size: 13.5px; line-height: 20px; font-weight: 700; color: var(--ink); }
+  .ex-today { font-size: 13.5px; line-height: 21px; color: var(--muted); }
+
+  /* Steps: the dashed line with checks from the email, turned upright */
+  .steps { display: flex; flex-direction: column; }
+  .step { position: relative; padding: 0 0 14px 40px; }
+  .step:last-child { padding-bottom: 0; }
+  .step::before { content: attr(data-n); position: absolute; left: 0; top: 0; width: 26px; height: 26px; border-radius: 50%; background: var(--sky); color: #FFFFFF; font-size: 13px; line-height: 26px; font-weight: 700; text-align: center; }
+  .step:last-child::before { background: var(--green); }
+  .step::after { content: ""; position: absolute; left: 12px; top: 28px; bottom: 2px; border-left: 2px dashed var(--sky); }
+  .step:last-child::after { display: none; }
+  .step h3 { font-size: 14.5px; line-height: 22px; font-weight: 600; color: var(--ink); }
+  .step p { font-size: 13.5px; line-height: 20px; color: var(--muted); }
+
+  /* Cost rows */
+  .costs { display: flex; flex-direction: column; }
+  .cost { display: grid; grid-template-columns: 148px 1fr; gap: 12px; padding: 8px 0; border-top: 1px solid var(--sky-1); font-size: 13.5px; line-height: 20px; color: var(--muted); }
+  .cost:last-child { border-bottom: 1px solid var(--sky-1); }
+  .cost b { font-weight: 600; color: var(--ink); }
+
+  /* Option cards */
+  .opts { display: flex; flex-direction: column; gap: 10px; }
+  .opt { padding: 11px 14px; border: 1px solid var(--sky); border-radius: 14px; font-size: 13px; line-height: 19px; color: var(--muted); }
+  .opt h3 { padding-bottom: 2px; font-size: 14.5px; line-height: 21px; font-weight: 600; color: var(--ink); }
+  .opt em { font-style: normal; font-weight: 600; color: var(--blue); }
+  .opt--mine { border: 2px solid var(--red); background: #FFF8F8; }
+  .opt--mine h3, .opt--mine em { color: var(--red); }
+
+  /* About */
+  .bio { display: flex; gap: 16px; align-items: center; }
+  .bio img { flex: none; width: 92px; height: 92px; border-radius: 50%; border: 2px solid var(--red); }
+  .bio-name { font-size: 18px; line-height: 25px; font-weight: 700; color: var(--red); }
+  .bio-role { font-size: 13px; line-height: 19px; color: var(--blue); }
+  .bio-link { font-size: 13px; line-height: 19px; font-weight: 600; }
+
+  /* Questions */
+  .faq { display: flex; flex-direction: column; gap: 9px; }
+  .faq h3 { font-size: 13.5px; line-height: 20px; font-weight: 600; color: var(--ink); }
+  .faq p { font-size: 13px; line-height: 19px; color: var(--muted); }
+
+  /* Back cover: the green footer from the email */
+  .back-cover { background: linear-gradient(135deg, var(--green-1) 0%, var(--green-2) 100%); color: var(--on-green); }
+  .back-cover .pg-body { justify-content: center; align-items: center; gap: 16px; padding: 28px var(--gutter); text-align: center; }
+  .back-cover h2 { padding: 0; font-size: 30px; line-height: 38px; color: #FFFFFF; }
+  .back-cover .pill { background: transparent; border-color: var(--on-green); color: #FFFFFF; }
+  .back-cover p { font-size: 15px; line-height: 24px; text-wrap: balance; }
+  .back-cover .btn { background: linear-gradient(135deg, var(--red-hi) 0%, var(--red-lo) 100%); }
+  .contact { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+  .contact a { display: inline-flex; align-items: center; gap: 10px; color: #FFFFFF; font-size: 14.5px; line-height: 22px; }
+  .sig { display: flex; align-items: center; gap: 12px; padding-top: 16px; border-top: 1px solid rgba(221, 232, 216, .35); text-align: left; font-size: 12.5px; line-height: 18px; }
+  .sig img { flex: none; width: 52px; height: 52px; border-radius: 50%; border: 2px solid #FFFFFF; }
+  .sig b { display: block; font-size: 15px; line-height: 21px; color: #FFFFFF; }
+
+  /* Controls */
+  .bar { display: none; }
+  .spread .bar, .single .bar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 50; display: flex; align-items: center; justify-content: center; gap: 12px; height: var(--bar); padding: 0 12px; background: #FFFFFF; border-top: 1px solid var(--sky-1); }
+  .bar button { min-height: 44px; padding: 0 16px; border: 1px solid var(--sky); border-radius: 10px; background: #FFFFFF; color: var(--blue); font: 600 13.5px/1 var(--font); cursor: pointer; }
+  .bar button:disabled { opacity: .4; cursor: default; }
+  .bar .go-next { border: 0; background: linear-gradient(135deg, var(--red-hi) 0%, var(--red-lo) 100%); color: #FFFFFF; }
+  .status { flex: 0 1 260px; min-width: 96px; text-align: center; font-size: 12.5px; line-height: 18px; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .track { height: 0; margin-top: 5px; border-top: 2px dashed var(--sky); position: relative; }
+  .fill { position: absolute; left: 0; top: -2px; height: 2px; width: 0; background: var(--red); transition: width .4s; }
+
+  /* Open book for wide screens */
+  .spread, .spread body, .single, .single body { height: 100%; overflow: hidden; }
+  .spread .stage, .single .stage { position: fixed; inset: 0 0 var(--bar) 0; }
+  .spread .scaler { position: absolute; left: 50%; top: 50%; width: calc(var(--pw) * 2); height: var(--ph); transform: translate(-50%, -50%) scale(var(--s, 1)); }
+  .spread .book { position: relative; display: block; width: 100%; height: 100%; padding: 0; perspective: 2600px; transition: transform .7s ease; }
+  .spread .book[data-state="closed"] { transform: translateX(-25%); }
+  .spread .book[data-state="end"] { transform: translateX(25%); }
+  .leaf { position: absolute; left: 50%; top: 0; width: 50%; height: 100%; transform-origin: left center; transform-style: preserve-3d; transition: transform .9s cubic-bezier(.4, .1, .2, 1); }
+  .leaf.flipped { transform: rotateY(-180deg); }
+  .face { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; box-shadow: 2px 0 0 #FFFFFF, 3px 0 0 #C9D9EC, 5px 0 0 #FFFFFF, 6px 0 0 #C9D9EC; }
+  .face.on { box-shadow: 2px 0 0 #FFFFFF, 3px 0 0 #C9D9EC, 5px 0 0 #FFFFFF, 6px 0 0 #C9D9EC, 0 16px 34px rgba(20, 33, 58, .2); }
+  .face.back { transform: rotateY(180deg); }
+  .face > .page { width: 100%; height: 100%; min-height: 0; }
+  .face::after { content: ""; position: absolute; top: 0; bottom: 0; width: 44px; pointer-events: none; }
+  .face.front::after { left: 0; background: linear-gradient(90deg, rgba(20, 33, 58, .16), rgba(20, 33, 58, 0)); }
+  .face.back::after { right: 0; background: linear-gradient(270deg, rgba(20, 33, 58, .16), rgba(20, 33, 58, 0)); }
+  .no-anim .leaf, .no-anim .book { transition: none !important; }
+  .spread .pg-body { justify-content: center; }
+  .spread .pg-body > * { zoom: var(--zoom, 1); }
+  .spread #idea { --zoom: 1.2; }
+  .spread #gap { --zoom: 1.14; }
+  .spread #limits { --zoom: 1.08; }
+  .spread #industries { --zoom: 1.24; }
+  .spread #example { --zoom: 1.14; }
+  .spread #process { --zoom: 1.2; }
+  .spread #cost { --zoom: 1.1; }
+  .spread #options { --zoom: 1.08; }
+  .spread #questions { --zoom: 1.08; }
+
+  /* One page at a time for phones and upright tablets: swipe to turn */
+  .single .scaler { height: 100%; }
+  .single .book { display: flex; justify-content: flex-start; grid-template-columns: none; gap: 0; height: 100%; padding: 0; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; overscroll-behavior-x: contain; scrollbar-width: none; }
+  .single .book::-webkit-scrollbar { display: none; }
+  .single .page { flex: 0 0 100%; height: 100%; min-height: 0; overflow-y: auto; scroll-snap-align: start; scroll-snap-stop: always; --gutter: max(20px, calc((100% - 520px) / 2)); }
+  .single .pg-body { flex: 1 0 auto; }
+  .single .cover-img { flex: 0 0 auto; height: auto; }
+  .single .cover-panel { flex: 1 0 auto; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+
+  @media (max-width: 460px) {
+    h2 { font-size: 23px; line-height: 30px; }
+    .back-cover h2 { font-size: 26px; line-height: 33px; }
+    .lanes, .two { grid-template-columns: 1fr; }
+    .cost { grid-template-columns: 1fr; gap: 0; }
+    .bar { gap: 8px; }
+    .bar button { padding: 0 12px; }
+  }
+  @media (max-width: 380px) {
+    .caps { grid-template-columns: 1fr; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .leaf, .spread .book, .fill { transition: none; }
+  }
+  @media print {
+    body { background: #FFFFFF; }
+    .book { gap: 0; padding: 0; }
+    .page { break-after: page; }
+  }
+</style>
+</head>
+<body>
+
+<div class="stage">
+<div class="scaler">
+<main class="book" id="book" aria-label="AI Solutions for Your Business, a guide by Hala Al-Attiyat">
+
+  <article class="page cover" id="cover">
+    <img class="cover-img" src="assets/cover.jpg" width="1149" height="950" alt="AI Solutions for your business: a hand holding a glowing AI sphere.">
+    <div class="cover-panel">
+      <p class="cover-sub">A practical guide for established companies</p>
+      <p class="cover-name">Hala Al-Attiyat</p>
+      <p class="cover-role">Software Engineer | AI Solutions &amp; Business Automation</p>
+      <a class="btn" href="#contents">Open the guide</a>
+    </div>
+  </article>
+
+  <article class="page" id="contents">
+    <header class="pg-head">
+      <p class="pill">Welcome</p>
+      <h2>A short guide, <span class="r">from start to finish.</span></h2>
+      <p class="lead">For owners and managers who want to understand, in plain language, what AI could mean for their company.</p>
+    </header>
+    <div class="pg-body">
+      <ol class="toc">
+        <li><a href="#idea"><span>The idea: two operations</span><span class="toc-n">3</span></a></li>
+        <li><a href="#gap"><span>The gap: no technical department</span><span class="toc-n">4</span></a></li>
+        <li><a href="#limits"><span>What AI can and cannot do</span><span class="toc-n">5</span></a></li>
+        <li><a href="#build"><span>What could be built</span><span class="toc-n">6</span></a></li>
+        <li><a href="#industries"><span>Where it applies</span><span class="toc-n">7</span></a></li>
+        <li><a href="#example"><span>One example, start to finish</span><span class="toc-n">8</span></a></li>
+        <li><a href="#process"><span>How a project starts and grows</span><span class="toc-n">9</span></a></li>
+        <li><a href="#cost"><span>What shapes the cost</span><span class="toc-n">10</span></a></li>
+        <li><a href="#options"><span>Three ways to bring in AI</span><span class="toc-n">11</span></a></li>
+        <li><a href="#about"><span>Who you would work with</span><span class="toc-n">12</span></a></li>
+        <li><a href="#questions"><span>Common questions</span><span class="toc-n">13</span></a></li>
+        <li><a href="#next-step"><span>The next step</span><span class="toc-n">14</span></a></li>
+      </ol>
+    </div>
+    <footer class="pg-foot"><span><b>Hala Al-Attiyat</b> | AI Solutions &amp; Business Automation</span><span>2</span></footer>
+  </article>
+
+  <article class="page" id="idea">
+    <header class="pg-head">
+      <p class="pill">The idea</p>
+      <h2>Every company runs <span class="r">two operations.</span></h2>
+      <p class="lead">One does the work your customers pay for. The other moves the information about that work.</p>
+    </header>
+    <div class="pg-body">
+      <div class="lanes">
+        <div class="tile"><b>The visible operation</b>Moving freight, making products, trading goods, delivering projects.</div>
+        <div class="tile tile--sky"><b>The information operation</b>Updates, documents, customer questions, records, reports.</div>
+      </div>
+      <p>The second operation lives in inboxes, spreadsheets, paper files and people's memories. It grows with the business, and it is often handled by hand.</p>
+      <p class="punch">That second operation is where AI gets interesting.</p>
+    </div>
+    <footer class="pg-foot"><span><b>Hala Al-Attiyat</b> | AI Solutions &amp; Business Automation</span><span>3</span></footer>
+  </article>
+
+  <article class="page" id="gap">
+    <header class="pg-head">
+      <p class="pill">The gap</p>
+      <h2>A strong business, <span class="r">with no technical department.</span></h2>
+    </header>
+    <div class="pg-body">
+      <p>Many established companies have real operational activity and experienced people, but no internal team to evaluate or build AI. Hiring one is a large decision to make before you know what AI could do for you.</p>
+      <p><strong style="color:var(--ink)">So the questions stay open:</strong></p>
+      <ul class="checks checks--q">
+        <li>Where would AI actually be useful for us?</li>
+        <li>Would it work with the systems we already have?</li>
+        <li>What would it take to find out?</li>
+      </ul>
+      <p>You can explore these questions before making any commitment, and without hiring anyone. The rest of this guide shows how.</p>
+    </div>
+    <footer class="pg-foot"><span>4</span><span><b>Hala Al-Attiyat</b> | AI Solutions &amp; Business Automation</span></footer>
+  </article>
+
+  <article class="page" id="limits">
+    <header class="pg-head">
+      <p class="pill">What AI can and cannot do</p>
+      <h2>AI supports your people. <span class="r">The decisions stay with you.</span></h2>
+    </header>
+    <div class="pg-body">
+      <div class="two">
+        <div>
+          <h3>What AI can support</h3>
+          <ul class="checks">
+            <li>Finding and summarizing company information</li>
+            <li>Drafting routine updates and replies</li>
+            <li>Sorting and checking document data</li>
+            <li>Bringing numbers together into reports</li>
+            <li>Automating suitable repetitive steps</li>
+          </ul>
+        </div>
+        <div>
+          <h3>What stays with your people</h3>
+          <ul class="checks checks--keep">
+            <li>Decisions and approvals</li>
+            <li>Customer and supplier relationships</li>
+            <li>Judgment on unusual cases</li>
+            <li>Priorities and strategy</li>
+          </ul>
+        </div>
+      </div>
+      <p class="note">AI can make mistakes, so important outputs should be reviewed by a person. A well-designed system is built with that review in mind.</p>
+    </div>
+    <footer class="pg-foot"><span><b>Hala Al-Attiyat</b> | AI Solutions &amp; Business Automation</span><span>5</span></footer>
+  </article>
+
+  <article class="page" id="build">
+    <header class="pg-head">
+      <p class="pill">What could be built</p>
+      <h2>Eight things a custom system <span class="r">could</span> include.</h2>
+    </header>
+    <div class="pg-body">
+      <div class="caps">
+        <div class="cap"><b>Internal management systems</b>Daily work, records and follow-ups in one AI-powered place.</div>
+        <div class="cap"><b>Document processing</b>Reading, sorting and finding your documents.</div>
+        <div class="cap"><b>Shipment and order workflows</b>Keeping status information moving automatically.</div>
+        <div class="cap"><b>Task coordination</b>Who is doing what, and by when.</div>
+        <div class="cap"><b>Communication assistance</b>Help with routine customer and supplier messages.</div>
+        <div class="cap"><b>Reporting and analysis</b>A clearer view of daily operations.</div>
+        <div class="cap"><b>Internal AI assistants</b>Ask a question, get an answer from your own searchable data.</div>
+        <div class="cap"><b>Automation and integration</b>Connecting the systems you already use.</div>
+      </div>
+      <p class="note">These are possibilities, not a package. No company needs all of them. You would build only what makes sense for your operation.</p>
+    </div>
+    <footer class="pg-foot"><span>6</span><span><b>Hala Al-Attiyat</b> | AI Solutions &amp; Business Automation</span></footer>
+  </article>
+
+  <article class="page" id="industries">
+    <header class="pg-head">
+      <p class="pill">Where it applies</p>
+      <h2>Four industries, <span class="r">one shared pattern.</span></h2>
+    </header>
+    <div class="pg-body">
+      <div class="inds">
+        <div class="ind">
+          <span class="ind-mark"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></span>
+          <div><h3>Logistics and supply chain</h3><p>Shipment updates, customs documents, customer inquiries.</p></div>
+        </div>
+        <div class="ind">
+          <span class="ind-mark"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 21V10l6 4v-4l6 4V3h7v18z"/></svg></span>
+          <div><h3>Manufacturing and industrial</h3><p>Production reports, supplier records, internal documents.</p></div>
+        </div>
+        <div class="ind">
+          <span class="ind-mark"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></span>
+          <div><h3>Trading, import and export</h3><p>Orders, shipping paperwork, customer and supplier messages.</p></div>
+        </div>
+        <div class="ind">
+          <span class="ind-mark"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="2" width="16" height="20"/><path d="M9 22v-4h6v4M8 6h.01M12 6h.01M16 6h.01M8 10h.01M12 10h.01M16 10h.01M8 14h.01M12 14h.01M16 14h.01"/></svg></span>
+          <div><h3>Construction and real estate</h3><p>Project documents, site reports, contractor coordination.</p></div>
+        </div>
+      </div>
+      <p class="note">The details change from one company to the next, so every solution starts with how yours actually runs.</p>
+    </div>
+    <footer class="pg-foot"><span><b>Hala Al-Attiyat</b> | AI Solutions &amp; Business Automation</span><span>7</span></footer>
+  </article>
+
+  <article class="page" id="example">
+    <header class="pg-head">
+      <p class="pill">One example</p>
+      <h2>A single customer question, <span class="r">start to finish.</span></h2>
+    </header>
+    <div class="pg-body">
+      <p class="tag">Illustrative example, not a client case</p>
+      <p class="msg">"Where is my shipment, and are the customs documents complete?"</p>
+      <p class="ex-today"><strong class="ex-label">Often today:</strong> someone checks the tracking system, searches old emails for the documents, asks a colleague, then writes a reply.</p>
+      <p class="ex-label">With a custom assistant, it could look like this:</p>
+      <ul class="checks">
+        <li>It reads the message and finds the shipment in your records.</li>
+        <li>It checks which documents are on file and which look missing.</li>
+        <li>It drafts a reply for your employee.</li>
+        <li>Your employee reviews it, edits it and sends it.</li>
+      </ul>
+    </div>
+    <footer class="pg-foot"><span>8</span><span><b>Hala Al-Attiyat</b> | AI Solutions &amp; Business Automation</span></footer>
+  </article>
+
+  <article class="page" id="process">
+    <header class="pg-head">
+      <p class="pill">How it works</p>
+      <h2>A gradual path, <span class="r">one step at a time.</span></h2>
+    </header>
+    <div class="pg-body">
+      <div class="steps">
+        <div class="step" data-n="1"><h3>An introductory conversation</h3><p>Twenty minutes. You tell me how your operation runs and where the time goes.</p></div>
+        <div class="step" data-n="2"><h3>Understanding your operation</h3><p>We look at your processes, existing systems and priorities.</p></div>
+        <div class="step" data-n="3"><h3>Choosing the starting point</h3><p>The most valuable first opportunity, with a manageable scope.</p></div>
+        <div class="step" data-n="4"><h3>A focused pilot</h3><p>Built around that one need, where a pilot is appropriate.</p></div>
+        <div class="step" data-n="5"><h3>Growth, if it proves its value</h3><p>Anything further is your decision, one stage at a time.</p></div>
+      </div>
+    </div>
+    <footer class="pg-foot"><span><b>Hala Al-Attiyat</b> | AI Solutions &amp; Business Automation</span><span>9</span></footer>
+  </article>
+
+  <article class="page" id="cost">
+    <header class="pg-head">
+      <p class="pill">What shapes the cost</p>
+      <h2>No fixed package. <span class="r">Your budget sets the scope.</span></h2>
+    </header>
+    <div class="pg-body">
+      <p>Each cost is estimated separately, so you can see what you would be paying for.</p>
+      <div class="costs">
+        <div class="cost"><b>Development</b><span>Designing and building the solution.</span></div>
+        <div class="cost"><b>Integration</b><span>Connecting it to the systems you already use.</span></div>
+        <div class="cost"><b>Infrastructure</b><span>Hosting, storage and running the system.</span></div>
+        <div class="cost"><b>External AI APIs</b><span>Charges from AI services, which vary with use.</span></div>
+        <div class="cost"><b>Maintenance</b><span>Keeping it reliable and up to date.</span></div>
+      </div>
+      <p class="note">A complete custom enterprise system is a serious investment, and it will not come at a small monthly fee. A focused first step can be far smaller, and it shows whether going further makes sense.</p>
+    </div>
+    <footer class="pg-foot"><span>10</span><span><b>Hala Al-Attiyat</b> | AI Solutions &amp; Business Automation</span></footer>
+  </article>
+
+  <article class="page" id="options">
+    <header class="pg-head">
+      <p class="pill">Your options</p>
+      <h2>Three ways to bring AI <span class="r">into a company.</span></h2>
+    </header>
+    <div class="pg-body">
+      <div class="opts">
+        <div class="opt"><h3>Ready-made software</h3>Quick to try, and you adapt your process to the product. <em>A good fit when</em> a standard tool already solves the problem.</div>
+        <div class="opt"><h3>An internal AI team</h3>Full in-house control, with the hiring and management that comes with it. <em>A good fit when</em> AI is central to your long-term plans.</div>
+        <div class="opt opt--mine"><h3>An independent engineer</h3>Designed around your process, starting small, with no department to build. <em>A good fit when</em> you want to explore a specific need before a larger commitment.</div>
+      </div>
+      <p class="note">If a ready-made tool is the better answer for you, that is worth knowing early, and I will say so.</p>
+    </div>
+    <footer class="pg-foot"><span><b>Hala Al-Attiyat</b> | AI Solutions &amp; Business Automation</span><span>11</span></footer>
+  </article>
+
+  <article class="page" id="about">
+    <header class="pg-head">
+      <p class="pill">Who you would work with</p>
+      <h2>You would deal directly <span class="r">with the engineer.</span></h2>
+    </header>
+    <div class="pg-body">
+      <div class="bio">
+        <img src="assets/hala.jpg" width="240" height="240" alt="Hala Al-Attiyat">
+        <div>
+          <p class="bio-name">Hala Al-Attiyat</p>
+          <p class="bio-role">Software Engineer | AI Solutions &amp; Business Automation</p>
+          <a class="bio-link" href="https://www.linkedin.com/in/hala-al-atyat" target="_blank" rel="noopener">View my LinkedIn profile</a>
+        </div>
+      </div>
+      <p class="note">I work independently. From the first conversation onward you would speak with me, the person who understands, designs and develops your solution.</p>
+      <ul class="checks">
+        <li>Full-stack software development</li>
+        <li>AI assistants and AI API integration, including Gemini</li>
+        <li>AI model training, evaluation and quality assurance</li>
+        <li>Chatbot testing and AI data projects</li>
+        <li>Three years coordinating technical projects and client communication for a founder-led company</li>
+        <li>Work with international AI platforms</li>
+      </ul>
+    </div>
+    <footer class="pg-foot"><span>12</span><span><b>Hala Al-Attiyat</b> | AI Solutions &amp; Business Automation</span></footer>
+  </article>
+
+  <article class="page" id="questions">
+    <header class="pg-head">
+      <p class="pill">Common questions</p>
+      <h2>Questions you may <span class="r">already have.</span></h2>
+    </header>
+    <div class="pg-body">
+      <div class="faq">
+        <div><h3>Do we need technical staff?</h3><p>No. You know your operation and I handle the technical side. Someone who knows the daily work should be available for questions.</p></div>
+        <div><h3>Will this replace our employees?</h3><p>That is not the aim. The aim is to support them and reduce repetitive steps.</p></div>
+        <div><h3>Will it work with our current systems?</h3><p>Often, but it depends on the systems. Checking this is part of the first stage.</p></div>
+        <div><h3>What about our data?</h3><p>Where data is stored, which AI services are used and who can access what are agreed before anything is built.</p></div>
+        <div><h3>How long does it take?</h3><p>It depends on the scope. You would get an estimate once the first step is defined.</p></div>
+        <div><h3>What should we prepare?</h3><p>Nothing for the first conversation. Just bring the process that frustrates you most.</p></div>
+      </div>
+    </div>
+    <footer class="pg-foot"><span><b>Hala Al-Attiyat</b> | AI Solutions &amp; Business Automation</span><span>13</span></footer>
+  </article>
+
+  <article class="page back-cover" id="next-step">
+    <div class="pg-body">
+      <p class="pill">The next step</p>
+      <h2>The next step is only a conversation.</h2>
+      <p>Twenty minutes, with no proposal and no commitment. You would come away with a clearer view of where AI could help your company, and where it would not.</p>
+      <a class="btn" href="mailto:44hala2003@gmail.com?subject=20-minute%20introductory%20meeting&amp;body=Hello%20Hala%2C%0D%0A%0D%0AI%20read%20your%20guide%20and%20I%20am%20open%20to%20a%2020-minute%20introductory%20meeting.%0D%0AA%20day%20that%20suits%20me%3A%20">Email me to arrange 20 minutes</a>
+      <ul class="contact">
+        <li><a href="mailto:44hala2003@gmail.com"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>44hala2003@gmail.com</a></li>
+        <li><a href="https://www.linkedin.com/in/hala-al-atyat" target="_blank" rel="noopener"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>linkedin.com/in/hala-al-atyat</a></li>
+        <!-- WhatsApp: to add it, remove these comment marks and put your number with its country code, digits only.
+        <li><a href="https://wa.me/YOURNUMBER" target="_blank" rel="noopener">WhatsApp</a></li>
+        -->
+      </ul>
+      <div class="sig">
+        <img src="assets/hala.jpg" width="240" height="240" alt="">
+        <div><b>Hala Al-Attiyat</b>Software Engineer | AI Solutions &amp; Business Automation</div>
+      </div>
+    </div>
+  </article>
+
+</main>
+</div>
+</div>
+
+<nav class="bar" aria-label="Turn the pages">
+  <button type="button" id="go-prev">Back</button>
+  <button type="button" id="go-contents">Contents</button>
+  <div class="status" aria-live="polite">
+    <span id="status-text"></span>
+    <div class="track"><div class="fill" id="status-fill"></div></div>
+  </div>
+  <button type="button" class="go-next" id="go-next">Next</button>
+</nav>
+
+<script>
+(function () {
+  var PAGE_W = 560, PAGE_H = 660, BAR_H = 64, MIN_SPREAD_SCALE = 0.7, FLIP_MS = 900, FLIP_STAGGER = 70;
+  var root = document.documentElement;
+  var book = document.getElementById('book');
+  var pages = Array.prototype.slice.call(book.querySelectorAll('.page'));
+  var leaves = [];
+  var mode = 'flow';
+  var pageIndex = 0;   // single mode: the page on screen
+  var turned = 0;      // spread mode: how many leaves have been turned
+  var moving = {};
+  var zCounter = 0;
+
+  function spreadScale() {
+    return Math.min((window.innerWidth - 48) / (PAGE_W * 2), (window.innerHeight - BAR_H - 24) / PAGE_H);
+  }
+  function chooseMode() {
+    return spreadScale() >= MIN_SPREAD_SCALE ? 'spread' : 'single';
+  }
+
+  function buildLeaves() {
+    for (var i = 0; i < pages.length; i += 2) {
+      var leaf = document.createElement('div');
+      leaf.className = 'leaf';
+      [['front', pages[i]], ['back', pages[i + 1]]].forEach(function (side) {
+        if (!side[1]) return;
+        var face = document.createElement('div');
+        face.className = 'face ' + side[0];
+        face.appendChild(side[1]);
+        leaf.appendChild(face);
+      });
+      book.appendChild(leaf);
+      leaves.push(leaf);
+    }
+  }
+  function removeLeaves() {
+    pages.forEach(function (page) {
+      page.inert = false;
+      book.appendChild(page);
+    });
+    leaves.forEach(function (leaf) { leaf.remove(); });
+    leaves = [];
+    moving = {};
+  }
+
+  function setMode(next) {
+    if (next === mode) return;
+    var at = currentPage();
+    removeLeaves();
+    root.classList.remove('spread', 'single');
+    if (next !== 'flow') root.classList.add(next);
+    mode = next;
+    if (mode === 'spread') buildLeaves();
+    showPage(at, false);
+  }
+
+  function currentPage() {
+    return mode === 'spread' ? Math.min(turned * 2, pages.length - 1) : pageIndex;
+  }
+
+  function stack() {
+    var count = leaves.length;
+    leaves.forEach(function (leaf, i) {
+      if (!moving[i]) leaf.style.zIndex = i < turned ? i + 1 : count - i;
+    });
+    if (!Object.keys(moving).length) zCounter = 0;
+  }
+
+  function turnTo(target, animate) {
+    target = Math.max(0, Math.min(leaves.length, target));
+    if (!animate) {
+      root.classList.add('no-anim');
+      leaves.forEach(function (leaf, i) { leaf.classList.toggle('flipped', i < target); });
+      turned = target;
+      stack();
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () { root.classList.remove('no-anim'); });
+      });
+    } else {
+      var forward = target > turned;
+      var order = [];
+      for (var i = turned; i !== target; i += forward ? 1 : -1) order.push(forward ? i : i - 1);
+      order.forEach(function (leafIndex, step) {
+        moving[leafIndex] = true;
+        leaves[leafIndex].style.zIndex = leaves.length + 10 + (zCounter++);
+        setTimeout(function () { leaves[leafIndex].classList.toggle('flipped', forward); }, step * FLIP_STAGGER);
+        setTimeout(function () { delete moving[leafIndex]; stack(); }, step * FLIP_STAGGER + FLIP_MS + 30);
+      });
+      turned = target;
+    }
+    book.dataset.state = turned === 0 ? 'closed' : turned === leaves.length ? 'end' : 'open';
+    pages.forEach(function (page, i) {
+      var open = i === turned * 2 || i === turned * 2 - 1;
+      page.inert = !open;
+      page.parentNode.classList.toggle('on', open);
+    });
+    refresh();
+  }
+
+  function showPage(index, animate) {
+    index = Math.max(0, Math.min(pages.length - 1, index));
+    if (mode === 'spread') {
+      turnTo(Math.ceil(index / 2), animate);
+    } else if (mode === 'single') {
+      pageIndex = index;
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      book.scrollTo({ left: index * book.clientWidth, behavior: animate && !reduce ? 'smooth' : 'auto' });
+      refresh();
+    } else {
+      pageIndex = index;
+    }
+  }
+
+  function step(direction) {
+    if (mode === 'spread') turnTo(turned + direction, true);
+    else showPage(pageIndex + direction, true);
+  }
+
+  var prev = document.getElementById('go-prev');
+  var next = document.getElementById('go-next');
+  var label = document.getElementById('status-text');
+  var fill = document.getElementById('status-fill');
+
+  function refresh() {
+    var total = pages.length, atStart, atEnd, ratio;
+    if (mode === 'spread') {
+      atStart = turned === 0;
+      atEnd = turned === leaves.length;
+      ratio = turned / leaves.length;
+      label.textContent = atStart ? 'Cover' : atEnd ? 'Back cover' : 'Pages ' + (turned * 2) + ' to ' + (turned * 2 + 1) + ' of ' + total;
+    } else {
+      atStart = pageIndex === 0;
+      atEnd = pageIndex === total - 1;
+      ratio = pageIndex / (total - 1);
+      label.textContent = 'Page ' + (pageIndex + 1) + ' of ' + total;
+    }
+    prev.disabled = atStart;
+    next.disabled = atEnd;
+    fill.style.width = (ratio * 100) + '%';
+    try {
+      var id = pages[currentPage()].id;
+      history.replaceState(null, '', currentPage() === 0 ? location.pathname + location.search : '#' + id);
+    } catch (e) { /* some embedded viewers refuse this; the page still works */ }
+  }
+
+  function pageFromHash(hash) {
+    var id = (hash || '').replace('#', '');
+    for (var i = 0; i < pages.length; i++) if (pages[i].id === id) return i;
+    return -1;
+  }
+
+  prev.addEventListener('click', function () { step(-1); });
+  next.addEventListener('click', function () { step(1); });
+  document.getElementById('go-contents').addEventListener('click', function () {
+    showPage(pageFromHash('#contents'), true);
+  });
+
+  document.addEventListener('click', function (event) {
+    var link = event.target.closest && event.target.closest('a[href^="#"]');
+    if (!link || mode === 'flow') return;
+    var index = pageFromHash(link.getAttribute('href'));
+    if (index >= 0) {
+      event.preventDefault();
+      showPage(index, true);
+    }
+  });
+
+  document.addEventListener('keydown', function (event) {
+    if (mode === 'flow' || event.altKey || event.ctrlKey || event.metaKey) return;
+    if (event.key === 'ArrowRight' || event.key === 'PageDown') { event.preventDefault(); step(1); }
+    if (event.key === 'ArrowLeft' || event.key === 'PageUp') { event.preventDefault(); step(-1); }
+    if (event.key === 'Home') { event.preventDefault(); showPage(0, true); }
+    if (event.key === 'End') { event.preventDefault(); showPage(pages.length - 1, true); }
+  });
+
+  var touchX = null;
+  book.addEventListener('touchstart', function (event) {
+    touchX = mode === 'spread' ? event.touches[0].clientX : null;
+  }, { passive: true });
+  book.addEventListener('touchend', function (event) {
+    if (touchX === null) return;
+    var distance = event.changedTouches[0].clientX - touchX;
+    if (Math.abs(distance) > 50) step(distance < 0 ? 1 : -1);
+    touchX = null;
+  }, { passive: true });
+
+  var scrollFrame = null;
+  book.addEventListener('scroll', function () {
+    if (mode !== 'single' || scrollFrame) return;
+    scrollFrame = requestAnimationFrame(function () {
+      scrollFrame = null;
+      var index = Math.round(book.scrollLeft / book.clientWidth);
+      if (index !== pageIndex) {
+        pageIndex = index;
+        refresh();
+      }
+    });
+  });
+
+  function fit() {
+    setMode(chooseMode());
+    if (mode === 'spread') root.style.setProperty('--s', spreadScale().toFixed(4));
+  }
+  window.addEventListener('resize', function () {
+    fit();
+    if (mode === 'single') book.scrollTo({ left: pageIndex * book.clientWidth, behavior: 'auto' });
+  });
+  window.addEventListener('hashchange', function () {
+    var index = pageFromHash(location.hash);
+    if (index >= 0) showPage(index, true);
+  });
+  window.addEventListener('beforeprint', function () { setMode('flow'); });
+  window.addEventListener('afterprint', function () { fit(); });
+
+  var start = pageFromHash(location.hash);   // read first: fit() rewrites the address
+  fit();
+  if (start >= 0) showPage(start, false);
+})();
+</script>
+</body>
+</html>
